@@ -8,8 +8,8 @@ export const routes: Routes = [
             NotAuthenticatedGuard,
         ] */
     },
-    {
-    path: '**',
-    redirectTo: 'auth'
-  },
+  {
+    path:'',
+    loadChildren: ()=> import('./platform-front/platform-front.routes')
+  }
 ];
