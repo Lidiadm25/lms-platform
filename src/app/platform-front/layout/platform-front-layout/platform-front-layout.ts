@@ -4,7 +4,7 @@ import { Drawer } from "../../components/drawer/drawer";
 
 @Component({
   selector: 'app-platform-front-layout',
-  imports: [Navbar, Drawer],
+  imports: [Drawer],
   templateUrl: './platform-front-layout.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

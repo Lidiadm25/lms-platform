@@ -6,7 +6,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
-  imports: [RouterLink,ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login-page-component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
