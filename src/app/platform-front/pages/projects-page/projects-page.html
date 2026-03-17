@@ -1,0 +1,7 @@
+
+@if (projectResource.error()) {
+    <h3>ERROR: </h3>
+    <h3>{{ projectResource.error()}}</h3>
+} @else if (projectResource.hasValue() && projectResource.value!) {
+    <app-project-list [projects] = "projectResource.value()"/>
+}
