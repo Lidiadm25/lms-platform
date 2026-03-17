@@ -24,13 +24,13 @@ export class AuthService {
   private _user = signal<User | null>(null);
 
   // If theres already a token for the current user, we can collect it from localStorage
-  private _token = signal<string | null>(localStorage.getItem('item'));
+  private _token = signal<string | null>(localStorage.getItem('token'));
 
   private http = inject(HttpClient);
 
- /* checkStatusResource = rxResource({
-    loader: () => this.checkStatus(),
-  });  */
+  checkStatusResource = rxResource({
+    stream: () => this.checkStatus(),
+  });  
 
   authStatus = computed<AuthStatus>(() => {
     if (this._authStatus() === 'checking') return 'checking';
@@ -61,9 +61,9 @@ export class AuthService {
   checkStatus(): Observable<boolean> {
     const token = localStorage.getItem('token');
     if (!token) {
-      this.logout();
+     this.logout();
      return of(false);
-    }
+    } 
 
     return this.http
       .get<AuthResponse>(`${baseUrl}/auth/check-status`, {
