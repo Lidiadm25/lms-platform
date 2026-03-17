@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthService } from './../../../auth/services/authService';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Navbar } from "./navbar/navbar";
 import { RouterLink, RouterOutlet } from "@angular/router";
 
@@ -8,4 +9,9 @@ import { RouterLink, RouterOutlet } from "@angular/router";
   templateUrl: './drawer.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Drawer { }
+export class Drawer {
+  authService = inject(AuthService) 
+  logout(){
+    this.authService.logout()
+  }
+ }

@@ -109,7 +109,7 @@ export class AuthService {
    * Changes status of the user and removes the token to sucessfully do a logout
    * 
    */
-  private logout(){
+  public logout(){
     this._authStatus.set('not-authenticated');
     this._user.set(null);
     this._token.set(null)
