@@ -5,3 +5,8 @@
 } @else if (projectResource.hasValue() && projectResource.value!) {
     <app-project-list [projects] = "projectResource.value()"/>
 }
+
+<app-pagination
+  [pages]="projectResource.value()?.pages ?? 0"
+  [currentPage]="paginationService.currentPage()"
+/>

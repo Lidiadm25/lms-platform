@@ -13,13 +13,13 @@
       </tr>
     </thead>
     <tbody>
-      @for (project of projects(); track project.id; let index = $index) {
+      @for (project of projects().projectsWithStudents; track project.id; let index = $index) {
         <tr>
           <td>{{ project.id }}</td>
           <td>{{ project.title }}</td>
           <td>{{ project.description }}</td>
           <td>{{ project.duration }} h</td>
-          <td>x</td>
+          <td>{{ project.studentsCount }}</td>
           <td><div aria-label="status" class="status status-accent"></div></td>
           <td>
             <svg
@@ -58,10 +58,5 @@
     </tbody>
   </table>
 
-  <div class="join place-content-center">
-    <button class="join-item btn">1</button>
-    <button class="join-item btn btn-active">2</button>
-    <button class="join-item btn">3</button>
-    <button class="join-item btn">4</button>
-  </div>
+  
 </section>

@@ -5,23 +5,26 @@ import { ChangeDetectionStrategy, Component, computed, inject, resource, signal 
 import { ProjectList } from '../../../projects/components/project-list/project-list';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProjectService } from '../../../projects/services/ProjectService';
+import { PaginationService } from '../../../shared/components/pagination.component/pagination.service';
+import { PaginationComponent } from "../../../shared/components/pagination.component/pagination.component";
 
 
 @Component({
   selector: 'app-projects-page',
-  imports: [ProjectList],
+  imports: [ProjectList, PaginationComponent],
   templateUrl: './projects-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsPage { 
 
   projectService = inject(ProjectService);
-  query = signal('');
+  paginationService = inject(PaginationService)
 
   projectResource = rxResource({
-    params: () => 'project-loader',
-    stream: () => this.projectService.getProjects(),
-    
-  })
+    params: () => ({ page: this.paginationService.currentPage() - 1 }),
+    stream: ({params}) => {
+     return  this.projectService.getProjects({offset: params.page * 9})
+    },
+  });
 
 }
