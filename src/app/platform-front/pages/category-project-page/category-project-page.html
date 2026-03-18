@@ -1,0 +1,24 @@
+<h1 class="text-3xl font-bold font-montserrat">
+  All courses
+  <span class="text-accent">{{ category() }} </span>
+</h1>
+
+
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-3"
+>
+  @for (project of projectsResource.value()?.projectsWithStudents; track $index) {
+  <app-project-card [project]="project" />
+
+  }
+  <!-- Empty -->
+  @empty {
+  <p>No courses</p>
+  }
+</div>
+
+<app-pagination
+  [pages]="projectsResource.value()?.pages ?? 0"
+  [currentPage]="paginationService.currentPage()"
+/>
+
