@@ -1,1 +1,32 @@
-<p>home-page works!</p>,
+<h1 class="text-3xl font-bold font-montserrat w-auto">
+  All courses
+</h1>
+
+<section class="flex flex-col gap-4">
+    <input type="string"
+    placeholder="Search courses"
+    class="mt-3 border border-gray-300 rounded-md p-2"
+    (keyup.enter)="onSearch(txtSearch.value)"
+    #txtSearch
+    />
+</section>
+
+
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-40"
+>
+  @for (project of projectResource.value()?.projectsWithStudents; track $index) {
+  <app-project-card [project]="project" />
+
+  }
+  <!-- Empty -->
+  @empty {
+  <p>No courses</p>
+  }
+</div>
+
+<app-pagination
+  [pages]="projectResource.value()?.pages ?? 0"
+  [currentPage]="paginationService.currentPage()"
+/>
+
