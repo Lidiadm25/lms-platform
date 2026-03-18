@@ -10,6 +10,7 @@ const BASE_URL = environment.baseUrl;
 interface Options {
   limit?: number;
   offset?: number;
+  category?: string;
 }
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,20 @@ export class ProjectService {
   private http = inject(HttpClient)
 
   getProjects(options: Options):Observable<ProjectsResponse>{
-    const  {limit = 10, offset = 0} = options;
+    
     return this.http.get<ProjectsResponse>(`${BASE_URL}/project`, {
       params: {
-        limit,
-        offset
+        ...options
       }
     });
   }
 
+  getFilteredProjects(options: Options, query:string):Observable<ProjectsResponse>{
+    console.log(query)
+    return this.http.get<ProjectsResponse>(`${BASE_URL}/project/search/${query}`, {
+      params: {
+        ...options,
+      }
+    });
+  }
 }
