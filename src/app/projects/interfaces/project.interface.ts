@@ -10,6 +10,7 @@ export interface Project {
     title:       string;
     description: string;
     duration:    number;
+    image: string;
     studentsCount: number;
 }
 
