@@ -3,10 +3,15 @@
     <h3>ERROR: </h3>
     <h3>{{ projectResource.error()}}</h3>
 } @else if (projectResource.hasValue() && projectResource.value!) {
+    @if( projectResource.isLoading() ) {
+<div class="flex justify-center items-center h-screen">
+  <span class="loading loading-spinner loading-lg"></span>
+</div>
+}
     <app-project-list [projects] = "projectResource.value()"/>
 }
 
 <app-pagination
   [pages]="projectResource.value()?.pages ?? 0"
   [currentPage]="paginationService.currentPage()"
-/>
+/> 

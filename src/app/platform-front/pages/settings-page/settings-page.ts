@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-settings',
+  selector: 'app-settings-page',
   imports: [],
-  templateUrl: './Settings.html',
-  styleUrl: './Settings.css',
+  templateUrl: './settings-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Settings { }
+export class SettingsPage { }

@@ -27,14 +27,7 @@ export class ProjectService {
         limit,
         offset
       }
-    }).pipe
-    (
-      // map(restProjects => ProjectMapper.mapperToProjectArray(restProjects)),
-      // catchError(error => {
-      //   console.log(error);
-      //   return throwError(() => new Error('Couldnt get any info'))
-      // })
-    )
+    });
   }
 
 }
