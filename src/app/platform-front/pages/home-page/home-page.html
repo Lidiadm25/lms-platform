@@ -6,7 +6,8 @@
     <input type="string"
     placeholder="Search courses"
     class="mt-3 border border-gray-300 rounded-md p-2"
-    (keyup.enter)="onSearch(txtSearch.value)"
+    [ngModel] = "search()"
+    (keydown.enter)="search.set($event.target.value); onSearch()"
     #txtSearch
     />
 </section>
@@ -15,7 +16,20 @@
 <div
   class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-40"
 >
-  @for (project of projectResource.value()?.projectsWithStudents; track $index) {
+@if(projectResource.isLoading()) {
+  <div class="flex items-center gap-2">
+      <span class="loading loading-spinner"></span>
+      <span>Loading…</span>
+    </div>
+}
+
+@if(projectResource.error()){
+  <div class="alert alert-error">
+      <span>Failed to load: {{ projectResource.error()?.message ?? 'Unknown error' }}</span>
+     <button class="btn btn-sm ml-auto" (click)="reload()">Retry</button>
+    </div>
+}
+  @for (project of projectResource.value()?.projects; track $index) {
   <app-project-card [project]="project" />
 
   }
