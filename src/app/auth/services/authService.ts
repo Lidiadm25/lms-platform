@@ -7,9 +7,6 @@ import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/user.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 
-
-
-
 // New type that will be used to save the state of authentication
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
@@ -22,6 +19,7 @@ export class AuthService {
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
+  public _role = signal<string>('');
 
   // If theres already a token for the current user, we can collect it from localStorage
   private _token = signal<string | null>(localStorage.getItem('token'));
@@ -47,13 +45,15 @@ export class AuthService {
 
 
   login(email: string, password: string): Observable<boolean> {
+
     return this.http
       .post<AuthResponse>(`${baseUrl}/auth/login`, {
         email: email,
         password: password,
       })
       .pipe(
-        map((resp) => this.handleAuthSuccess(resp)),
+        map((resp) =>
+          this.handleAuthSuccess(resp)),
         catchError((error: any) => this.handleAuthError(error))
       ); 
   }
@@ -84,6 +84,8 @@ export class AuthService {
    * @returns 
    */
   private handleAuthSuccess({ token, user }: AuthResponse) {
+
+    this._role.set(user.roles[0]);
     this._user.set(user);
     this._authStatus.set('authenticated');
     this._token.set(token);

@@ -31,7 +31,6 @@ export class ProjectService {
   }
 
   getFilteredProjects(options: Options, query:string):Observable<ProjectsResponse>{
-    console.log(query)
     return this.http.get<ProjectsResponse>(`${BASE_URL}/project/search/${query}`, {
       params: {
         ...options,

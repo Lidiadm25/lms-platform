@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthService } from './../../../auth/services/authService';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,4 +8,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './navbar.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Navbar { }
+export class Navbar {
+  authService = inject(AuthService)
+ }

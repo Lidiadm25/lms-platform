@@ -2,12 +2,13 @@
   <div class="navbar-start">
     <a routerLink="/" class="btn btn-ghost text-xl font-montserrat">
       Innova
-      <span class="text-secondary">| earn</span>
+      <span class="text-primary">| earn</span>
     </a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
-      <li>
+      @if(authService._role()=="user"){
+         <li>
         <a
           routerLink="category/Software development"
           class="btn btn-ghost"
@@ -16,6 +17,7 @@
           Software development
         </a>
       </li>
+   
       <li>
         <a
           routerLink="category/Web Development"
@@ -35,6 +37,8 @@
         </a>
       </li>
       
+      }
+     
     </ul>
   </div>
   <div class="navbar-end gap-4">
