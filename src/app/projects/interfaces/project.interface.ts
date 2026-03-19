@@ -1,7 +1,7 @@
 export interface ProjectsResponse {
   count: number;
   pages: number;
-  projectsWithStudents: Project[];
+  projects: Project[];
 
 }
 
