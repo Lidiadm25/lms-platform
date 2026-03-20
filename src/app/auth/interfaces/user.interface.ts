@@ -23,3 +23,8 @@ export interface UserProject{
     start_date:Date;
     end_date:Date;
 }
+
+export interface UserProjectCreate {
+    userId: string;
+    projectId:string;
+}

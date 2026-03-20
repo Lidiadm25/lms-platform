@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
-import { UsersProjectResponse } from '../../auth/interfaces/user.interface';
+import { catchError, Observable, of } from 'rxjs';
+import { UserProject, UserProjectCreate, UsersProjectResponse } from '../../auth/interfaces/user.interface';
 
 
 const BASE_URL = environment.baseUrl;
@@ -27,4 +27,12 @@ getUsers(id:string, options:Options):Observable<UsersProjectResponse>{
       },
     });
   }
+
+  addUser(userProjectLike: UserProjectCreate): Observable<UserProject> {
+
+       
+   return this.http.post<UserProject>(`${BASE_URL}/user-projects`, userProjectLike);
+  }
+
+    
 }
