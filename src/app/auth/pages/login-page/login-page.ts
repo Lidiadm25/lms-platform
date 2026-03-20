@@ -24,9 +24,11 @@ export class LoginPage {
   OnSubmit() {
     const { email = '', password = '' } = this.loginForm.value;
     this.authService.login(email!, password!).subscribe((isAuthenticated) => {
-      if (isAuthenticated) {
-        this.router.navigateByUrl('/')
+      if (isAuthenticated && this.authService.isAdmin()) {
+        this.router.navigateByUrl('/admin')
         console.log('login correcto');
+      } else if(isAuthenticated) {
+        this.router.navigateByUrl('/')
       }
     });
   }
