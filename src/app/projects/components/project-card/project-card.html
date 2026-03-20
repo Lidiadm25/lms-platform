@@ -1,4 +1,5 @@
-<div class="card bg-base-100 w-96 shadow-sm">
+<a [routerLink]="['project-details']" >
+  <div class="card bg-base-100 w-96 shadow-sm">
   <figure>
     <img
       [src]="image"
@@ -10,7 +11,8 @@
         {{project().duration}}
     </p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary">Start now</button>
+      <button class="btn btn-primary" (click)= "inscription(project().id)">Start now</button>
     </div>
   </div>
 </div>
+</a>

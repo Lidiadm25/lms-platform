@@ -22,7 +22,8 @@
           <td>{{ project.studentsCount }}</td>
           <td><div aria-label="status" class="status status-accent"></div></td>
           <td>
-            <svg
+            <button [routerLink]="['/admin/project-manager', project.id]"  class="btn btn-ghost">
+              <svg
              xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -36,9 +37,10 @@
                 d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
+            </button>
           </td>
           <td>
-            <button [routerLink]="['/users-project', project.id]">
+            <button [routerLink]="['/admin/users-project', project.id]"  class="btn btn-ghost">
               <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

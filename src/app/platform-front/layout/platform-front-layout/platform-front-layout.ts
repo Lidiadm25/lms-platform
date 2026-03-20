@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Navbar } from "../../components/navbar/navbar";
-import { Drawer } from "../../components/drawer/drawer";
+import { Drawer } from '../../../shared/components/drawer/drawer';
+import { Navbar } from '../../../shared/components/navbar/navbar';
+
 
 @Component({
   selector: 'app-platform-front-layout',
