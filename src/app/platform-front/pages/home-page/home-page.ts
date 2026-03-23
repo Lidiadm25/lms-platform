@@ -24,9 +24,9 @@ export class HomePage {
     params: () => ({ page: this.paginationService.currentPage() - 1, query: this.search() }),
     stream: ({params}) => {
       if(params.query.length==0) {
-        return  this.projectService.getProjects({offset: params.page * 9})
+        return  this.projectService.getProjects({offset: params.page * 9, limit:9})
       } 
-        return this.projectService.getFilteredProjects({offset: params.page * 9, limit: 5}, params.query)
+        return this.projectService.getFilteredProjects({offset: params.page * 9, limit: 9}, params.query)
     },
   });
  
