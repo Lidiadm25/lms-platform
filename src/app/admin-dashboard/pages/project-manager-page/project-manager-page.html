@@ -1,7 +1,4 @@
-
-@if(projectResource.hasValue()){
-
-<h1 class="text-2xl font-bold">Título de curso</h1>
+<h1 class="text-2xl font-bold">Project manager</h1>
 <div class="divider"></div>
 
 <form
@@ -12,7 +9,7 @@
 
   <!-- Datos generales -->
   <div class="flex flex-col gap-2">
-    <h2 class="text-2xl font-bold h-12">Datos generales</h2>
+    <h2 class="text-2xl font-bold h-12">General</h2>
     <input
       type="text"
       class="input input-bordered w-full"
@@ -20,16 +17,7 @@
       
       [class.border-red-500]="projectForm.get('title')?.errors ?? false"
     /> 
-    <!-- <form-error-label [control]="productForm.get('title')!" /> -->
-
-    <!-- <input
-      type="text"
-      placeholder="Slug"
-      class="input input-bordered w-full"
-      formControlName="slug"
-      [class.border-red-500]="projectForm.get('')?.errors ?? false"
-    /> -->
-    <!-- <form-error-label [control]="productForm.get('')!" /> -->
+    <form-error-label [control]="projectForm.get('title')!" /> 
 
     <textarea
       class="textarea textarea-bordered"
@@ -39,55 +27,19 @@
       [class.border-red-500]="projectForm.get('description')?.errors ?? false"
     ></textarea>
 
-    <!-- <form-error-label [control]="productForm.get('description')!" /> -->
-
-    <!-- <h2 class="text-lg font-bold">Datos de venta</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <div>
-        <input
-          type="number"
-          placeholder="Precio"
-          class="input input-bordered w-full"
-          formControlName="price"
-          [class.border-red-500]="projectForm.get('price')?.errors ?? false"
-        />
-        <form-error-label [control]="productForm.get('price')!" /> 
-      </div>
-
-      <div>
-        <input
-          type="number"
-          placeholder="Inventario"
-          class="input input-bordered w-full"
-          formControlName="stock"
-          [class.border-red-500]="projectForm.get('stock')?.errors ?? false"
-        />
-         <form-error-label [control]="productForm.get('stock')!" /> 
-      </div>
-    </div> -->
-
-    <!-- tags -->
-   
-    <!-- <form-error-label [control]="productForm.get('tags')!" /> -->
-
-   
-
+  <form-error-label [control]="projectForm.get('description')!" /> 
    
   </div>
   
   <!-- Imágenes -->
   <div class="flex flex-col gap-2">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
-      <!-- @for (image of tempImages(); track image) { -->
+      <div class=" mt-2 flex-1">
       <img
-        [src]=""
+        src="https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg"
         alt="Temporal image"
-        class="w-full object-cover rounded-xl"
+        class="w-1/2 object-cover rounded-xl"
       />
-     
-
-      <!-- } -->
+    
     </div>
      <input
       type="file"
@@ -103,19 +55,6 @@
         Guardar
       </button>
     </div>
-
-   
-
-    
-    <!-- <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
-       @for (image of tempImages(); track image) { 
-      <img
-        [src]=""
-        alt="Temporal image"
-        class="w-full object-cover rounded-xl"
-      />
-       } 
-    </div> -->
   </div>
 </form>
 
@@ -126,4 +65,3 @@
 
 }
 
-}

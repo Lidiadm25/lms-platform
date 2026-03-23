@@ -13,33 +13,38 @@ interface Options {
   category?: string;
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectService {
+  constructor() {}
 
-  constructor() { }
+  private http = inject(HttpClient);
 
-  private http = inject(HttpClient)
-
-  getProjects(options: Options):Observable<ProjectsResponse>{
-    
+  getProjects(options: Options): Observable<ProjectsResponse> {
     return this.http.get<ProjectsResponse>(`${BASE_URL}/project`, {
       params: {
-        ...options
-      }
+        ...options,
+      },
     });
   }
 
-  getFilteredProjects(options: Options, query:string):Observable<ProjectsResponse>{
+  getFilteredProjects(options: Options, query: string): Observable<ProjectsResponse> {
     return this.http.get<ProjectsResponse>(`${BASE_URL}/project/search/${query}`, {
       params: {
         ...options,
-      }
+      },
     });
   }
 
-  getById(id:string){
+  getById(id: string) {
     console.log(id);
     return this.http.get<FullProjectRespose>(`${BASE_URL}/project/${id}`);
+  }
+
+  // Update
+
+  updateProject(id: string, project: Partial<FullProjectRespose>) {
+    console.log(project);
+    return this.http.patch<FullProjectRespose>(`${BASE_URL}/project/${id}`, project);
   }
 }

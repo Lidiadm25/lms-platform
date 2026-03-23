@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FullProjectRespose, Project } from '../../../projects/interfaces/project.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { FormErrorLabel } from "../../../shared/components/form-error-label/form-error-label";
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [  ReactiveFormsModule,],
+  imports: [ReactiveFormsModule, FormErrorLabel],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -16,7 +18,7 @@ export class ProjectManagerPage {
   projectService = inject(ProjectService)
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder)
-  projectId = this.activatedRoute.snapshot.params['idProject'];
+  projectId:string = this.activatedRoute.snapshot.params['idProject'];
   
   projectResource = rxResource({
     params: ()=> ({ id: this.projectId}),
@@ -39,10 +41,24 @@ export class ProjectManagerPage {
   projectForm = this.fb.group({
     title: [this.projectResource.value()?.title, Validators.required],
     description: ['', Validators.required],
+    image: ['https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg']
 
     
   })
 
-  onSubmit(){}
+  async onSubmit(){
+    const projectLike: Partial<FullProjectRespose> = {
+      ...(this.projectForm.value as any)
+    }
+
+    await firstValueFrom(
+        this.projectService.updateProject(
+          this.projectId,
+          projectLike,
+          
+        )
+      );
+
+  }
   onFilesChange(event : Event){}
 }
