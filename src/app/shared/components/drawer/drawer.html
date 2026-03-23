@@ -21,7 +21,7 @@
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Homepage"
-            [routerLink]="['/', home()]"
+            [routerLink]="['/',this.home()]"
           >
             <!-- Home icon -->
             <svg
@@ -46,10 +46,10 @@
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Log out"
-            routerLink="auth"
+            routerLink="/auth"
             (click) = "logout()"
           >
-            <!-- Settings icon -->
+            <!-- Logout icon -->
             <svg
                xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -74,7 +74,7 @@
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Settings"
-            routerLink="Settings"
+            routerLink="/settings"
           >
             <!-- Settings icon -->
             <svg
@@ -101,9 +101,10 @@
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="List of projects"
-            routerLink="projects"
+            routerLink="/admin/projects"
           >
-            <!-- Settings icon -->
+           
+          
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

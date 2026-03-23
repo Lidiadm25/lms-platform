@@ -31,7 +31,11 @@ export const platformFrontRoutes: Routes = [
             {
             path:'project-details/:idProject',
             component: ProjectDetails
-            }  
+            },
+            {
+            path: 'home',
+            redirectTo:'' 
+            }
         ]
         
     },

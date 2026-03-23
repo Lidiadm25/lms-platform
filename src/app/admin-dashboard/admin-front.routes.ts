@@ -15,8 +15,8 @@ export const platformFrontRoutes: Routes = [
         canMatch:[isAdminGuard],
         children:[
             {
-                path: '',
-                component: DashboardPage
+            path: '',
+            component: DashboardPage
             }
             ,
             {

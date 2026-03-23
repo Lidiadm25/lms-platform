@@ -12,16 +12,13 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 export class Drawer {
   authService = inject(AuthService) 
 
-  home:Signal<string> = computed(() => this.establishRoutes());
-  
-  establishRoutes(){
+  home:Signal<string> = computed(() => {
     if(this.authService.isAdmin()){
-      console.log("admin")
-     return 'admin'
+      return 'admin'
+    } else {
+      return 'home'
     }
-    console.log("no")
-    return ''
-  }
+  });
 
   logout(){
     this.authService.logout()
