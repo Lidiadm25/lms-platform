@@ -5,6 +5,7 @@ import { ProjectsPage } from '../admin-dashboard/pages/projects-page/projects-pa
 import { UsersProjectPage } from '../admin-dashboard/pages/users-project-page/users-project-page';
 import { CategoryProjectPage } from './pages/category-project-page/category-project-page';
 import { ProjectDetails } from './pages/project-details/project-details';
+import { SettingsPage } from './pages/settings-page/settings-page';
 
 
 
@@ -19,7 +20,7 @@ export const platformFrontRoutes: Routes = [
             },
             {
              path:'settings',
-             component:HomePage
+             component:SettingsPage
             },
             
             {
@@ -28,7 +29,7 @@ export const platformFrontRoutes: Routes = [
             },
            
             {
-            path:'project-details',
+            path:'project-details/:idProject',
             component: ProjectDetails
             }  
         ]
