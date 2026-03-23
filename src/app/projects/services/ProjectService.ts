@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Project, ProjectsResponse } from '../interfaces/project.interface';
+import { FullProjectRespose, Project, ProjectsResponse } from '../interfaces/project.interface';
 import { RESTProject } from '../interfaces/rest-project.interface';
 import { environment } from '../../../environments/environment';
 import { ProjectMapper } from '../mappers/project.mapper';
@@ -36,5 +36,10 @@ export class ProjectService {
         ...options,
       }
     });
+  }
+
+  getById(id:string){
+    console.log(id);
+    return this.http.get<FullProjectRespose>(`${BASE_URL}/project/${id}`);
   }
 }
