@@ -64,16 +64,28 @@ export class ProjectManagerPage {
     await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike));
   }
   onFilesChange(event: any) {
+    const input = event.target as HTMLInputElement;
+    
+   
+    if(input.files && input.files.length > 0) {
+      var fileObject;
+       var fileName:string;
+      fileObject = input.files[0];
+      fileName = fileObject.name;
+      console.log(fileName)
+    }
+
     const reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
+    
 
       reader.onload = () => {
         this.image.set(reader.result as string);
         this.projectForm.patchValue({
-          image: reader.result as string,
+          image: fileName,
         });
       };
     }
