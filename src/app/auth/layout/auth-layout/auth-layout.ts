@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, Signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
@@ -7,4 +7,23 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './auth-layout.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthLayout { }
+export class AuthLayout {
+  router = inject(Router);
+  public actualRoute = signal<string>('');
+  public title = signal<string>('');
+
+  constructor() {
+    effect(() => {
+      if (this.actualRoute() == '/auth/login') {
+        this.title.set('Sign in to your account');
+      } else {
+        this.title.set('Sign up to your account');
+      }
+    });
+  }
+
+  ngAfterContentChecked() {
+    console.log(this.router.url);
+    this.actualRoute.set(this.router.url);
+  }
+}
