@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 import { AuthService } from '../../services/authService';
-import { email } from '@angular/forms/signals';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login-page-component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -26,7 +25,6 @@ export class LoginPage {
     this.authService.login(email!, password!).subscribe((isAuthenticated) => {
       if (isAuthenticated && this.authService.isAdmin()) {
         this.router.navigateByUrl('/admin')
-        console.log('login correcto');
       } else if(isAuthenticated) {
         this.router.navigateByUrl('/')
       }
