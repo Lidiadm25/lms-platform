@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { ProjectService } from '../../../projects/services/ProjectService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FullProjectRespose, Project } from '../../../projects/interfaces/project.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -18,7 +18,7 @@ import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, FormErrorLabel],
+  imports: [ReactiveFormsModule, FormErrorLabel, RouterLink],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,7 +49,7 @@ export class ProjectManagerPage {
   wasSaved = signal(false);
 
   projectForm = this.fb.group({
-    title: [this.projectResource.value()?.title, Validators.required],
+    title: ['', Validators.required],
     description: ['', Validators.required],
     image: [
       'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
@@ -63,6 +63,14 @@ export class ProjectManagerPage {
 
     await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike));
   }
+
+  /**
+   * 2 Functionalities
+   * 1.- Takes the name of the input file
+   * 2.- Creates a reader that converts the file to base64 so its possible to do a preview 
+   * @param event 
+   */
+
   onFilesChange(event: any) {
     const input = event.target as HTMLInputElement;
     
@@ -72,7 +80,7 @@ export class ProjectManagerPage {
        var fileName:string;
       fileObject = input.files[0];
       fileName = fileObject.name;
-      console.log(fileName)
+     
     }
 
     const reader = new FileReader();
@@ -89,5 +97,9 @@ export class ProjectManagerPage {
         });
       };
     }
+  }
+  search = signal('');
+  onSearch(){
+
   }
 }
