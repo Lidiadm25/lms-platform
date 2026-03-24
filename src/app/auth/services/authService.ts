@@ -1,11 +1,11 @@
+import { AuthResponse } from './../interfaces/auth-response.interface';
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/user.interface';
-import { AuthResponse } from '../interfaces/auth-response.interface';
+
 
 // New type that will be used to save the state of authentication
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
@@ -46,11 +46,25 @@ export class AuthService {
 
 
   login(email: string, password: string): Observable<boolean> {
-
     return this.http
       .post<AuthResponse>(`${baseUrl}/auth/login`, {
         email: email,
         password: password,
+      })
+      .pipe(
+        map((resp) =>
+          this.handleAuthSuccess(resp)),
+        catchError((error: any) => this.handleAuthError(error))
+      ); 
+  }
+
+  register(email:string, password:string, fullname:string): Observable<boolean> {
+
+      return this.http
+      .post<AuthResponse>(`${baseUrl}/auth/register`, {
+        email: email,
+        password: password,
+        fullName: fullname
       })
       .pipe(
         map((resp) =>
