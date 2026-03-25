@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
 import { FullProjectRespose, Project, ProjectsResponse } from '../interfaces/project.interface';
 import { RESTProject } from '../interfaces/rest-project.interface';
 import { environment } from '../../../environments/environment';
@@ -37,14 +37,35 @@ export class ProjectService {
   }
 
   getById(id: string) {
-    console.log(id);
+    
     return this.http.get<FullProjectRespose>(`${BASE_URL}/project/${id}`);
   }
 
   // Update
 
-  updateProject(id: string, project: Partial<FullProjectRespose>) {
-    console.log(project);
-    return this.http.patch<FullProjectRespose>(`${BASE_URL}/project/${id}`, project);
+  updateProject(id: string, project: Partial<FullProjectRespose>, file :File|undefined) {
+
+    const image = project.image ?? null;
+    if(file != undefined){
+      
+   
+    return this.uploadImage(file).pipe(
+      switchMap((updatedProject) => this.http.patch<FullProjectRespose>(`${BASE_URL}/project/${id}`, project))
+    )
+     }
+     return this.http.patch<FullProjectRespose>(`${BASE_URL}/project/${id}`, project) ;
+
+
   }
+
+  uploadImage(imageFile: File) : Observable<string> {
+    const formData = new FormData();
+    formData.append('file', imageFile);
+
+    return this.http.post<{
+      fileName:string
+    }>(`${BASE_URL}/files/project`, formData)
+    .pipe(map((resp) => resp.fileName));
+  }
+
 }
