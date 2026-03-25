@@ -23,27 +23,37 @@ import { firstValueFrom } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectManagerPage {
-  // recibe id por param
+  // Services
   projectService = inject(ProjectService);
   activatedRoute = inject(ActivatedRoute);
+  // Form
   fb = inject(FormBuilder);
-  projectId: string = this.activatedRoute.snapshot.params['idProject'];
-  image = signal<string>(
-    'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
-  );
 
+  // Variables
+  projectId: string = this.activatedRoute.snapshot.params['idProject'];
   file: File | undefined = undefined;
+
+ 
 
   projectResource = rxResource({
     params: () => ({ id: this.projectId }),
     stream: ({ params }) => this.projectService.getById(params.id),
   });
 
+  project:FullProjectRespose | undefined;
+
+  imageUrl = signal<string>('');
+
   constructor() {
+    
     effect(() => {
-      const project = this.projectResource.value();
-      if (project) {
-        this.projectForm.patchValue(project as any);
+      this.project=this.projectResource.value();
+      
+      if (this.project) {
+        this.imageUrl.set(`http://localhost:3000/api/files/project/${this.project!.image}`);
+        this.projectForm.patchValue(this.project as any);
+      } else {
+        this.imageUrl.set('https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg')
       }
     });
   }
@@ -53,9 +63,7 @@ export class ProjectManagerPage {
   projectForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    image: [
-      'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
-    ],
+    image: [''],
   });
 
   async onSubmit() {
@@ -66,21 +74,16 @@ export class ProjectManagerPage {
     await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file));
   }
 
-  /**
-   * 2 Functionalities
-   * 1.- Takes the name of the input file
-   * 2.- Creates a reader that converts the file to base64 so its possible to do a preview
-   * @param event
-   */
-
   onFilesChange(event: any) {
     const input = event.target as HTMLInputElement;
     const fileList = (event.target as HTMLInputElement).files;
     if (fileList != null) {
       this.file = fileList[0];
-      this.image.set(URL.createObjectURL(this.file));
+      this.imageUrl.set(URL.createObjectURL(this.file));
     }
   }
+
+  // future search bar
   search = signal('');
   onSearch() {}
 }
