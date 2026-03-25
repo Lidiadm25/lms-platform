@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { FullProjectRespose, Project, ProjectsResponse } from '../interfaces/project.interface';
 import { RESTProject } from '../interfaces/rest-project.interface';
 import { environment } from '../../../environments/environment';
@@ -43,29 +43,39 @@ export class ProjectService {
 
   // Update
 
-  updateProject(id: string, project: Partial<FullProjectRespose>, file :File|undefined) {
+  updateProject(id: string, project: Partial<FullProjectRespose>, imageFile?:File) {
+    console.log(project)
+    const currentImages = project.image ?? [];
+    if (!imageFile) {
+    return this.http.patch<Project>(`${BASE_URL}/project/${id}`, project);
+    }
+   return this.uploadImage(imageFile).pipe(
+    map((fileName) => {
+      console.log('fileName:', fileName);
 
-    const image = project.image ?? null;
-    if(file != undefined){
-      
-   
-    return this.uploadImage(file).pipe(
-      switchMap((updatedProject) => this.http.patch<FullProjectRespose>(`${BASE_URL}/project/${id}`, project))
+      return {
+        ...project,
+        image: fileName.substring(40)   
+      };
+    }),
+    switchMap((updatedProject) =>
+      this.http.patch<Project>(`${BASE_URL}/project/${id}`, updatedProject)
     )
-     }
-     return this.http.patch<FullProjectRespose>(`${BASE_URL}/project/${id}`, project) ;
+  );
+}
 
-
-  }
+   
 
   uploadImage(imageFile: File) : Observable<string> {
     const formData = new FormData();
     formData.append('file', imageFile);
-
     return this.http.post<{
-      fileName:string
+      secureUrl:string
     }>(`${BASE_URL}/files/project`, formData)
-    .pipe(map((resp) => resp.fileName));
+    .pipe(
+      map((resp) => resp.secureUrl),
+      tap((imageNames)=> console.log({imageNames}))
+    );
   }
 
 }

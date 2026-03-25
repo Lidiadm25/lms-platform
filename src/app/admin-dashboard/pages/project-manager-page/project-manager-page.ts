@@ -31,7 +31,7 @@ export class ProjectManagerPage {
 
   // Variables
   projectId: string = this.activatedRoute.snapshot.params['idProject'];
-  file: File | undefined = undefined;
+  file: File| undefined = undefined;
 
  
 
@@ -71,11 +71,10 @@ export class ProjectManagerPage {
       ...(this.projectForm.value as any),
     };
 
-    await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file));
+    await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file ));
   }
 
   onFilesChange(event: any) {
-    const input = event.target as HTMLInputElement;
     const fileList = (event.target as HTMLInputElement).files;
     if (fileList != null) {
       this.file = fileList[0];
