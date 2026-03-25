@@ -32,6 +32,8 @@ export class ProjectManagerPage {
     'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
   );
 
+  file: File | undefined = undefined;
+
   projectResource = rxResource({
     params: () => ({ id: this.projectId }),
     stream: ({ params }) => this.projectService.getById(params.id),
@@ -61,45 +63,24 @@ export class ProjectManagerPage {
       ...(this.projectForm.value as any),
     };
 
-    await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike));
+    await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file));
   }
 
   /**
    * 2 Functionalities
    * 1.- Takes the name of the input file
-   * 2.- Creates a reader that converts the file to base64 so its possible to do a preview 
-   * @param event 
+   * 2.- Creates a reader that converts the file to base64 so its possible to do a preview
+   * @param event
    */
 
   onFilesChange(event: any) {
     const input = event.target as HTMLInputElement;
-    
-   
-    if(input.files && input.files.length > 0) {
-      var fileObject;
-       var fileName:string;
-      fileObject = input.files[0];
-      fileName = fileObject.name;
-     
-    }
-
-    const reader = new FileReader();
-
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-    
-
-      reader.onload = () => {
-        this.image.set(reader.result as string);
-        this.projectForm.patchValue({
-          image: fileName,
-        });
-      };
+    const fileList = (event.target as HTMLInputElement).files;
+    if (fileList != null) {
+      this.file = fileList[0];
+      this.image.set(URL.createObjectURL(this.file));
     }
   }
   search = signal('');
-  onSearch(){
-
-  }
+  onSearch() {}
 }
