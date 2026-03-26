@@ -1,1 +1,42 @@
-<p>lesson-manager-page works!</p>,
+<form (ngSubmit)="OnSubmit()" [formGroup]="lessonForm">
+  <label>Title</label>
+  <input
+    class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+    type="text"
+    formControlName="title"
+    [class.border-red-500]="lessonForm.get('title')?.errors ?? false"
+  />
+
+  <label>Description</label> <br />
+
+  <textarea
+    class="textarea textarea-bordered"
+    placeholder="Descripción"
+    rows="6"
+    formControlName="description"
+    [class.border-red-500]="lessonForm.get('description')?.errors ?? false"
+  ></textarea>
+  <br />
+  <input
+    type="file"
+    multiple
+    class="file-input file-input-bordered w-full mt-4"
+    (change)="onFilesChange($event)"
+  />
+
+  
+    <fieldset class="fieldset">
+      <select class="select" formControlName="maxSize">
+        <option disabled selected>Pick a size</option>
+        <option [ngValue]="2e+6">2 MB</option>
+        <option [ngValue]="2e+7">20 MB</option>
+        <option [ngValue]="5e+7">50 MB</option>
+        <option [ngValue]="1e+9">1 GB</option>
+        <option [ngValue]="2e+9">2 GB</option>
+      </select>
+      <span class="label">Optional</span>
+    </fieldset>
+
+
+  <button class="btn btn-secondary" type="submit">Save</button>
+</form>
