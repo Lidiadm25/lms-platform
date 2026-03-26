@@ -15,7 +15,7 @@
       formControlName="title"
       [class.border-red-500]="projectForm.get('title')?.errors ?? false"
     />
-    <form-error-label [control]="projectForm.get('title')!" />
+ 
 
     <textarea
       class="textarea textarea-bordered"
@@ -25,7 +25,7 @@
       [class.border-red-500]="projectForm.get('description')?.errors ?? false"
     ></textarea>
 
-    <form-error-label [control]="projectForm.get('description')!" />
+    <p>añadir categoria</p>
     
     <div class="flex center-items gap-4 ">
       <Label for="toggle">Status of course</Label>
@@ -37,17 +37,8 @@
   </div>
 
   <!-- Imágenes -->
-  <div class="flex flex-col gap-2 ">
-    <div class="mt-2 flex "> 
-      <img [src]="imageUrl()" alt="Temporal image" class="w-1/2 object-cover rounded-xl " />
-    </div>
-    <input
-      type="file"
-      multiple
-      accept="image/*"
-      class="file-input file-input-bordered w-full mt-4"
-      (change)="onFilesChange($event)"
-    />
+   <app-image-input (imageUrl)="imageUrl()"/>
+ 
     <div class="flex justify-end h-12">
       <button class="btn btn-secondary" type="submit">
         <!-- <span class="loading loading-spinner loading-sm"></span> -->
@@ -55,60 +46,10 @@
         Guardar
       </button>
     </div>
-  </div>
+  
   <!-- LIST OF UNITS OF THE PROJECT -->
-  <div class="flex flex-col gap-2">
-    <h2 class="text-2xl font-bold h-12">Units</h2>
 
-    @for (item of projectResource.value()?.units; track $index) {
-      <div class="join join-vertical bg-base-100">
-        <div class="collapse collapse-arrow join-item border-base-300 border">
-          <input type="radio" name="my-accordion-4" checked="checked" />
-          <div class="collapse-title font-semibold">{{ item.title }}</div>
-          <div class="collapse-content text-sm">
-            @for (lesson of item.lessons; track $index) {
-              <div class="divider"></div>
-              <div class="grid grid-cols-[10%_85%_5%]"> <!-- Primero: tipo lección Segundo: editar-->
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                  fill="none"
-                  stroke="currentColor"
-                  class="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path
-                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-                  ></path>
-                </svg>
-                <p class="">{{ lesson.title }}</p>
-
-                <a [routerLink]="['/admin/lesson-manager', lesson.id]">
-                  <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                  />
-                </svg>
-              </a>
-              </div>
-            }
-          </div>
-        </div>
-      </div>
-    }
-  </div>
+    <!-- <app-units-list [units] = "projectResource.value()!.units"/> -->
   <!-- Management of students -->
 
   <div class="flex flex-col gap-2">
@@ -131,13 +72,13 @@
           </svg>
        </div>
 
-    <div class="card bg-base-100 w-full shadow-sm">
+    <!-- <div class="card bg-base-100 w-full shadow-sm">
       <a [routerLink]="['/admin/users-project', projectId]">
         <div class="card-body">
         <h2 class="card-title">See all students</h2>
       </div>
       </a>
-    </div>
+    </div> -->
 
     <div class="card bg-base-100 w-full shadow-sm">
       <div class="card-body" onclick="my_modal_1.showModal()">
@@ -186,8 +127,8 @@
   </div>
 </dialog>
 
-@if (wasSaved()) {
+<!-- @if (wasSaved()) {
   <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
     <span>Datos actualizados correctamente</span>
   </div>
-}
+} -->

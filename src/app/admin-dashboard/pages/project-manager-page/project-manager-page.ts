@@ -4,6 +4,8 @@ import {
   computed,
   effect,
   inject,
+  input,
+  model,
   resource,
   Signal,
   signal,
@@ -13,12 +15,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FullProjectRespose, Project } from '../../../projects/interfaces/project.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { FormErrorLabel } from '../../../shared/components/form-error-label/form-error-label';
 import { firstValueFrom } from 'rxjs';
+import { UnitsList } from "../../components/units-list/units-list";
+import { ImageInput } from '../../components/image-input/image-input';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, FormErrorLabel, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, UnitsList, ImageInput],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -33,8 +36,6 @@ export class ProjectManagerPage {
   projectId: string = this.activatedRoute.snapshot.params['idProject'];
   file: File| undefined = undefined;
 
- 
-
   projectResource = rxResource({
     params: () => ({ id: this.projectId }),
     stream: ({ params }) => this.projectService.getById(params.id),
@@ -42,7 +43,7 @@ export class ProjectManagerPage {
 
   project:FullProjectRespose | undefined;
 
-  imageUrl = signal<string>('');
+  imageUrl = model<string>('');
 
   constructor() {
     
@@ -50,9 +51,12 @@ export class ProjectManagerPage {
       this.project=this.projectResource.value();
       
       if (this.project) {
+        console.log("aqui3")
         this.imageUrl.set(`http://localhost:3000/api/files/project/${this.project!.image}`);
-        this.projectForm.patchValue(this.project as any);
+        this.projectForm.patchValue(this.project);
+        console.log("en project manager" + this.imageUrl())
       } else {
+        console.log("aqui2")
         this.imageUrl.set('https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg')
       }
     });
@@ -74,14 +78,8 @@ export class ProjectManagerPage {
     await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file ));
   }
 
-  onFilesChange(event: any) {
-    const fileList = (event.target as HTMLInputElement).files;
-    if (fileList != null) {
-      this.file = fileList[0];
-      this.imageUrl.set(URL.createObjectURL(this.file));
-    }
-  }
-
+ 
+  // TODO transaction that also collects the manage students changes of project
   // future search bar
   search = signal('');
   onSearch() {}
