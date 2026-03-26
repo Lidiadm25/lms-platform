@@ -1,0 +1,9 @@
+<div class="collapse collapse-arrow join-item border-base-300 border">
+          <input type="radio" name="my-accordion-4" checked="checked" />
+          <div class="collapse-title font-semibold ">{{ unit().title }}</div>
+          <div class="collapse-content text-sm">
+            @for (lesson of unit().lessons; track $index) {
+              <app-lesson-card [lesson] = "lesson"/>
+            }
+          </div>
+        </div>
