@@ -48,8 +48,10 @@
     </div>
   
   <!-- LIST OF UNITS OF THE PROJECT -->
-
-    <!-- <app-units-list [units] = "projectResource.value()!.units"/> -->
+    @if (this.project) {
+    <app-units-list [units] = "project.units"/>
+    }
+    <!--  -->
   <!-- Management of students -->
 
   <div class="flex flex-col gap-2">

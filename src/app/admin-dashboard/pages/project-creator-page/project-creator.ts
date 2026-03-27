@@ -5,12 +5,13 @@ import { ImageInput } from "../../components/image-input/image-input";
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { FullProjectResponse } from '../../../projects/interfaces/project.interface';
 import { firstValueFrom } from 'rxjs';
+import { UnitsList } from "../../components/units-list/units-list";
 
 
 
 @Component({
   selector: 'app-project-creator',
-  imports: [ReactiveFormsModule, SearchTags, ImageInput],
+  imports: [ReactiveFormsModule, SearchTags, ImageInput, UnitsList],
   templateUrl: '../project-manager-page/project-manager-page.html',
   //templateUrl:'./a.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,6 +25,7 @@ export class ProjectCreator {
     image: [''],
   });
 
+  project:FullProjectResponse | undefined = undefined;
   file!: File;
 
   imageUrl = model<string>('https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg');

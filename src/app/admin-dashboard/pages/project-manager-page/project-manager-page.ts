@@ -15,10 +15,11 @@ import { firstValueFrom } from 'rxjs';
 import { ImageInput } from '../../components/image-input/image-input';
 import { SearchTags } from "../../components/search-tags/search-tags";
 import { FullProjectResponse } from '../../../projects/interfaces/project.interface';
+import { UnitsList } from "../../components/units-list/units-list";
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, ImageInput, SearchTags],
+  imports: [ReactiveFormsModule, ImageInput, SearchTags, UnitsList],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -77,7 +78,5 @@ export class ProjectManagerPage {
 
  
   // TODO transaction that also collects the manage students changes of project
-  // future search bar
-  search = signal('');
-  onSearch() {}
+
 }
