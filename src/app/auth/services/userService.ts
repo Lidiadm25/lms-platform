@@ -12,7 +12,7 @@ export class UserService {
   constructor() { }
   private http = inject(HttpClient);
 
-  getUsers():Observable<User[]>{
-    return this.http.get<User[]>(`${baseUrl}/auth/`);
+  getUsers(query:string):Observable<User[]>{
+    return this.http.get<User[]>(`${baseUrl}/auth/email/${query}`);
   }
 }
