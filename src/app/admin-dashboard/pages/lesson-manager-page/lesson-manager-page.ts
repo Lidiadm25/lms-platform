@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -14,6 +14,17 @@ import { firstValueFrom } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LessonManagerPage { 
+
+ constructor(){
+  effect(()=> {
+    const lesson =  this.lessonResource.value();
+    if(lesson){
+      this.lessonForm.patchValue(lesson)
+    }
+  })
+
+  }
+
   lessonService = inject(LessonService);
   activatedRoute = inject(ActivatedRoute)
   file: File| undefined = undefined;
@@ -46,10 +57,8 @@ export class LessonManagerPage {
 
   async OnSubmit(){
     if(this.verifySize(this.file,this.lessonForm.value.maxSize)){
-     const {maxSize, ...rest} = {
-          ...(this.lessonForm.value as any),
-        };
-        const lessonLike: Partial<Lesson> = {...rest}
+    
+        const lessonLike: Partial<Lesson> = {...(this.lessonForm.value as any)}
     await firstValueFrom(this.lessonService.updateLesson(this.lessonId, lessonLike, this.file))
     }
   }
