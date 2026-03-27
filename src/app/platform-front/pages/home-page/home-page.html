@@ -12,10 +12,21 @@
     />
 </section>
 
-
+<!-- TODO -->
 <div
-  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-40"
+  class="grid grid-flow-col grid-rows-3 gap-4 mt-5"
 >
+
+  @for (project of projectResource.value()?.projects; track $index) {
+<app-project-card [project]="project" />
+
+  }
+  <!-- Empty -->
+  @empty {
+  <p>No courses</p>
+  }
+</div>
+
 @if(projectResource.isLoading()) {
   <div class="flex items-center gap-2">
       <span class="loading loading-spinner"></span>
@@ -29,15 +40,6 @@
      <button class="btn btn-sm ml-auto" (click)="reload()">Retry</button>
     </div>
 }
-  @for (project of projectResource.value()?.projects; track $index) {
-<app-project-card [project]="project" />
-
-  }
-  <!-- Empty -->
-  @empty {
-  <p>No courses</p>
-  }
-</div>
 
 <app-pagination
   [pages]="projectResource.value()?.pages ?? 0"

@@ -7,7 +7,6 @@
       formControlName="name"
       [class.border-red-500]="registerForm.get('name')?.errors ?? false"
     />
-     <form-error-label [control]="registerForm.get('name')!" />
 
     <label class="block text-gray-700 text-sm font-bold mb-2 mt-4">Email address</label>
     <input
@@ -16,7 +15,6 @@
       formControlName="email"
       [class.border-red-500]="registerForm.get('email')?.errors ?? false"
     />
-     <form-error-label [control]="registerForm.get('email')!" />
 
     <div class="mt-4">
       <div class="flex justify-between">
@@ -28,7 +26,7 @@
         formControlName="password"
         [class.border-red-500]="registerForm.get('password')?.errors ?? false"
       />
-       <form-error-label [control]="registerForm.get('password')!" />
+
       <div class="flex justify-between mt-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">Repeat password</label>
       </div>
@@ -38,7 +36,6 @@
         formControlName="confirmPassword"
         [class.border-red-500]="registerForm.get('confirmPassword')?.errors ?? false"
       />
-       <form-error-label [control]="registerForm.get('confirmPassword')!" />
     </div>
     <div class="mt-8">
       <button class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
@@ -77,4 +74,23 @@
       <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with Google</h1>
     </a>
   </form>
+
+  @if (hasError()) {
+    <div role="alert" class="alert alert-error animate-fadeIn fixed bottom-5 right-5 w-52">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>Por favor revise la información ingresada.</span>
+    </div>
+  }
 </div>

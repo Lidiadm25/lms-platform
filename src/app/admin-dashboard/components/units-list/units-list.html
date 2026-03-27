@@ -1,14 +1,14 @@
 <div class="flex flex-col gap-2">
     <h2 class="text-2xl font-bold h-12">Units</h2>
 
-    @if(units == undefined) {
-        <p>No units</p>
-    } @else {
         @for (item of units(); track $index) {
       <div class="join join-vertical bg-base-100">
         <app-unit-card [unit] = "item"/>
       </div>
     } 
+    @empty {
+        <p>No units</p>
     }
+    
 
   </div>

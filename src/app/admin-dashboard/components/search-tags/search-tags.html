@@ -1,17 +1,7 @@
 
-<!-- MI BARRA DE BÚSQUEDA -->
-<section class="flex flex-col gap-4">
-    <input type="string"
-    placeholder="Search courses"
-    class="mt-3 border border-gray-300 rounded-md p-2"
-    (keydown.enter)="search.set($event.target.value); onSearch()"
-    #txtSearch
-    />
-</section>
 
 <!-- AÑADIR TAGS CON INPUT -->
 <mat-form-field class="example-chip-list">
-  <mat-label>Add new student</mat-label>
   <mat-chip-grid #chipGrid aria-label="Enter fruits">
     <!-- TAG -->
     @for (fruit of namesAsArr; track fruit) {
@@ -27,6 +17,19 @@
     }
   </mat-chip-grid>
   <!-- LA BÚSQUEDA -->
+    
+  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <g
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      stroke-width="2.5"
+      fill="none"
+      stroke="currentColor"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </g>
+  </svg>
   <input
     [matChipInputFor]="chipGrid"
    
@@ -35,7 +38,7 @@
     (keydown.enter)="search.set($event.target.value); onSearch()"
   />
 
-  
+ 
    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
   @for (option of searchResult(); track option) {
     <mat-option [value]="option">
