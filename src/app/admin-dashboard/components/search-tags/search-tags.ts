@@ -5,10 +5,11 @@ import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core'
 import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import { User } from '../../../projects/interfaces/rest-project.interface';
+
 import {MatSelectModule} from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import { User } from '../../../auth/interfaces/user.interface';
 export interface Fruit {
   name: string;
 }

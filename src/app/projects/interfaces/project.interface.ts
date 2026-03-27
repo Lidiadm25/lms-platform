@@ -1,4 +1,5 @@
-import { User } from "./rest-project.interface";
+import { User } from "../../auth/interfaces/user.interface";
+
 
 export interface ProjectsResponse {
   count: number;
@@ -7,10 +8,11 @@ export interface ProjectsResponse {
 
 }
 
-export interface FullProjectRespose{
+export interface FullProjectResponse{
   id:          string;
   title:       string;
   image:       string;
+  category:    string
   description: string;
   duration:    number;
   units:       Unit[];
@@ -23,7 +25,6 @@ export interface Project {
     title:       string;
     description: string;
     duration:    number;
-    image: string;
     studentsCount: number;
 }
 
@@ -38,5 +39,6 @@ export interface Lesson {
   id:       string;
   url_file: null;
   title:    string;
+  description: string;
+  maxSize?:string;
 }
-

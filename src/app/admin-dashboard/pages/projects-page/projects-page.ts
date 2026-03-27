@@ -7,11 +7,12 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { PaginationService } from '../../../shared/components/pagination.component/pagination.service';
 import { PaginationComponent } from "../../../shared/components/pagination.component/pagination.component";
+import { RouterLink } from "@angular/router";
 
 
 @Component({
   selector: 'app-projects-page',
-  imports: [ProjectList, PaginationComponent],
+  imports: [ProjectList, PaginationComponent, RouterLink],
   templateUrl: './projects-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
