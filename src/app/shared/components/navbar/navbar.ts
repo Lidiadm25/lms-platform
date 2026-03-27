@@ -15,10 +15,8 @@ export class Navbar {
   
   establishRoutes(){
     if(this.authService.isAdmin()){
-      console.log("admin")
      return 'admin'
     }
-    console.log("no")
-    return ''
+    return 'home'
   }
  }

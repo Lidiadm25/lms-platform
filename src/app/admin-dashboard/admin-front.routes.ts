@@ -7,6 +7,7 @@ import { ProjectsPage } from './pages/projects-page/projects-page';
 import { UsersProjectPage } from './pages/users-project-page/users-project-page';
 import { DashboardPage } from './pages/dashboard-page/dashboard-page';
 import { LessonManagerPage } from './pages/lesson-manager-page/lesson-manager-page';
+import { ProjectCreator } from './pages/project-creator-page/project-creator';
 
 
 export const platformFrontRoutes: Routes = [
@@ -39,6 +40,10 @@ export const platformFrontRoutes: Routes = [
             {
             path:'lesson-manager/:idLesson',
             component: LessonManagerPage
+            },
+            {
+                path: 'project-creator',
+                component: ProjectCreator
             }
 
         ]
