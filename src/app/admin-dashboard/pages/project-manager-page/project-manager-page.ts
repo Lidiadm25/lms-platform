@@ -21,7 +21,7 @@ import { ImageInput } from '../../components/image-input/image-input';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, RouterLink, UnitsList, ImageInput],
+  imports: [ReactiveFormsModule, ImageInput],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -50,7 +50,7 @@ export class ProjectManagerPage {
     effect(() => {
       this.project=this.projectResource.value();
       
-      if (this.project) {
+      if (this.project?.image) {
         console.log("aqui3")
         this.imageUrl.set(`http://localhost:3000/api/files/project/${this.project!.image}`);
         this.projectForm.patchValue(this.project);
