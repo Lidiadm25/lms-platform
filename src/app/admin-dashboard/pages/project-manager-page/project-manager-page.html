@@ -37,7 +37,7 @@
   </div>
 
   <!-- Imágenes -->
-   <app-image-input [(imageUrl)]="imageUrl"/>
+   <app-image-input [(imageUrl)]="imageUrl" [(file)] = "file"/>
  
     <div class="flex justify-end h-12">
       <button class="btn btn-secondary" type="submit">
@@ -98,26 +98,7 @@
 <!-- MODAL PARA AGREGAR POR CORREO -->
 <dialog id="my_modal_1" class="modal">
   <div class="modal-box">
-    <h3 class="text-lg font-bold">Add new students</h3>
-   <label class="input">
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2.5"
-      fill="none"
-      stroke="currentColor"
-    >
-      <circle cx="11" cy="11" r="8"></circle>
-      <path d="m21 21-4.3-4.3"></path>
-    </g>
-  </svg>
-  <!-- <input type="search" class="grow" placeholder="Search" 
-  [ngModel] = "search()"
-  (keydown.enter)="search.set($event.target.value); onSearch()"
-    #txtSearch /> -->
- 
-</label>
+   <app-search-tags/>
     <div class="modal-action">
       <form method="dialog">
         <!-- if there is a button in form, it will close the modal -->

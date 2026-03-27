@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, forkJoin, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { FullProjectRespose, Project, ProjectsResponse } from '../interfaces/project.interface';
-import { RESTProject } from '../interfaces/rest-project.interface';
+import { map, Observable, switchMap, tap } from 'rxjs';
+import { FullProjectResponse, Project, ProjectsResponse } from '../interfaces/project.interface';
 import { environment } from '../../../environments/environment';
-import { ProjectMapper } from '../mappers/project.mapper';
 
 const BASE_URL = environment.baseUrl;
 interface Options {
@@ -38,12 +36,12 @@ export class ProjectService {
 
   getById(id: string) {
     
-    return this.http.get<FullProjectRespose>(`${BASE_URL}/project/${id}`);
+    return this.http.get<FullProjectResponse>(`${BASE_URL}/project/${id}`);
   }
 
   // Update
 
-  updateProject(id: string, project: Partial<FullProjectRespose>, imageFile?:File) {
+  updateProject(id: string, project: Partial<FullProjectResponse>, imageFile?:File) {
     console.log(project)
     const currentImages = project.image ?? [];
     if (!imageFile) {
@@ -67,6 +65,7 @@ export class ProjectService {
    
 
   uploadImage(imageFile: File) : Observable<string> {
+    console.log("entra")
     const formData = new FormData();
     formData.append('file', imageFile);
     return this.http.post<{
@@ -77,5 +76,23 @@ export class ProjectService {
       tap((imageNames)=> console.log({imageNames}))
     );
   }
+
+  createProject(project: FullProjectResponse, imageFile:File):Observable<FullProjectResponse>{
+   
+   
+   return this.uploadImage(imageFile).pipe(
+    map((fileName) => {
+      console.log('fileName:', fileName);
+
+      return {
+        ...project,
+        image: fileName.substring(40)   
+      };
+    }),
+    switchMap((updatedProject) =>
+      this.http.post<FullProjectResponse>(`${BASE_URL}/project/`, updatedProject)
+    )
+  );
+}
 
 }

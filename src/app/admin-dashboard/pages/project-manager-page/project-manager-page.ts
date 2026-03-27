@@ -1,27 +1,24 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
-  input,
   model,
-  resource,
-  Signal,
   signal,
 } from '@angular/core';
 import { ProjectService } from '../../../projects/services/ProjectService';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FullProjectRespose, Project } from '../../../projects/interfaces/project.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { firstValueFrom } from 'rxjs';
-import { UnitsList } from "../../components/units-list/units-list";
+
 import { ImageInput } from '../../components/image-input/image-input';
+import { SearchTags } from "../../components/search-tags/search-tags";
+import { FullProjectResponse } from '../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, ImageInput],
+  imports: [ReactiveFormsModule, ImageInput, SearchTags],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -41,7 +38,7 @@ export class ProjectManagerPage {
     stream: ({ params }) => this.projectService.getById(params.id),
   });
 
-  project:FullProjectRespose | undefined;
+  project:FullProjectResponse | undefined;
 
   imageUrl = model<string>('');
 
@@ -71,7 +68,7 @@ export class ProjectManagerPage {
   });
 
   async onSubmit() {
-    const projectLike: Partial<FullProjectRespose> = {
+    const projectLike: Partial<FullProjectResponse> = {
       ...(this.projectForm.value as any),
     };
 
