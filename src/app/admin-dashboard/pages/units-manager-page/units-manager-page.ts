@@ -1,10 +1,9 @@
 import { Unit } from './../../../projects/interfaces/project.interface';
 import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { UnitService } from '../../../projects/services/UnitService';
 import { firstValueFrom } from 'rxjs';
-
 
 @Component({
   selector: 'app-units-manager-page',
@@ -13,39 +12,39 @@ import { firstValueFrom } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnitsManagerPage {
-   fb = inject(FormBuilder)
-   activatedRoute = inject(ActivatedRoute);
+  fb = inject(FormBuilder);
+  activatedRoute = inject(ActivatedRoute);
   unitForm = this.fb.group({
     title: ['', []],
     description: ['', []],
-  })
+  });
 
-  edit = signal(true);
+  edit = signal(false);
   unitService = inject(UnitService);
   projectId: string = this.activatedRoute.snapshot.params['idProject'];
   unitId: string = this.activatedRoute.snapshot.params['idUnit'];
 
-  constructor(){
-    
-    if(this.unitId != "create"){
-      this.edit.set(false);
-     this.unitService.getById(this.unitId).subscribe((result) => {
-      console.log(result);
-      this.unitForm.patchValue(result)
-     });
-  } 
-  }
-
-  async OnSubmit(){
-    if(this.edit() == false){
-
-    } else {
-      const unit :Unit = {
-        ...this.unitForm.value as any,
-        project: this.projectId
-      } 
-      console.log(unit)
-      firstValueFrom(await this.unitService.createUnit(unit))
+  constructor() {
+    if (this.unitId != 'create') {
+      this.edit.set(true);
+      this.unitService.getById(this.unitId).subscribe((result) => {
+        console.log(result);
+        this.unitForm.patchValue(result);
+      });
     }
   }
- }
+
+  async OnSubmit() {
+    const unit: Unit = {
+      ...(this.unitForm.value as any),
+      id: this.unitId,
+      project: this.projectId,
+    };
+    if (this.edit() == true) {
+      firstValueFrom(await this.unitService.updateUnit(unit));
+    } else {
+      const { id, ...rest } = unit;
+      firstValueFrom(await this.unitService.createUnit(rest as Unit));
+    }
+  }
+}
