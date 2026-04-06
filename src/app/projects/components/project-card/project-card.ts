@@ -1,10 +1,10 @@
 import { AuthService } from './../../../auth/services/authService';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { FullProjectResponse, Project } from '../../interfaces/project.interface';
+import { Project } from '../../interfaces/project.interface';
 import { RouterLink } from '@angular/router';
 
 import { UsersProjectService } from '../../services/UsersProjectService';
-import { User, UserProject, UserProjectCreate } from '../../../auth/interfaces/user.interface';
+import { User, UserProjectCreate } from '../../../auth/interfaces/user.interface';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { User, UserProject, UserProjectCreate } from '../../../auth/interfaces/u
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCard {
-  project = input.required<FullProjectResponse>();
+  project = input.required<Project>();
   imageUrl = computed(() => {
     const nombre = this.project().image;
     return nombre? `http://localhost:3000/api/files/project/${this.project().image}` : 'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg' ;

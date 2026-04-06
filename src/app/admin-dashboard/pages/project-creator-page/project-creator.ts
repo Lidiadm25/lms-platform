@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SearchTags } from "../../components/search-tags/search-tags";
 import { ImageInput } from "../../components/image-input/image-input";
 import { ProjectService } from '../../../projects/services/ProjectService';
-import { FullProjectResponse } from '../../../projects/interfaces/project.interface';
 import { firstValueFrom } from 'rxjs';
 import { UnitsList } from "../../components/units-list/units-list";
+import { Project } from '../../../projects/interfaces/project.interface';
 
 
 
@@ -25,12 +25,12 @@ export class ProjectCreator {
     image: [''],
   });
 
-  project:FullProjectResponse | undefined = undefined;
+  project:Project | undefined = undefined;
   file!: File;
 
   imageUrl = model<string>('https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg');
   async onSubmit(){
-    const projectLike: FullProjectResponse= {
+    const projectLike: Project= {
           ...(this.projectForm.value as any),
         };
         projectLike.category ="907b3cf9-c320-48b1-9414-aee7729008ea";

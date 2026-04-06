@@ -7,7 +7,7 @@ export interface ProjectsResponse {
   projects: Project[];
 
 }
-
+/*
 export interface FullProjectResponse{
   id:          string;
   title:       string;
@@ -17,15 +17,19 @@ export interface FullProjectResponse{
   duration:    number;
   units:       Unit[];
   author: User;
-}
+} */
 
-
+// quitar
 export interface Project {
-    id:          string;
-    title:       string;
-    description: string;
-    duration:    number;
-    studentsCount: number;
+  id:          string;
+  title:       string;
+  image:       string;
+  category:    string
+  description: string;
+  duration:    number;
+  units:       Unit[];
+  author: User;
+  studentsCount: number;
 }
 
 export interface Unit {

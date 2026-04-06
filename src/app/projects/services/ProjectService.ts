@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable, switchMap, tap } from 'rxjs';
-import { FullProjectResponse, Project, ProjectsResponse } from '../interfaces/project.interface';
+import { Project, ProjectsResponse } from '../interfaces/project.interface';
 import { environment } from '../../../environments/environment';
 
 const BASE_URL = environment.baseUrl;
@@ -36,12 +36,12 @@ export class ProjectService {
 
   getById(id: string) {
     
-    return this.http.get<FullProjectResponse>(`${BASE_URL}/project/${id}`);
+    return this.http.get<Project>(`${BASE_URL}/project/${id}`);
   }
 
   // Update
 
-  updateProject(id: string, project: Partial<FullProjectResponse>, imageFile?:File) {
+  updateProject(id: string, project: Partial<Project>, imageFile?:File) {
     console.log(project)
     const currentImages = project.image ?? [];
     if (!imageFile) {
@@ -77,7 +77,7 @@ export class ProjectService {
     );
   }
 
-  createProject(project: FullProjectResponse, imageFile:File):Observable<FullProjectResponse>{
+  createProject(project: Project, imageFile:File):Observable<Project>{
    
    
    return this.uploadImage(imageFile).pipe(
@@ -90,7 +90,7 @@ export class ProjectService {
       };
     }),
     switchMap((updatedProject) =>
-      this.http.post<FullProjectResponse>(`${BASE_URL}/project/`, updatedProject)
+      this.http.post<Project>(`${BASE_URL}/project/`, updatedProject)
     )
   );
 }

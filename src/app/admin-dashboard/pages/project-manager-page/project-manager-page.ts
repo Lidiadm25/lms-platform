@@ -14,8 +14,8 @@ import { firstValueFrom } from 'rxjs';
 
 import { ImageInput } from '../../components/image-input/image-input';
 import { SearchTags } from "../../components/search-tags/search-tags";
-import { FullProjectResponse } from '../../../projects/interfaces/project.interface';
 import { UnitsList } from "../../components/units-list/units-list";
+import { Project } from '../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-project-manager-page',
@@ -39,7 +39,7 @@ export class ProjectManagerPage {
     stream: ({ params }) => this.projectService.getById(params.id),
   });
 
-  project:FullProjectResponse | undefined;
+  project:Project | undefined;
 
   imageUrl = model<string>('');
 
@@ -69,7 +69,7 @@ export class ProjectManagerPage {
   });
 
   async onSubmit() {
-    const projectLike: Partial<FullProjectResponse> = {
+    const projectLike: Partial<Project> = {
       ...(this.projectForm.value as any),
     };
 
