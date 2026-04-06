@@ -50,8 +50,7 @@ export class UnitsManagerPage {
     }
   }
 
-  deleteUnit() {
-    this.unitService.delete(this.unitId).subscribe(() => console.log('user deleted'));
-    this.router.navigate(['/admin/project-manager/', this.projectId]);
+  deleteUnit(){
+    this.unitService.delete(this.unitId).subscribe(() => console.log("user deleted"));;
   }
 }
