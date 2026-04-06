@@ -1,5 +1,5 @@
 import { Unit } from './../../../projects/interfaces/project.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { UnitService } from '../../../projects/services/UnitService';
@@ -23,6 +23,8 @@ export class UnitsManagerPage {
   unitService = inject(UnitService);
   projectId: string = this.activatedRoute.snapshot.params['idProject'];
   unitId: string = this.activatedRoute.snapshot.params['idUnit'];
+  router = inject(Router);
+  route = inject(ActivatedRoute);
 
   constructor() {
     if (this.unitId != 'create') {
@@ -46,5 +48,10 @@ export class UnitsManagerPage {
       const { id, ...rest } = unit;
       firstValueFrom(await this.unitService.createUnit(rest as Unit));
     }
+  }
+
+  deleteUnit() {
+    this.unitService.delete(this.unitId).subscribe(() => console.log('user deleted'));
+    this.router.navigate(['/admin/project-manager/', this.projectId]);
   }
 }
