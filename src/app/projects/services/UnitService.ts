@@ -25,4 +25,8 @@ export class UnitService {
   createUnit(unit: Unit): Observable<Unit> {
     return this.http.post<Unit>(`${BASE_URL}/sections`, unit);
   }
+
+  delete(id: string) {
+    return this.http.delete<Unit>(`${BASE_URL}/sections/${id}`);
+  }
 }

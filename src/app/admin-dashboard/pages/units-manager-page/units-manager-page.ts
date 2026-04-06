@@ -47,4 +47,8 @@ export class UnitsManagerPage {
       firstValueFrom(await this.unitService.createUnit(rest as Unit));
     }
   }
+
+  deleteUnit(){
+    this.unitService.delete(this.unitId).subscribe(() => console.log("user deleted"));;
+  }
 }
