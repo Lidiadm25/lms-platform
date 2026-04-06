@@ -33,6 +33,7 @@ export interface Project {
 }
 
 export interface Unit {
+  project :    string;
   id:          string;
   title:       string;
   description: string;

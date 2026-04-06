@@ -49,7 +49,7 @@
   
   <!-- LIST OF UNITS OF THE PROJECT -->
     @if (this.project) {
-    <app-units-list [units] = "project.units"/>
+    <app-units-list [units] = "project.units" [projectId] = "project.id"/>
     }
     <!--  -->
   <!-- Management of students -->

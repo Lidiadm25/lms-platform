@@ -8,6 +8,7 @@ import { UsersProjectPage } from './pages/users-project-page/users-project-page'
 import { DashboardPage } from './pages/dashboard-page/dashboard-page';
 import { LessonManagerPage } from './pages/lesson-manager-page/lesson-manager-page';
 import { ProjectCreator } from './pages/project-creator-page/project-creator';
+import { UnitsManagerPage } from './pages/units-manager-page/units-manager-page';
 
 
 export const platformFrontRoutes: Routes = [
@@ -44,6 +45,10 @@ export const platformFrontRoutes: Routes = [
             {
                 path: 'project-creator',
                 component: ProjectCreator
+            },
+            {
+                path:'units-manager/:idProject/:idUnit',
+                component: UnitsManagerPage
             }
 
         ]

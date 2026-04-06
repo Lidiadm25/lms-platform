@@ -1,0 +1,25 @@
+<form (ngSubmit)="OnSubmit()" [formGroup]="unitForm">
+  <label>Title</label>
+  <input
+    class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+    type="text"
+    formControlName="title"
+    [class.border-red-500]="unitForm.get('title')?.errors ?? false"
+  />
+
+  <label>Description</label> <br />
+
+  <textarea
+    class="textarea textarea-bordered"
+    placeholder="Descripción"
+    rows="6"
+    formControlName="description"
+    [class.border-red-500]="unitForm.get('description')?.errors ?? false"
+  ></textarea>
+  <br />
+
+
+
+
+  <button class="btn btn-secondary" type="submit">Save</button>
+</form>
