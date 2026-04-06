@@ -21,7 +21,7 @@
 
   @for (item of units(); track $index) {
     <div class="join join-vertical bg-base-100">
-      <app-unit-card [unit]="item" />
+      <div  (dblclick)="onDoubleClick( item.id)"><app-unit-card [unit]="item" /></div>
     </div>
   } @empty {
     <p>No units</p>
