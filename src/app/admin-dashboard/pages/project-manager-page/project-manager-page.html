@@ -15,7 +15,6 @@
       formControlName="title"
       [class.border-red-500]="projectForm.get('title')?.errors ?? false"
     />
- 
 
     <textarea
       class="textarea textarea-bordered"
@@ -26,53 +25,66 @@
     ></textarea>
 
     <p>añadir categoria</p>
-    
-    <div class="flex center-items gap-4 ">
+
+    <div class="flex center-items gap-4">
       <Label for="toggle">Status of course</Label>
       <div class="tooltip" data-tip="Students will no longer be able to access the course">
         <input type="checkbox" checked="checked" class="toggle toggle-success" />
       </div>
     </div>
-
   </div>
 
   <!-- Imágenes -->
-   <app-image-input [(imageUrl)]="imageUrl" [(file)] = "file"/>
- 
-    <div class="flex justify-end h-12">
-      <button class="btn btn-secondary" type="submit">
-        <!-- <span class="loading loading-spinner loading-sm"></span> -->
+  <app-image-input [(imageUrl)]="imageUrl" [(file)]="file" />
 
-        Guardar
-      </button>
-    </div>
-  
-  <!-- LIST OF UNITS OF THE PROJECT -->
+  <div class="flex justify-end h-12">
     @if (this.project) {
-    <app-units-list [units] = "project.units" [projectId] = "project.id"/>
+      <button class="btn btn-primary" onclick="my_modal_2.showModal()">Delete</button>
+      <dialog id="my_modal_2" class="modal">
+        <div class="modal-box">
+          <h3 class="text-lg font-bold">Delete unit</h3>
+          <p class="py-4">If there's lessons assigned to the unit, they will also be deleted.</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn" (click)="deleteProject()">Delete</button>
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     }
-    <!--  -->
+    <button class="btn btn-secondary" type="submit">
+      <!-- <span class="loading loading-spinner loading-sm"></span> -->
+
+      Guardar
+    </button>
+  </div>
+
+  <!-- LIST OF UNITS OF THE PROJECT -->
+  @if (this.project) {
+    <app-units-list [units]="project.units" [projectId]="project.id" />
+  }
+  <!--  -->
   <!-- Management of students -->
 
   <div class="flex flex-col gap-2">
-    
-        <div class="flex center-items gap-4">
-          <h2 class="text-2xl font-bold h-12">Manage students</h2>
-          <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-          >
-          <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
-          />
-          </svg>
-       </div>
+    <div class="flex center-items gap-4">
+      <h2 class="text-2xl font-bold h-12">Manage students</h2>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+        />
+      </svg>
+    </div>
 
     <!-- <div class="card bg-base-100 w-full shadow-sm">
       <a [routerLink]="['/admin/users-project', projectId]">
@@ -96,11 +108,10 @@
   </div>
 </form>
 
-
 <!-- MODAL PARA AGREGAR POR CORREO -->
 <dialog id="my_modal_1" class="modal">
   <div class="modal-box">
-   <app-search-tags/>
+    <app-search-tags />
     <div class="modal-action">
       <form method="dialog">
         <!-- if there is a button in form, it will close the modal -->

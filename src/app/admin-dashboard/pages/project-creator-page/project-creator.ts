@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, model, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SearchTags } from "../../components/search-tags/search-tags";
-import { ImageInput } from "../../components/image-input/image-input";
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { SearchTags } from '../../components/search-tags/search-tags';
+import { ImageInput } from '../../components/image-input/image-input';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { firstValueFrom } from 'rxjs';
-import { UnitsList } from "../../components/units-list/units-list";
+import { UnitsList } from '../../components/units-list/units-list';
 import { Project } from '../../../projects/interfaces/project.interface';
-
-
 
 @Component({
   selector: 'app-project-creator',
@@ -17,28 +15,28 @@ import { Project } from '../../../projects/interfaces/project.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCreator {
-  projectService = inject(ProjectService)
-  fb = inject(FormBuilder)
-    projectForm = this.fb.group({
+  projectService = inject(ProjectService);
+  fb = inject(FormBuilder);
+  projectForm = this.fb.group({
     title: [''],
     description: [''],
     image: [''],
   });
 
-  project:Project | undefined = undefined;
+  project: Project | undefined = undefined;
   file!: File;
 
-  imageUrl = model<string>('https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg');
-  async onSubmit(){
-    const projectLike: Project= {
-          ...(this.projectForm.value as any),
-        };
-        projectLike.category ="907b3cf9-c320-48b1-9414-aee7729008ea";
+  imageUrl = model<string>(
+    'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
+  );
+  async onSubmit() {
+    const projectLike: Project = {
+      ...(this.projectForm.value as any),
+    };
+    projectLike.category = '907b3cf9-c320-48b1-9414-aee7729008ea';
 
-  
-     firstValueFrom( await this.projectService.createProject(projectLike, this.file ))
-  
+    firstValueFrom(await this.projectService.createProject(projectLike, this.file));
   }
 
-
- }
+  deleteProject() {}
+}

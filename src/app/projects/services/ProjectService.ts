@@ -35,64 +35,63 @@ export class ProjectService {
   }
 
   getById(id: string) {
-    
     return this.http.get<Project>(`${BASE_URL}/project/${id}`);
   }
 
   // Update
 
-  updateProject(id: string, project: Partial<Project>, imageFile?:File) {
-    console.log(project)
+  updateProject(id: string, project: Partial<Project>, imageFile?: File) {
+    console.log(project);
     const currentImages = project.image ?? [];
     if (!imageFile) {
-    return this.http.patch<Project>(`${BASE_URL}/project/${id}`, project);
+      return this.http.patch<Project>(`${BASE_URL}/project/${id}`, project);
     }
-   return this.uploadImage(imageFile).pipe(
-    map((fileName) => {
-      console.log('fileName:', fileName);
+    return this.uploadImage(imageFile).pipe(
+      map((fileName) => {
+        console.log('fileName:', fileName);
 
-      return {
-        ...project,
-        image: fileName.substring(40)   
-      };
-    }),
-    switchMap((updatedProject) =>
-      this.http.patch<Project>(`${BASE_URL}/project/${id}`, updatedProject)
-    )
-  );
-}
-
-   
-
-  uploadImage(imageFile: File) : Observable<string> {
-    console.log("entra")
-    const formData = new FormData();
-    formData.append('file', imageFile);
-    return this.http.post<{
-      secureUrl:string
-    }>(`${BASE_URL}/files/project`, formData)
-    .pipe(
-      map((resp) => resp.secureUrl),
-      tap((imageNames)=> console.log({imageNames}))
+        return {
+          ...project,
+          image: fileName.substring(40),
+        };
+      }),
+      switchMap((updatedProject) =>
+        this.http.patch<Project>(`${BASE_URL}/project/${id}`, updatedProject),
+      ),
     );
   }
 
-  createProject(project: Project, imageFile:File):Observable<Project>{
-   
-   
-   return this.uploadImage(imageFile).pipe(
-    map((fileName) => {
-      console.log('fileName:', fileName);
+  uploadImage(imageFile: File): Observable<string> {
+    console.log('entra');
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    return this.http
+      .post<{
+        secureUrl: string;
+      }>(`${BASE_URL}/files/project`, formData)
+      .pipe(
+        map((resp) => resp.secureUrl),
+        tap((imageNames) => console.log({ imageNames })),
+      );
+  }
 
-      return {
-        ...project,
-        image: fileName.substring(40)   
-      };
-    }),
-    switchMap((updatedProject) =>
-      this.http.post<Project>(`${BASE_URL}/project/`, updatedProject)
-    )
-  );
-}
+  createProject(project: Project, imageFile: File): Observable<Project> {
+    return this.uploadImage(imageFile).pipe(
+      map((fileName) => {
+        console.log('fileName:', fileName);
 
+        return {
+          ...project,
+          image: fileName.substring(40),
+        };
+      }),
+      switchMap((updatedProject) =>
+        this.http.post<Project>(`${BASE_URL}/project/`, updatedProject),
+      ),
+    );
+  }
+
+  delete(id: string) {
+    return this.http.delete(`${BASE_URL}/project/${id}`);
+  }
 }
