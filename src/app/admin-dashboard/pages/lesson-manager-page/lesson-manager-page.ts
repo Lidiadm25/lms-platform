@@ -5,6 +5,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { firstValueFrom } from 'rxjs';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class LessonManagerPage { 
 
- constructor(){
+ constructor(private location:Location){
   effect(()=> {
     const lesson =  this.lessonResource.value();
     if(lesson){
@@ -75,5 +76,9 @@ export class LessonManagerPage {
     } else {
      return true;
     }
+  }
+  deleteLesson(){
+    this.lessonService.delete(this.lessonId).subscribe(() => console.log("Lesson deleted"));
+    this.location.back();
   }
 }

@@ -21,6 +21,7 @@
   <button class="btn btn-secondary" type="submit">Save</button>
 </form>
 
+
 @if(this.edit() == true){
   <!-- Open the modal using ID.showModal() method -->
 <button class="btn btn-primary" onclick="my_modal_1.showModal()">Delete</button>
@@ -37,3 +38,15 @@
   </div>
 </dialog>
 }
+
+<h2>LESSONS</h2>
+@if(this.unitLoaded()!=null && this.unitLoaded()!.lessons){
+   @for (lesson of unitLoaded()!.lessons; track $index) {
+              <app-lesson-card [lesson] = "lesson"/>
+            }
+}@else {
+  <h2>No lessons</h2>
+}
+
+
+

@@ -4,10 +4,11 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { UnitService } from '../../../projects/services/UnitService';
 import { firstValueFrom } from 'rxjs';
+import { LessonCard } from "../../components/units-list/unit-card/lesson-card/lesson-card";
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, LessonCard],
   templateUrl: './units-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -25,12 +26,14 @@ export class UnitsManagerPage {
   unitId: string = this.activatedRoute.snapshot.params['idUnit'];
   router = inject(Router);
   route = inject(ActivatedRoute);
+  unitLoaded= signal<Unit| null>(null)
 
   constructor() {
     if (this.unitId != 'create') {
       this.edit.set(true);
-      this.unitService.getById(this.unitId).subscribe((result) => {
+       this.unitService.getById(this.unitId).subscribe((result) => {
         console.log(result);
+        this.unitLoaded.set(result)
         this.unitForm.patchValue(result);
       });
     }
@@ -51,6 +54,6 @@ export class UnitsManagerPage {
   }
 
   deleteUnit(){
-    this.unitService.delete(this.unitId).subscribe(() => console.log("user deleted"));;
+    this.unitService.delete(this.unitId).subscribe(() => console.log("unit deleted"));;
   }
 }

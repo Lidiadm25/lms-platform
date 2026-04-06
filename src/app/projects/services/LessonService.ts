@@ -50,4 +50,8 @@ export class LessonService {
         tap((imageNames) => console.log({ imageNames })),
       );
   }
+
+  delete(id:string){
+   return this.http.delete(`${BASE_URL}/lessons/${id}`)
+  }
 }
