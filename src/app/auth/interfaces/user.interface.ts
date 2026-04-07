@@ -25,6 +25,7 @@ export interface UserProject{
 }
 
 export interface UserProjectCreate {
-    userId: string;
+    userId?: string;
     projectId:string;
+    userEmail?:string;
 }
