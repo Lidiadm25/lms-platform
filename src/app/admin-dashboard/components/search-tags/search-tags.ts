@@ -1,69 +1,77 @@
 import { UserService } from './../../../auth/services/userService';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
-import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Output,
+  signal,
+} from '@angular/core';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+} from '@angular/material/autocomplete';
 import { User } from '../../../auth/interfaces/user.interface';
-export interface Fruit {
-  name: string;
-}
 
 @Component({
   selector: 'app-search-tags',
-  imports: [MatFormFieldModule, MatChipsModule, MatIconModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule],
+  imports: [
+    MatFormFieldModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+  ],
   templateUrl: './search-tags.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class SearchTags { 
+export class SearchTags {
   search = signal<string>('');
-  userService = inject (UserService)
+  userService = inject(UserService);
   searchResult = signal<User[]>([]);
-  onSearch(){
-    console.log(this.search())
-    this.userService.getUsers(this.search()).subscribe((users) =>
-    this.searchResult.set(users)
-    
-    );
-    console.log(this.searchResult())
+  onSearch() {
+    console.log(this.search());
+    this.userService.getUsers(this.search()).subscribe((users) => this.searchResult.set(users));
+    console.log(this.searchResult());
   }
 
-
-  
-
-  readonly addOnBlur = true;
-
-  readonly users = signal<User[]>([]);
-
   namesAsArr: Array<string> = [];
+  users = signal<string[]>([]);
+
+  @Output() onUsersPicked = new EventEmitter<any>();
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value) {
       this.namesAsArr.push(value);
+      this.users.set(this.namesAsArr);
     }
   }
 
-   selected(event: MatAutocompleteSelectedEvent): void {
-    this.namesAsArr.push(event.option.viewValue);
-
+  selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.namesAsArr.includes(event.option.viewValue)) {
+      this.namesAsArr.push(event.option.viewValue);
+      this.users.set(this.namesAsArr);
+    }
     event.option.deselect();
   }
 
-  remove(name:string): void {
-    
-   const index = this.namesAsArr.indexOf(name);
+  remove(name: string): void {
+    const index = this.namesAsArr.indexOf(name);
     if (index > -1) {
       this.namesAsArr.splice(index, 1);
+      this.users.set(this.namesAsArr);
     }
   }
 
- 
+  OnSaveUsers() {
+    this.onUsersPicked.emit(this.users());
+  }
 }
-

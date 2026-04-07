@@ -1,54 +1,51 @@
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    <mat-form-field class="example-chip-list">
+      <mat-chip-grid #chipGrid aria-label="Enter fruits">
+        <!-- TAG -->
+        @for (email of namesAsArr; track email) {
+          <mat-chip-row (removed)="remove(email)">
+            {{ email }}
+            <button matChipRemove [attr.aria-label]="'remove ' + email">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        }
+      </mat-chip-grid>
+      <!-- LA BÚSQUEDA -->
 
+      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          stroke-width="2.5"
+          fill="none"
+          stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+      <input
+        [matChipInputFor]="chipGrid"
+        [matAutocomplete]="auto"
+        (keydown.enter)="search.set($event.target.value); onSearch()"
+      />
 
-<!-- AÑADIR TAGS CON INPUT -->
-<mat-form-field class="example-chip-list">
-  <mat-chip-grid #chipGrid aria-label="Enter fruits">
-    <!-- TAG -->
-    @for (fruit of namesAsArr; track fruit) {
-      <mat-chip-row
-        (removed)="remove(fruit)"
-       
-      >
-        {{fruit}}
-        <button matChipRemove [attr.aria-label]="'remove ' + fruit">
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip-row>
-    }
-  </mat-chip-grid>
-  <!-- LA BÚSQUEDA -->
-    
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2.5"
-      fill="none"
-      stroke="currentColor"
-    >
-      <circle cx="11" cy="11" r="8"></circle>
-      <path d="m21 21-4.3-4.3"></path>
-    </g>
-  </svg>
-  <input
-    [matChipInputFor]="chipGrid"
-   
-    [matAutocomplete]="auto"
-    (matChipInputTokenEnd)="add($event)"
-    (keydown.enter)="search.set($event.target.value); onSearch()"
-  />
-
- 
-   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-  @for (option of searchResult(); track option) {
-    <mat-option [value]="option">
-      {{ option.email }}
-    </mat-option>
-}
-</mat-autocomplete>
-
-  
-</mat-form-field>
-
-
- 
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        @for (option of searchResult(); track option) {
+          <mat-option [value]="option">
+            {{ option.email }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+        <button class="btn btn-secondary" type="submit" (click)="OnSaveUsers()">Add</button>
+      </form>
+    </div>
+  </div>
+</dialog>
