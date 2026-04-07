@@ -72,11 +72,8 @@ export class ProjectManagerPage {
     await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file));
 
     if (this.users.length > 0) {
-      let user: UserProjectCreate = {
-        projectId: this.projectId,
-        userEmail: this.users[0],
-      };
-      await this.userProjectService.addUser(user).subscribe(() => console.log('User added'));
+      console.log(this.usersEmails)
+      await this.userProjectService.addUsers(this.usersEmails).subscribe(() => console.log('User added'));
     }
   }
 
@@ -86,8 +83,18 @@ export class ProjectManagerPage {
   }
 
   users: Array<string> = [];
+  usersEmails :UserProjectCreate[] = [];
 
   usersInscription(event: any) {
     this.users = event;
+    for (let index = 0; index < this.users.length; index++) {
+      
+      this.usersEmails[index] = {
+        projectId : this.projectId,
+        userEmail : this.users[index]
+      }
+      console.log(this.usersEmails[index])
+      
+    }
   }
 }

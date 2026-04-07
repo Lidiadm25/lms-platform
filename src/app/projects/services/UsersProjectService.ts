@@ -34,5 +34,11 @@ getUsers(id:string, options:Options):Observable<UsersProjectResponse>{
    return this.http.post<UserProject>(`${BASE_URL}/user-projects`, userProjectLike);
   }
 
+  addUsers(userProjectLike: UserProjectCreate[]): Observable<UserProject> {
+
+       
+   return this.http.post<UserProject>(`${BASE_URL}/user-projects/bulk`,{users:  userProjectLike});
+  }
+
     
 }
