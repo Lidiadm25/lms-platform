@@ -5,6 +5,7 @@ import {
   effect,
   EventEmitter,
   inject,
+  input,
   Output,
   signal,
 } from '@angular/core';
@@ -34,13 +35,14 @@ import { User } from '../../../auth/interfaces/user.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchTags {
+  projectId = input.required<string>();
   search = signal<string>('');
   userService = inject(UserService);
   searchResult = signal<User[]>([]);
   theresValues = signal<boolean>(false);
   onSearch() {
     console.log(this.search());
-    this.userService.getUsers(this.search()).subscribe((users) => this.searchResult.set(users));
+    this.userService.getUsersEmails(this.search(), this.projectId()).subscribe((users) => this.searchResult.set(users));
     console.log(this.searchResult());
   }
 
