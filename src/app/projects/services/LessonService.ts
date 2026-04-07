@@ -40,11 +40,11 @@ export class LessonService {
     const formData = new FormData();
     formData.append('file', file);
     if(size == undefined) size ="DEFAULT"
-    //formData.append("maxSize", size)
+    formData.append("maxSize", size)
     return this.http
       .post<{
         secureUrl: string;
-      }>(`${BASE_URL}/files/project`, formData)
+      }>(`${BASE_URL}/files/lesson`, formData)
       .pipe(
         map((resp) => resp.secureUrl),
         tap((imageNames) => console.log({ imageNames })),
