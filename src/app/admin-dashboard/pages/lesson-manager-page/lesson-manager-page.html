@@ -25,7 +25,7 @@
   />
 
   
-    <fieldset class="fieldset">
+    <!-- <fieldset class="fieldset">
       <select class="select" formControlName="maxSize">
         <option disabled selected>Pick a size</option>
         <option [ngValue]="2e+6">2 MB</option>
@@ -35,8 +35,8 @@
         <option [ngValue]="2e+9">2 GB</option>
       </select>
       <span class="label">Optional</span>
-    </fieldset>
-
+    </fieldset> -->
+    <app-dynamic-size/>
 
   <button class="btn btn-secondary" type="submit">Save</button>
 </form>
