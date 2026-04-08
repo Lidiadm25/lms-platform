@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
-import { PlatformFrontLayout } from '../platform-front/layout/platform-front-layout/platform-front-layout';
-import { ProjectManagerPage } from './pages/project-manager-page/project-manager-page';
 import { isAdminGuard } from '../auth/guards/is-admin.guard';
 import { DashboardLayout } from './layouts/dashboard-layout/dashboard-layout';
-import { ProjectsPage } from './pages/projects-page/projects-page';
-import { UsersProjectPage } from './pages/users-project-page/users-project-page';
 import { DashboardPage } from './pages/dashboard-page/dashboard-page';
 import { LessonManagerPage } from './pages/lesson-manager-page/lesson-manager-page';
-import { ProjectCreator } from './pages/project-creator-page/project-creator';
+import { ProjectManagerPage } from './pages/project-manager-page/project-manager-page';
+import { ProjectsPage } from './pages/projects-page/projects-page';
+import { UsersProjectPage } from './pages/users-project-page/users-project-page';
+
 import { UnitsManagerPage } from './pages/units-manager-page/units-manager-page';
 
 
@@ -41,10 +40,6 @@ export const platformFrontRoutes: Routes = [
             {
             path:'lesson-manager/:idLesson',
             component: LessonManagerPage
-            },
-            {
-                path: 'project-creator',
-                component: ProjectCreator
             },
             {
                 path:'units-manager/:idProject/:idUnit',

@@ -16,5 +16,10 @@ export const routes: Routes = [
   {
     path:'',
     loadChildren: ()=> import('./platform-front/platform-front.routes')
+  },
+  {
+    path:'**',
+    // not found page!!
+    loadChildren: ()=> import('./auth/auth.routes')
   }
 ];

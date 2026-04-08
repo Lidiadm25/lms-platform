@@ -41,14 +41,14 @@ export class ProjectService {
   // Update
 
   updateProject(id: string, project: Partial<Project>, imageFile?: File) {
-    console.log(project);
+    
     const currentImages = project.image ?? [];
     if (!imageFile) {
       return this.http.patch<Project>(`${BASE_URL}/project/${id}`, project);
     }
     return this.uploadImage(imageFile).pipe(
       map((fileName) => {
-        console.log('fileName:', fileName);
+
 
         return {
           ...project,
@@ -62,7 +62,7 @@ export class ProjectService {
   }
 
   uploadImage(imageFile: File): Observable<string> {
-    console.log('entra');
+    
     const formData = new FormData();
     formData.append('file', imageFile);
     return this.http
@@ -76,9 +76,12 @@ export class ProjectService {
   }
 
   createProject(project: Project, imageFile: File): Observable<Project> {
+    if (imageFile == undefined) {
+      return this.http.post<Project>(`${BASE_URL}/project/`, project);
+    }
+
     return this.uploadImage(imageFile).pipe(
       map((fileName) => {
-        console.log('fileName:', fileName);
 
         return {
           ...project,
