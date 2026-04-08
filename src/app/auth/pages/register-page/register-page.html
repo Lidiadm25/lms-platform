@@ -1,11 +1,10 @@
 <div class="mt-4">
-  <form (ngSubmit)="OnSubmit()" [formGroup]="registerForm" autocomplete="on">
+  <form (ngSubmit)="OnSubmit()" [formGroup]="registerForm">
     <label class="block text-gray-700 text-sm font-bold mb-2">Full name</label>
     <input
       class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
       type="text"
       formControlName="name"
-      [class.border-red-500]="registerForm.get('name')?.errors ?? false"
     />
 
     <label class="block text-gray-700 text-sm font-bold mb-2 mt-4">Email address</label>
@@ -13,7 +12,6 @@
       class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
       type="email"
       formControlName="email"
-      [class.border-red-500]="registerForm.get('email')?.errors ?? false"
     />
 
     <div class="mt-4">
@@ -24,7 +22,7 @@
         class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
         type="password"
         formControlName="password"
-        [class.border-red-500]="registerForm.get('password')?.errors ?? false"
+        
       />
 
       <div class="flex justify-between mt-4">
@@ -34,7 +32,7 @@
         class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
         type="password"
         formControlName="confirmPassword"
-        [class.border-red-500]="registerForm.get('confirmPassword')?.errors ?? false"
+       
       />
     </div>
     <div class="mt-8">
