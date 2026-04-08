@@ -4,7 +4,6 @@
     class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
     type="text"
     formControlName="title"
-    [class.border-red-500]="unitForm.get('title')?.errors ?? false"
   />
 
   <label>Description</label> <br />
@@ -14,7 +13,6 @@
     placeholder="Descripción"
     rows="6"
     formControlName="description"
-    [class.border-red-500]="unitForm.get('description')?.errors ?? false"
   ></textarea>
   <br />
 
@@ -39,13 +37,41 @@
 </dialog>
 }
 
-<h2>LESSONS</h2>
-@if(this.unitLoaded()!=null && this.unitLoaded()!.lessons){
+<div class="flex flex-col gap-2">
+   <a
+    class="flex flex-col-2 gap-3"
+    [routerLink]="['/admin/lesson-manager',this.unitId, 'create']"
+  >
+    <h2 class="text-2xl font-bold h-12">Lessons</h2>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="size-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
+    </svg>
+  </a>
+
+@if(this.unitLoaded()!=null && this.unitLoaded()!.lessons.length>0){
+
    @for (lesson of unitLoaded()!.lessons; track $index) {
               <app-lesson-card [lesson] = "lesson"/>
             }
 }@else {
   <h2>No lessons</h2>
+}
+
+@if (wasSaved()) {
+  <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>Changes saved succesfully</span>
+  </div>
 }
 
 

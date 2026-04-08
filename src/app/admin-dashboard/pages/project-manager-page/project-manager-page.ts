@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, model, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { UserProjectCreate } from './../../../auth/interfaces/user.interface';
@@ -14,7 +14,7 @@ import { UnitsList } from '../../components/units-list/units-list';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, ImageInput, SearchTags, UnitsList],
+  imports: [ReactiveFormsModule, ImageInput, SearchTags, UnitsList, RouterLink],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -96,6 +96,11 @@ export class ProjectManagerPage {
         .addUsers(this.usersEmails)
         .subscribe(() => console.log('User added'));
     }
+
+    this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
   }
 
   deleteProject() {

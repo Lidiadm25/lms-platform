@@ -1,5 +1,5 @@
 import { Unit } from './../../../projects/interfaces/project.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { UnitService } from '../../../projects/services/UnitService';
@@ -8,7 +8,7 @@ import { LessonCard } from "../../components/units-list/unit-card/lesson-card/le
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule, LessonCard],
+  imports: [ReactiveFormsModule, LessonCard, RouterLink],
   templateUrl: './units-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -27,12 +27,13 @@ export class UnitsManagerPage {
   router = inject(Router);
   route = inject(ActivatedRoute);
   unitLoaded= signal<Unit| null>(null)
+  wasSaved = signal<boolean>(false);
 
   constructor() {
     if (this.unitId != 'create') {
       this.edit.set(true);
        this.unitService.getById(this.unitId).subscribe((result) => {
-        console.log(result);
+
         this.unitLoaded.set(result)
         this.unitForm.patchValue(result);
       });
@@ -51,9 +52,18 @@ export class UnitsManagerPage {
       const { id, ...rest } = unit;
       firstValueFrom(await this.unitService.createUnit(rest as Unit));
     }
+    this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
   }
 
   deleteUnit(){
-    this.unitService.delete(this.unitId).subscribe(() => console.log("unit deleted"));;
+    this.unitService.delete(this.unitId).subscribe(() => console.log("unit deleted"));
+
+    this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
   }
 }
