@@ -28,6 +28,7 @@ export interface Project {
   description: string;
   duration:    number;
   units:       Unit[];
+  isActive: boolean;
   author: User;
   studentsCount: number;
 }
@@ -41,6 +42,7 @@ export interface Unit {
 }
 
 export interface Lesson {
+  section: string
   id:       string;
   url_file: null;
   title:    string;

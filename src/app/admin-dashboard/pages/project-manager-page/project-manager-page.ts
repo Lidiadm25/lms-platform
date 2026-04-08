@@ -37,15 +37,16 @@ export class ProjectManagerPage {
   });
 
   project: Project | undefined;
-
   imageUrl = model<string>('');
 
   constructor(private location: Location) {
     effect(() => {
       this.project = this.projectResource.value();
-
+       var toggle = document.getElementById('toggle') as HTMLInputElement
       if (this.project) {
         this.projectForm.patchValue(this.project);
+        if (this.project.isActive) 
+          toggle.checked = true;
         if (this.project.image)
           this.imageUrl.set(`http://localhost:3000/api/files/project/${this.project!.image}`);
       } else {
@@ -68,6 +69,12 @@ export class ProjectManagerPage {
     const projectLike: Partial<Project> = {
       ...(this.projectForm.value as any),
     };
+
+    var toggle = document.getElementById('toggle') as HTMLInputElement
+    if(toggle.checked == true){
+      projectLike.isActive = true;
+
+    } else projectLike.isActive = false;
 
     await firstValueFrom(this.projectService.updateProject(this.projectId, projectLike, this.file));
 

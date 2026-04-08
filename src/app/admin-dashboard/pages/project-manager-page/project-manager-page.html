@@ -29,7 +29,7 @@
     <div class="flex center-items gap-4">
       <Label for="toggle">Status of course</Label>
       <div class="tooltip" data-tip="Students will no longer be able to access the course">
-        <input type="checkbox" checked="checked" class="toggle toggle-success" />
+        <input id="toggle" type="checkbox" class="toggle toggle-success" />
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@
 
 <!-- MODAL PARA AGREGAR POR CORREO -->
 
-    <app-search-tags (onUsersPicked) ="usersInscription($event)"/>
+    <app-search-tags [projectId]="this.projectId" (onUsersPicked) ="usersInscription($event)"/>
    
 
 <!-- @if (wasSaved()) {
