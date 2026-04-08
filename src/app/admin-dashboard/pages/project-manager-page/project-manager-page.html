@@ -6,7 +6,7 @@
   class="grid grid-cols-1 sm:grid-cols-2 gap-4"
   (ngSubmit)="onSubmit()"
 >
-  <!-- Datos generales -->
+  <!-- CUADRO IZQUIERDA-->
   <div class="flex flex-col gap-2">
     <h2 class="text-2xl font-bold h-12">General</h2>
     <input
@@ -32,13 +32,14 @@
         <input id="toggle" type="checkbox" class="toggle toggle-success" />
       </div>
     </div>
-  </div>
 
-  <!-- Imágenes -->
-  <app-image-input [(imageUrl)]="imageUrl" [(file)]="file" />
+    <button class="btn btn-secondary" type="submit">
+      <!-- <span class="loading loading-spinner loading-sm"></span> -->
 
-  <div class="flex justify-end h-12">
-    @if (this.project) {
+      save
+    </button>
+
+    @if (this.projectLoaded()) {
       <button class="btn btn-primary" onclick="my_modal_2.showModal()">Delete</button>
       <dialog id="my_modal_2" class="modal">
         <div class="modal-box">
@@ -53,19 +54,12 @@
         </div>
       </dialog>
     }
-    <button class="btn btn-secondary" type="submit">
-      <!-- <span class="loading loading-spinner loading-sm"></span> -->
-
-      Guardar
-    </button>
   </div>
 
-  <!-- LIST OF UNITS OF THE PROJECT -->
-  @if (this.project) {
-    <app-units-list [units]="project.units" [projectId]="project.id" />
-  }
-  <!--  -->
-  <!-- Management of students -->
+  <!-- CUADRO DERECHA -->
+  <div class="flex flex-col gap-2">
+    <app-image-input [(imageUrl)]="imageUrl" [(file)]="file" />
+  </div>
 
   <div class="flex flex-col gap-2">
     <div class="flex center-items gap-4">
@@ -106,15 +100,21 @@
       </div>
     </div>
   </div>
+  <!-- LIST OF UNITS OF THE PROJECT CUADRO BOTTOM RIGHT-->
+
+  @if (this.projectLoaded()) {
+    <app-units-list [units]="this.projectLoaded()!.units" [projectId]="this.projectLoaded()!.id" />
+  }
+
+  <!-- Management of students -->
 </form>
 
 <!-- MODAL PARA AGREGAR POR CORREO -->
 
-    <app-search-tags [projectId]="this.projectId" (onUsersPicked) ="usersInscription($event)"/>
-   
+<app-search-tags [projectId]="this.projectId" (onUsersPicked)="usersInscription($event)" />
 
-<!-- @if (wasSaved()) {
+@if (wasSaved()) {
   <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
     <span>Datos actualizados correctamente</span>
   </div>
-} -->
+}
