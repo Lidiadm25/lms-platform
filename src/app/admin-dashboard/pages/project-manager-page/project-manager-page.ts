@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, model, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProjectService } from '../../../projects/services/ProjectService';
@@ -11,10 +11,12 @@ import { UsersProjectService } from '../../../projects/services/UsersProjectServ
 import { ImageInput } from '../../components/image-input/image-input';
 import { SearchTags } from '../../components/search-tags/search-tags';
 import { UnitsList } from '../../components/units-list/units-list';
+import { CategoryDropdown } from "../../components/category-dropdown/category-dropdown";
+
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, ImageInput, SearchTags, UnitsList, RouterLink],
+  imports: [ReactiveFormsModule, ImageInput, SearchTags, UnitsList, RouterLink, CategoryDropdown],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -69,7 +71,13 @@ export class ProjectManagerPage {
     title: ['', Validators.required],
     description: ['', Validators.required],
     image: [''],
+    category:['']
+  
   });
+
+  getSelectedControlCategory():FormControl{
+    return this.projectForm.get('category') as FormControl
+  }
 
   async onSubmit() {
     const projectLike: Project = {
@@ -82,11 +90,12 @@ export class ProjectManagerPage {
     } else projectLike.isActive = false;
 
     if (this.edit() == true) {
-      await firstValueFrom(
-        this.projectService.updateProject(this.projectId, projectLike, this.file),
-      );
+       await firstValueFrom(
+         this.projectService.updateProject(this.projectId, projectLike, this.file),
+       );
+      
     } else {
-      projectLike.category = '907b3cf9-c320-48b1-9414-aee7729008ea';
+     
       await firstValueFrom(this.projectService.createProject(projectLike, this.file));
     }
 

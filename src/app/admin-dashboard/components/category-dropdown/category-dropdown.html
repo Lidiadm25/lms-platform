@@ -1,0 +1,18 @@
+<form >
+    <label for="countries" class="block mb-2.5 text-sm font-medium text-heading"
+  >Select an option</label
+>
+<select
+  [formControl]="control"
+  id="countries"
+  class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+>
+  <option selected>Choose a category</option>
+  @if (this.categories().length > 0) {
+    @for (item of this.categories(); track $index) {
+      <option [ngValue]="item.id">{{ item.name }}</option>
+    }
+  }
+</select>
+
+</form>

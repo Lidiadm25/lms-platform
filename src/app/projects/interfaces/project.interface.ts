@@ -49,3 +49,8 @@ export interface Lesson {
   description: string;
   maxSize?:string;
 }
+
+export interface Category {
+  id: string;
+  name: string;
+}
