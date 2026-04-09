@@ -4,11 +4,12 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/authService';
 import { equivalentValidator } from '../../validators/passwordMatchingValidator';
 import { FormErrorLabel } from "../../../shared/components/form-error-label/form-error-label";
+import { FormUtils } from '../../../utils/form-utils';
 
 
 @Component({
   selector: 'app-register-page',
-  imports: [ ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormErrorLabel],
   templateUrl: './register-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -29,12 +30,13 @@ export class RegisterPage {
 
   authService = inject(AuthService);
 
-  
+
 
   OnSubmit() {
     this.registerForm.markAllAsTouched()
+    if(this.registerForm.invalid) return;
     const { email = '', password = '', name= '' } = this.registerForm.value;
-    this.authService.register(email!, password!, name!).subscribe((isAuthenticated) => {
+     this.authService.register(email!, password!, name!).subscribe((isAuthenticated) => {
       if (isAuthenticated && this.authService.isAdmin()) {
         this.router.navigateByUrl('/admin')
         return;
