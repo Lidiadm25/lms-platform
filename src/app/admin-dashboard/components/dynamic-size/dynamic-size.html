@@ -1,11 +1,11 @@
  <fieldset class="fieldset">
-      <select class="select" formControlName="maxSize">
+      <select class="select" [formControl]="control" >
         <option disabled selected>Pick a size</option>
-        <option value="2e+6">2 MB</option>
-        <option value="2e+7">20 MB</option>
-        <option value="5e+7">50 MB</option>
-        <option value="1e+9">1 GB</option>
-        <option value="2e+9">2 GB</option>
+        <option [ngValue]="2e+6">2 MB</option>
+        <option [ngValue]="2e+7">20 MB</option>
+        <option [ngValue]="5e+7">50 MB</option>
+        <option [ngValue]="1e+9">1 GB</option>
+        <option [ngValue]="2e+9">2 GB</option>
       </select>
       <span class="label">Optional</span>
-    </fieldset>
+    </fieldset> 

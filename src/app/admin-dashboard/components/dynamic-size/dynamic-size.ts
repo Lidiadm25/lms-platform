@@ -1,9 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-size',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './dynamic-size.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicSize { }
+export class DynamicSize {
+
+  @Input() control !: FormControl;
+ }

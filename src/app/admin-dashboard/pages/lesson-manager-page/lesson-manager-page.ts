@@ -3,14 +3,15 @@ import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { firstValueFrom } from 'rxjs';
 import { Location } from '@angular/common';
+import { DynamicSize } from "../../components/dynamic-size/dynamic-size";
 
 
 @Component({
   selector: 'app-lesson-manager-page',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, DynamicSize],
   templateUrl: './lesson-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -46,6 +47,9 @@ export class LessonManagerPage {
     maxSize: ['']
   })
 
+ getSelectedSize():FormControl{
+    return this.lessonForm.get('maxSize') as FormControl
+  }
    onFilesChange(event: any) {
   
     const fileList = (event.target as HTMLInputElement).files;
@@ -57,11 +61,11 @@ export class LessonManagerPage {
 
 
   async OnSubmit(){
-    if(this.verifySize(this.file,this.lessonForm.value.maxSize)){
+  //  if(this.verifySize(this.file,this.lessonForm.value.maxSize)){
     
         const lessonLike: Partial<Lesson> = {...(this.lessonForm.value as any)}
     await firstValueFrom(this.lessonService.updateLesson(this.lessonId, lessonLike, this.file))
-    }
+   // }
   }
 
   verifySize(file:File|undefined, size:string|null|undefined): boolean{
