@@ -11,4 +11,5 @@ import { RouterLink } from '@angular/router';
 })
 export class LessonCard {
   lesson = input.required<Lesson>();
+  unitId = input.required<string>();
  }

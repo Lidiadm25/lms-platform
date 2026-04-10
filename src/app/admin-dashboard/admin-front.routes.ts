@@ -38,7 +38,7 @@ export const platformFrontRoutes: Routes = [
              component: ProjectManagerPage
             },
             {
-            path:'lesson-manager/:idLesson',
+            path:'lesson-manager/:idUnit/:idLesson',
             component: LessonManagerPage
             },
             {

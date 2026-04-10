@@ -17,7 +17,7 @@
                 </svg>
                 <p class="">{{ lesson().title }}</p>
 
-                <a [routerLink]="['/admin/lesson-manager', lesson().id]">
+                <a [routerLink]="['/admin/lesson-manager', this.unitId ,lesson().id]">
                   <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
