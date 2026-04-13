@@ -2,6 +2,7 @@
   <table class="table table-md mt-2 w-full text-center">
     <thead>
       <tr>
+        <th><input type="checkbox" (change)="toggleAll($event)"></th>
         <th>Email of student</th>
         <th>Full name</th>
         <th>Project</th>
@@ -11,6 +12,7 @@
     <tbody>
       @for (user of users().users; track user.id; let index = $index) {
         <tr>
+          <td><input type="checkbox" name="cb" value="{{user.id}}"></td>
           <td>{{ user.user.email }}</td>
           <td>{{ user.user.fullName }}</td>
           <td>{{ user.project.title }}</td>
