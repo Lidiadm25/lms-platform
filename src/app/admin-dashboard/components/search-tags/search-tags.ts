@@ -30,7 +30,7 @@ import { User } from '../../../auth/interfaces/user.interface';
     MatSelectModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-  ],
+],
   templateUrl: './search-tags.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -41,9 +41,7 @@ export class SearchTags {
   searchResult = signal<User[]>([]);
   theresValues = signal<boolean>(false);
   onSearch() {
-    console.log(this.search());
     this.userService.getUsersEmails(this.search(), this.projectId()).subscribe((users) => this.searchResult.set(users));
-    console.log(this.searchResult());
   }
 
   namesAsArr: Array<string> = [];
@@ -53,16 +51,13 @@ export class SearchTags {
 
   constructor() {
     effect(() => {
-      console.log('Valor de la señal: ' + this.theresValues());
       if (this.theresValues() == false) {
         let btn = document.getElementById('myBtn') as HTMLButtonElement;
         if (btn) btn.disabled = true;
       } else {
-        console.log('entra a qui');
         let btn = document.getElementById('myBtn') as HTMLButtonElement;
         if (btn) {
           btn.disabled = false;
-          console.log('entra en el ult if');
         }
       }
     });

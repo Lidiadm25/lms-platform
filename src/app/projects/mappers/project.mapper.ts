@@ -1,5 +1,4 @@
-import { Project } from "../interfaces/project.interface";
-import { RESTProject } from "../interfaces/rest-project.interface";
+
 
 export class ProjectMapper {
    /*

@@ -24,7 +24,7 @@ export interface Project {
   id:          string;
   title:       string;
   image:       string;
-  category:    string
+  category:    Category;
   description: string;
   duration:    number;
   units:       Unit[];

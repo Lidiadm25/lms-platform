@@ -12,7 +12,9 @@ export const notAuthenticatedGuard: CanMatchFn = async (route, segments) => {
 
   if(isAuthenticated){
     router.navigateByUrl('/');
+
     return false;
   }
+
   return true;
 };

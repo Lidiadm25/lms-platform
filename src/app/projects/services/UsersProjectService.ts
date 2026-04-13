@@ -40,5 +40,11 @@ getUsers(id:string, options:Options):Observable<UsersProjectResponse>{
    return this.http.post<UserProject>(`${BASE_URL}/user-projects/bulk`,{users:  userProjectLike});
   }
 
+  removeUsers(userProjectLike: string[]) {
+    return this.http.request<UserProject>("DELETE", BASE_URL + '/user-projects/bulk', {
+    body: userProjectLike
+}); 
+  }
+
     
 }

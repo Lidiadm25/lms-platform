@@ -23,7 +23,6 @@ export class AuthLayout {
   }
 
   ngAfterContentChecked() {
-    console.log(this.router.url);
     this.actualRoute.set(this.router.url);
   }
 }

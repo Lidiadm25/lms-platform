@@ -96,12 +96,15 @@ export class ProjectManagerPage {
     } else projectLike.isActive = false;
 
     if (this.edit() == true) {
-      await firstValueFrom(
+      this.projectLoaded.set(await firstValueFrom(
         this.projectService.updateProject(this.projectId, projectLike, this.file),
-      );
+      ))
+    
     } else {
-      await firstValueFrom(this.projectService.createProject(projectLike, this.file));
+    this.projectLoaded.set( await firstValueFrom(this.projectService.createProject(projectLike, this.file)))
+    
     }
+    this.projectId = this.projectLoaded()!.id
 
     // TODO users inscription WHEN CREATE
     if (this.users.length > 0) {
@@ -113,12 +116,16 @@ export class ProjectManagerPage {
     this.wasSaved.set(true);
     setTimeout(() => {
       this.wasSaved.set(false);
+      
     }, 3000);
+
+    
   }
 
   hasError = signal<boolean>(false);
 
   verifyStatus(){
+    
     if(!this.wasSaved() && this.projectId=='create'){
       this.hasError.set(true)
       setTimeout(()=>{
@@ -126,8 +133,8 @@ export class ProjectManagerPage {
        
       },  3000)
     } else {
-      let route:string = this.projectId +"/create"
-     this.router.navigate([route], {relativeTo: this.activatedRoute})
+     let route:string = "/admin/units-manager/" + this.projectId +"/create"
+     this.router.navigate([route], {replaceUrl: true})
     }
   }
 

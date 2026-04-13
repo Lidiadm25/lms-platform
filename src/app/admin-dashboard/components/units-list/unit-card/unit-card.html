@@ -3,7 +3,7 @@
           <div class="collapse-title font-semibold ">{{ unit().title }}</div>
           <div class="collapse-content text-sm">
             @for (lesson of unit().lessons; track $index) {
-              <app-lesson-card [lesson] = "lesson"/>
+              <app-lesson-card [lesson] = "lesson" [unitId]="unit().id"/>
             }
           </div>
         </div>
