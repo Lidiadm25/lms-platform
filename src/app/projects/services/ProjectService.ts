@@ -41,15 +41,12 @@ export class ProjectService {
   // Update
 
   updateProject(id: string, project: Partial<Project>, imageFile?: File) {
-    
-    const currentImages = project.image ?? [];
+  
     if (!imageFile) {
       return this.http.patch<Project>(`${BASE_URL}/project/${id}`, project);
     }
     return this.uploadImage(imageFile).pipe(
       map((fileName) => {
-
-
         return {
           ...project,
           image: fileName.substring(40),
