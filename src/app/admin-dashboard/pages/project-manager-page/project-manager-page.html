@@ -100,7 +100,8 @@
   <div class="flex flex-col gap-2">
     <a
       class="flex flex-col-2 gap-3"
-      [routerLink]="['/admin/units-manager', this.projectId, 'create']"
+      (click)="verifyStatus()"
+      
     >
       <h2 class="text-2xl font-bold h-12">Units</h2>
       <svg
@@ -134,5 +135,10 @@
 @if (wasSaved()) {
   <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
     <span>Changes saved succesfully</span>
+  </div>
+}
+@if(hasError()){
+   <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>You shall create a project first</span>
   </div>
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, model, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { UserProjectCreate } from './../../../auth/interfaces/user.interface';
@@ -24,6 +24,7 @@ export class ProjectManagerPage {
   projectService = inject(ProjectService);
   userProjectService = inject(UsersProjectService);
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router)
   // Form
   fb = inject(FormBuilder);
 
@@ -113,6 +114,21 @@ export class ProjectManagerPage {
     setTimeout(() => {
       this.wasSaved.set(false);
     }, 3000);
+  }
+
+  hasError = signal<boolean>(false);
+
+  verifyStatus(){
+    if(!this.wasSaved() && this.projectId=='create'){
+      this.hasError.set(true)
+      setTimeout(()=>{
+        this.hasError.set(false);
+       
+      },  3000)
+    } else {
+      let route:string = this.projectId +"/create"
+     this.router.navigate([route], {relativeTo: this.activatedRoute})
+    }
   }
 
   deleteProject() {
