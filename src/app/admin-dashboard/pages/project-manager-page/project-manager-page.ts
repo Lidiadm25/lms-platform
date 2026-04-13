@@ -24,7 +24,7 @@ export class ProjectManagerPage {
   projectService = inject(ProjectService);
   userProjectService = inject(UsersProjectService);
   activatedRoute = inject(ActivatedRoute);
-  router = inject(Router)
+  router = inject(Router);
   // Form
   fb = inject(FormBuilder);
 
@@ -85,10 +85,11 @@ export class ProjectManagerPage {
   }
 
   async onSubmit() {
+    if (this.hasError() == true) return;
+
     const projectLike: Project = {
       ...(this.projectForm.value as any),
     };
-    console.log(projectLike);
 
     var toggle = document.getElementById('toggle') as HTMLInputElement;
     if (toggle.checked == true) {
@@ -96,15 +97,17 @@ export class ProjectManagerPage {
     } else projectLike.isActive = false;
 
     if (this.edit() == true) {
-      this.projectLoaded.set(await firstValueFrom(
-        this.projectService.updateProject(this.projectId, projectLike, this.file),
-      ))
-    
+      this.projectLoaded.set(
+        await firstValueFrom(
+          this.projectService.updateProject(this.projectId, projectLike, this.file),
+        ),
+      );
     } else {
-    this.projectLoaded.set( await firstValueFrom(this.projectService.createProject(projectLike, this.file)))
-    
+      this.projectLoaded.set(
+        await firstValueFrom(this.projectService.createProject(projectLike, this.file)),
+      );
     }
-    this.projectId = this.projectLoaded()!.id
+    this.projectId = this.projectLoaded()!.id;
 
     // TODO users inscription WHEN CREATE
     if (this.users.length > 0) {
@@ -116,30 +119,28 @@ export class ProjectManagerPage {
     this.wasSaved.set(true);
     setTimeout(() => {
       this.wasSaved.set(false);
-      
     }, 3000);
 
-    
+    console.log('entra aqui?');
   }
 
   hasError = signal<boolean>(false);
 
-  verifyStatus(){
-    
-    if(!this.wasSaved() && this.projectId=='create'){
-      this.hasError.set(true)
-      setTimeout(()=>{
+  verifyStatus() {
+    if (!this.wasSaved() && this.projectId == 'create') {
+      this.hasError.set(true);
+      setTimeout(() => {
         this.hasError.set(false);
-       
-      },  3000)
+      }, 3000);
     } else {
-     let route:string = "/admin/units-manager/" + this.projectId +"/create"
-     this.router.navigate([route], {replaceUrl: true})
+      let route: string = '/admin/units-manager/' + this.projectId + '/create';
+      this.router.navigate([route], { replaceUrl: true });
     }
   }
 
   deleteProject() {
-    this.projectService.delete(this.projectId).subscribe(() => console.log('Lesson deleted'));
+    this.hasError.set(true);
+    this.projectService.delete(this.projectId).subscribe(() => this.projectLoaded.set(null));
     this.location.back();
   }
 
