@@ -11,8 +11,7 @@ import { UsersProjectService } from '../../../projects/services/UsersProjectServ
 import { ImageInput } from '../../components/image-input/image-input';
 import { SearchTags } from '../../components/search-tags/search-tags';
 import { UnitsList } from '../../components/units-list/units-list';
-import { CategoryDropdown } from "../../components/category-dropdown/category-dropdown";
-
+import { CategoryDropdown } from '../../components/category-dropdown/category-dropdown';
 
 @Component({
   selector: 'app-project-manager-page',
@@ -34,22 +33,28 @@ export class ProjectManagerPage {
   edit = signal(false);
   projectLoaded = signal<Project | null>(null);
 
-  project: Project | undefined;
   imageUrl = model<string>(
     'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
   );
 
   constructor(private location: Location) {
-    this.project = undefined;
     if (this.projectId != 'create') {
       this.projectService
         .getById(this.projectId)
         .subscribe((result) => this.projectLoaded.set(result));
+
       effect(() => {
         var toggle = document.getElementById('toggle') as HTMLInputElement;
         if (this.projectLoaded() != null) {
+          console.log(this.projectLoaded());
           this.edit.set(true);
-          this.projectForm.patchValue(this.projectLoaded() as Project);
+
+          this.projectForm.patchValue({
+            title: this.projectLoaded()?.title,
+            description: this.projectLoaded()?.description,
+            image: this.projectLoaded()?.image,
+            category: this.projectLoaded()?.category.id,
+          });
           if (this.projectLoaded()?.isActive) toggle.checked = true;
           if (this.projectLoaded()!.image.length > 0) {
             this.imageUrl.set(
@@ -71,18 +76,18 @@ export class ProjectManagerPage {
     title: ['', Validators.required],
     description: ['', Validators.required],
     image: [''],
-    category:['']
-  
+    category: [''],
   });
 
-  getSelectedControlCategory():FormControl{
-    return this.projectForm.get('category') as FormControl
+  getSelectedControlCategory(): FormControl {
+    return this.projectForm.get('category') as FormControl;
   }
 
   async onSubmit() {
     const projectLike: Project = {
       ...(this.projectForm.value as any),
     };
+    console.log(projectLike);
 
     var toggle = document.getElementById('toggle') as HTMLInputElement;
     if (toggle.checked == true) {
@@ -90,12 +95,10 @@ export class ProjectManagerPage {
     } else projectLike.isActive = false;
 
     if (this.edit() == true) {
-       await firstValueFrom(
-         this.projectService.updateProject(this.projectId, projectLike, this.file),
-       );
-      
+      await firstValueFrom(
+        this.projectService.updateProject(this.projectId, projectLike, this.file),
+      );
     } else {
-     
       await firstValueFrom(this.projectService.createProject(projectLike, this.file));
     }
 

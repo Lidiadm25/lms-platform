@@ -9,22 +9,16 @@
   <!-- CUADRO IZQUIERDA-->
   <div class="flex flex-col gap-2">
     <h2 class="text-2xl font-bold h-12">General</h2>
-    <input
-      type="text"
-      class="input input-bordered w-full"
-      formControlName="title"
-      
-    />
+    <input type="text" class="input input-bordered w-full" formControlName="title" />
 
     <textarea
       class="textarea textarea-bordered"
       placeholder="Descripción"
       rows="6"
       formControlName="description"
-      
     ></textarea>
 
-    <app-category-dropdown [control] = "getSelectedControlCategory()"/>
+    <app-category-dropdown [control]="getSelectedControlCategory()" />
 
     <div class="flex center-items gap-4">
       <Label for="toggle">Status of course</Label>
@@ -95,38 +89,42 @@
     </div>
 
     <div class="card bg-base-100 w-full shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title">Remove students</h2>
-      </div>
+      <a [routerLink]="['/admin/users-project', this.projectId]">
+        <div class="card-body">
+          <h2 class="card-title">Remove students</h2>
+        </div>
+      </a>
     </div>
   </div>
   <!-- LIST OF UNITS OF THE PROJECT CUADRO BOTTOM RIGHT-->
-   <div class="flex flex-col gap-2">
-   <a
-    class="flex flex-col-2 gap-3"
-    [routerLink]="['/admin/units-manager', this.projectId, 'create']"
-  >
-    <h2 class="text-2xl font-bold h-12">Units</h2>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="size-6"
+  <div class="flex flex-col gap-2">
+    <a
+      class="flex flex-col-2 gap-3"
+      [routerLink]="['/admin/units-manager', this.projectId, 'create']"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      <h2 class="text-2xl font-bold h-12">Units</h2>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>
+    </a>
+    @if (this.projectLoaded()) {
+      <app-units-list
+        [units]="this.projectLoaded()!.units"
+        [projectId]="this.projectLoaded()!.id"
       />
-    </svg>
-  </a>
-  @if (this.projectLoaded()) {
-    <app-units-list [units]="this.projectLoaded()!.units" [projectId]="this.projectLoaded()!.id" />
-  }
-</div>
-  <!-- Management of students -->
+    }
+  </div>
 </form>
 
 <!-- MODAL PARA AGREGAR POR CORREO -->
