@@ -120,8 +120,6 @@ export class ProjectManagerPage {
     setTimeout(() => {
       this.wasSaved.set(false);
     }, 3000);
-
-    console.log('entra aqui?');
   }
 
   hasError = signal<boolean>(false);
