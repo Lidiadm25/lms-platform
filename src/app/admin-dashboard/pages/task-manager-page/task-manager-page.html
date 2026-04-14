@@ -46,7 +46,16 @@
     </div>
   </div>
 </dialog>
-
+@if (wasSaved()) {
+    <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+      <span>Changes saved succesfully</span>
+    </div>
+  }
+  @if (hasError()) {
+    <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+      <span>You shall create a lesson first</span>
+    </div>
+  }
 
 
 

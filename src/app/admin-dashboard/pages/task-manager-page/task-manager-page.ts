@@ -26,6 +26,8 @@ export class TaskManagerPage {
     task_close: [''],
   })
   edit = signal<boolean>(false);
+  wasSaved = signal<boolean>(false);
+  hasError = signal<boolean>(false)
   constructor(){
     if(this.taskId != 'create') {
       this.edit.set(true);
@@ -71,7 +73,23 @@ export class TaskManagerPage {
     if(this.taskId == 'create') {
       this.taskService.create(task).subscribe((result) => console.log(result))
     } else {
-      this.taskService.update(task).subscribe((result) => console.log(result))
+      this.taskService.update(this.taskId,task).subscribe((result) => result.valueOf()? this.success() : this.error() )
     }
+    
+ 
   }
+
+  success(){
+          this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
+  }
+  error(){
+          this.hasError.set(true);
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 3000);
+  }
+
 }

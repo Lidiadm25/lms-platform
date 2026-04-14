@@ -1,3 +1,4 @@
+import { catchError, map, of } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -18,10 +19,16 @@ export class TaskService {
   create(task : TaskCreate){
     return this.http.post<TaskCreate>(`${BASE_URL}/tasks`, task)
   }
-  update(task: TaskCreate){
-    return this.http.patch<TaskCreate>(`${BASE_URL}/tasks`, task)
+  update(id: string, task: TaskCreate){
+    return this.http.patch<TaskCreate>(`${BASE_URL}/tasks/${id}`, task).pipe
+    (
+      catchError((error:any) => {return of(false)})
+    )
   }
   delete(id:string){
     return this.http.delete(`${BASE_URL}/tasks/${id}`)
   }
+
+  
+  
 }
