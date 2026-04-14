@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicSize } from "../../components/dynamic-size/dynamic-size";
@@ -25,21 +25,53 @@ export class TaskManagerPage {
     task_open: [''],
     task_close: [''],
   })
-
+  edit = signal<boolean>(false);
   constructor(){
-    
+    if(this.taskId != 'create') {
+      this.edit.set(true);
+      this.taskService
+        .getById(this.taskId)
+        .subscribe((result) => this.taskLoaded.set(result));
+
+      effect(() => {
+        const task = this.taskLoaded();
+        if (task) {
+         
+          // todo ?????????????????????????
+         const taskCloseDate = new Date(task.task_close);
+         const taskOpenDate = new Date(task.task_open);
+
+          this.taskForm.patchValue({
+            title: task.title,
+            description: task.description,
+            task_close: taskCloseDate.toISOString().slice(0,16),
+            task_open : taskOpenDate.toISOString().slice(0,16)
+            
+          });
+        }
+      });
+    }
   }
 
-  deleteTask(){}
+  
+
+  deleteTask(){
+    this.taskService.delete(this.taskId).subscribe((result) => console.log(result))
+  }
   onFilesChange( event: any){}
   getSelectedSize(){ return this.taskForm.get('title') as FormControl}
+
   OnSubmit(){
-   
+    
     var task: TaskCreate = {
       ...this.taskForm.value as any,
       lesson: this.lessonId
     }
     
-    this.taskService.create(task).subscribe((result) => console.log(result))
+    if(this.taskId == 'create') {
+      this.taskService.create(task).subscribe((result) => console.log(result))
+    } else {
+      this.taskService.update(task).subscribe((result) => console.log(result))
+    }
   }
 }

@@ -18,4 +18,10 @@ export class TaskService {
   create(task : TaskCreate){
     return this.http.post<TaskCreate>(`${BASE_URL}/tasks`, task)
   }
+  update(task: TaskCreate){
+    return this.http.patch<TaskCreate>(`${BASE_URL}/tasks`, task)
+  }
+  delete(id:string){
+    return this.http.delete(`${BASE_URL}/tasks/${id}`)
+  }
 }

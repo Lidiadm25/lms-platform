@@ -1,11 +1,9 @@
-import { User } from "../../auth/interfaces/user.interface";
-
+import { User } from '../../auth/interfaces/user.interface';
 
 export interface ProjectsResponse {
   count: number;
   pages: number;
   projects: Project[];
-
 }
 /*
 export interface FullProjectResponse{
@@ -21,36 +19,45 @@ export interface FullProjectResponse{
 
 // quitar
 export interface Project {
-  id:          string;
-  title:       string;
-  image:       string;
-  category:    Category;
+  id: string;
+  title: string;
+  image: string;
+  category: Category;
   description: string;
-  duration:    number;
-  units:       Unit[];
+  duration: number;
+  units: Unit[];
   isActive: boolean;
   author: User;
   studentsCount: number;
 }
 
 export interface Unit {
-  project :    string;
-  id:          string;
-  title:       string;
+  project: string;
+  id: string;
+  title: string;
   description: string;
-  lessons:     Lesson[];
+  lessons: Lesson[];
 }
 
 export interface Lesson {
-  section: string
-  id:       string;
+  section: string;
+  id: string;
   url_file: null;
-  title:    string;
+  title: string;
   description: string;
-  maxSize?:string;
+  maxSize?: string;
+  tasks: Task[];
 }
 
 export interface Category {
   id: string;
   name: string;
+}
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  task_created: Date;
+  task_open: Date;
+  task_close: Date;
 }
