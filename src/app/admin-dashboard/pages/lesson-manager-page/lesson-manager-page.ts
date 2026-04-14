@@ -1,22 +1,16 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import {
-  FormBuilder,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { Location } from '@angular/common';
 import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
+import { TaskCard } from "../../components/task-card/task-card";
 
 @Component({
   selector: 'app-lesson-manager-page',
-  imports: [FormsModule, ReactiveFormsModule, DynamicSize],
+  imports: [FormsModule, ReactiveFormsModule, DynamicSize, TaskCard],
   templateUrl: './lesson-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -26,7 +20,7 @@ export class LessonManagerPage {
   fb = inject(FormBuilder);
   // signals
 
-  LessonLoaded = signal<Lesson | null>(null);
+  lessonLoaded = signal<Lesson | null>(null);
   fileUrl = signal<string>('');
   edit = signal(false);
   lessonId: string = this.activatedRoute.snapshot.params['idLesson'];
@@ -37,10 +31,10 @@ export class LessonManagerPage {
       this.edit.set(true);
       this.lessonService
         .getById(this.lessonId)
-        .subscribe((result) => this.LessonLoaded.set(result));
+        .subscribe((result) => this.lessonLoaded.set(result));
 
       effect(() => {
-        const lesson = this.LessonLoaded();
+        const lesson = this.lessonLoaded();
         if (lesson) {
           this.lessonForm.patchValue(lesson);
         }
@@ -75,6 +69,11 @@ export class LessonManagerPage {
       } else {
         await firstValueFrom(this.lessonService.create(this.unitId, lessonLike, this.file));
       }
+
+       this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
     }
   }
 
@@ -93,5 +92,20 @@ export class LessonManagerPage {
   deleteLesson() {
     this.lessonService.delete(this.lessonId).subscribe(() => console.log('Lesson deleted'));
     this.location.back();
+  }
+
+  wasSaved = signal<boolean>(false);
+  hasError = signal<boolean>(false)
+  router = inject(Router)
+  verifyStatus() {
+    if (!this.wasSaved() && this.lessonId == 'create') {
+      this.hasError.set(true);
+      setTimeout(() => {
+        this.hasError.set(false);
+      }, 3000);
+    } else {
+      let route: string = '/admin/tasks-manager/' + this.lessonId + '/create';
+      this.router.navigate([route], { replaceUrl: true });
+    }
   }
 }

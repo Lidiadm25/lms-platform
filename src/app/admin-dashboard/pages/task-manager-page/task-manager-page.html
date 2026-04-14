@@ -1,4 +1,4 @@
-<form (ngSubmit)="OnSubmit()" [formGroup]="lessonForm">
+<form (ngSubmit)="OnSubmit()" [formGroup]="taskForm">
   <label>Title</label>
   <input
     class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
@@ -17,6 +17,11 @@
     
   ></textarea>
   <br />
+
+  <label > Task opens</label>
+  <input type="datetime-local" class="input"  formControlName="task_open"/> <br>
+    <label >Task closes</label>
+    <input type="datetime-local" class="input" formControlName="task_close" />
   <input
     type="file"
     multiple
@@ -35,7 +40,7 @@
     <p class="py-4">Are you sure you wanna delete the lesson?</p>
     <div class="modal-action">
       <form method="dialog">
-         <button class="btn" (click)="deleteLesson()"> Delete</button>
+         <button class="btn" (click)="deleteTask()"> Delete</button>
         <button class="btn">Close</button>
       </form>
     </div>
@@ -43,39 +48,5 @@
 </dialog>
 
 
-<div class="flex flex-col gap-2">
-  <a class="flex flex-col-2 gap-3" (click)="verifyStatus()">
-    <h2 class="text-2xl font-bold h-12">Tasks</h2>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="size-6"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-      />
-    </svg>
-  </a>
-@if (!lessonLoaded() ) {
-  <p> No tasks </p>
-} @else {
- @for (item of lessonLoaded()!.tasks; track $index) {
-  <app-task-card [taskId] = "item.id" />
- }
-}
- @if (wasSaved()) {
-    <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
-      <span>Changes saved succesfully</span>
-    </div>
-  }
-  @if (hasError()) {
-    <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
-      <span>You shall create a lesson first</span>
-    </div>
-  }
-</div>
+
+
