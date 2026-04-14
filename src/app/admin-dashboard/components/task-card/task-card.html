@@ -1,3 +1,4 @@
+<div class="divider"></div>
 <div class="grid grid-cols-[10%_85%_5%]">
   <!-- Primero: tipo lección Segundo: editar-->
   <svg
@@ -15,9 +16,9 @@
     />
   </svg>
 
-  <p class="">{{ taskLoaded()?.title }}</p>
+  <p>{{ taskLoaded()?.title }}</p>
 
-  <a>
+  <a [routerLink]="['/admin/tasks-manager', this.lessonId(), this.taskLoaded()?.id]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

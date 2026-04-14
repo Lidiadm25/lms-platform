@@ -4,7 +4,6 @@
     class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
     type="text"
     formControlName="title"
-    
   />
 
   <label>Description</label> <br />
@@ -14,7 +13,6 @@
     placeholder="Descripción"
     rows="6"
     formControlName="description"
-    
   ></textarea>
   <br />
   <input
@@ -23,7 +21,7 @@
     class="file-input file-input-bordered w-full mt-4"
     (change)="onFilesChange($event)"
   />
-    <app-dynamic-size [control] = "getSelectedSize()"/>
+  <app-dynamic-size [control]="getSelectedSize()" />
 
   <button class="btn btn-secondary" type="submit">Save</button>
 </form>
@@ -35,13 +33,12 @@
     <p class="py-4">Are you sure you wanna delete the lesson?</p>
     <div class="modal-action">
       <form method="dialog">
-         <button class="btn" (click)="deleteLesson()"> Delete</button>
+        <button class="btn" (click)="deleteLesson()">Delete</button>
         <button class="btn">Close</button>
       </form>
     </div>
   </div>
 </dialog>
-
 
 <div class="flex flex-col gap-2">
   <a class="flex flex-col-2 gap-3" (click)="verifyStatus()">
@@ -61,14 +58,14 @@
       />
     </svg>
   </a>
-@if (!lessonLoaded() ) {
-  <p> No tasks </p>
-} @else {
- @for (item of lessonLoaded()!.tasks; track $index) {
-  <app-task-card [taskId] = "item.id" />
- }
-}
- @if (wasSaved()) {
+  @if (!lessonLoaded()) {
+    <p>No tasks</p>
+  } @else {
+    @for (item of lessonLoaded()!.tasks; track $index) {
+      <app-task-card [taskId]="item.id" [lessonId]="this.lessonId" />
+    }
+  }
+  @if (wasSaved()) {
     <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
       <span>Changes saved succesfully</span>
     </div>

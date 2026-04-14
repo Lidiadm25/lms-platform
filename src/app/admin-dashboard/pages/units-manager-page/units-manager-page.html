@@ -57,7 +57,7 @@
 
   @if (this.unitLoaded() != null && this.unitLoaded()!.lessons.length > 0) {
     @for (lesson of unitLoaded()!.lessons; track $index) {
-      <app-lesson-card [lesson]="lesson" [unitId]="this.unitId" />
+      <app-lesson-card [unitId]="this.unitId" [lesson]="lesson" />
     }
   } @else {
     <h2>No lessons</h2>
