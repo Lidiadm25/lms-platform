@@ -9,9 +9,9 @@ export class DateEventMapper{
        for (let index = 0; index < submitItem.tasks.length; index++) {
             events.push({
                 id: submitItem.tasks[index].id,
-                title: submitItem.tasks[index].id,
-                start: TODAY_STR + 'T12:00:00',
-                end: TODAY_STR + 'T15:00:00'
+                title: submitItem.tasks[index].task.title, 
+                start:new Date( submitItem.tasks[index].task.task_open),
+                end: new Date( submitItem.tasks[index].task.task_close)
 
             })
         

@@ -21,11 +21,12 @@ export class HomePage {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin],
     height: 650,
-    events: []
+    events: [],
+    
     
   };
   taskService = inject(TaskService)
-   
+   // todo toggle calendar visible
   ngOnInit() {
     // recoger tareas del user
     this.taskService.getSubmissions()?.subscribe((result)=> {
