@@ -5,3 +5,9 @@ export interface AuthResponse {
   token: string;
   roles: string[];
 }
+
+export interface jwtToken {
+  id: string;
+  iat: number;
+  exp: number;
+}
