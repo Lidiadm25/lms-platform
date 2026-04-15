@@ -1,48 +1,10 @@
-<h1 class="text-3xl font-bold font-montserrat w-auto">
-  All courses
-</h1>
 
-<section class="flex flex-col gap-4">
-    <input type="string"
-    placeholder="Search courses"
-    class="mt-3 border border-gray-300 rounded-md p-2"
-    [ngModel] = "search()"
-    (keydown.enter)="search.set($event.target.value); onSearch()"
-    #txtSearch
-    />
-</section>
+<div class="h-full">
+    <section>
+    <app-courses-slider/>
 
-<!-- TODO -->
-<div
-  class="grid grid-flow-col grid-rows-3 gap-4 mt-5"
->
-
-  @for (project of projectResource.value()?.projects; track $index) {
-<app-project-card [project]="project" />
-
-  }
-  <!-- Empty -->
-  @empty {
-  <p>No courses</p>
-  }
+    </section>
+    <section>
+        
+    </section>
 </div>
-
-@if(projectResource.isLoading()) {
-  <div class="flex items-center gap-2">
-      <span class="loading loading-spinner"></span>
-      <span>Loading…</span>
-    </div>
-}
-
-@if(projectResource.error()){
-  <div class="alert alert-error">
-      <span>Failed to load: {{ projectResource.error()?.message ?? 'Unknown error' }}</span>
-     <button class="btn btn-sm ml-auto" (click)="reload()">Retry</button>
-    </div>
-}
-
-<app-pagination
-  [pages]="projectResource.value()?.pages ?? 0"
-  [currentPage]="paginationService.currentPage()"
-/>
-
