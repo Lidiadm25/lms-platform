@@ -1,0 +1,19 @@
+
+
+      <!-- Swiper -->
+    <swiper-container slides-per-view="3" navigation="true" pagination="true">
+      @for (item of projects()?.projects; track $index) {
+      <swiper-slide > 
+  
+        <app-project-card [project] = "item"/>
+       
+      </swiper-slide>
+      }
+      
+    </swiper-container>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+
+
+   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-element-bundle.min.js"></script>
