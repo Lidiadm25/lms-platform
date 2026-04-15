@@ -117,7 +117,7 @@ export class AuthService {
    * @returns 
    */
   private handleAuthError(error:any){
-    console.log(error)
+    
     this.logout();
     return of(false);
   }

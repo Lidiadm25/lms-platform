@@ -8,7 +8,7 @@ import { LessonCard } from '../../components/units-list/unit-card/lesson-card/le
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule, LessonCard, RouterLink],
+  imports: [ReactiveFormsModule, LessonCard],
   templateUrl: './units-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

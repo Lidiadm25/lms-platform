@@ -19,7 +19,7 @@ export class LessonManagerPage {
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);
   // signals
-
+  
   lessonLoaded = signal<Lesson | null>(null);
   fileUrl = signal<string>('');
   edit = signal(false);

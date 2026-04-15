@@ -14,9 +14,9 @@ export class CategoryDropdown {
   categories = signal<Category[]>([]);
   chosenCategory = signal<string>('Select a category');
 
-  @Input() control !: FormControl;
+  control = input.required<FormControl>();
+  
  
-
   constructor(){
     this.categoryService.getCategories().subscribe((result)=>this.categories.set(result));
   }
