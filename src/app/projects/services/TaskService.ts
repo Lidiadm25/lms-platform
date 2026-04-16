@@ -2,10 +2,10 @@ import { catchError, map, of } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Task } from '../interfaces/project.interface';
-import { SubmitTaskResponse, TaskCreate } from '../../admin-dashboard/interfaces/task.interface';
 import { jwtDecode } from 'jwt-decode';
 import { jwtToken } from '../../auth/interfaces/auth-response.interface';
+import { Task } from '../interfaces/project.interface';
+import { Submit, SubmitTaskResponse, TaskCreate } from '../interfaces/tasks.interface.ts';
 
 const BASE_URL = environment.baseUrl;
 @Injectable({
@@ -41,6 +41,11 @@ export class TaskService {
     let result = jwtDecode<jwtToken>(token);
 
     return this.http.get<SubmitTaskResponse>(`${BASE_URL}/submit-task/user/${result.id}`)
+  }
+
+  getSubmission(id: string){
+
+    return this.http.get<Submit>(`${BASE_URL}/submit-task/${id}`)
   }
   
 }

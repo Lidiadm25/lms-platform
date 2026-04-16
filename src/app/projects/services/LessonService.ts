@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Lesson } from '../interfaces/project.interface';
+import { Lesson, Tree } from '../interfaces/project.interface';
 import { map, Observable, switchMap, tap } from 'rxjs';
 const BASE_URL = environment.baseUrl;
 @Injectable({
@@ -68,5 +68,9 @@ export class LessonService {
 
   delete(id: string) {
     return this.http.delete(`${BASE_URL}/lessons/${id}`);
+  }
+
+  getTree(id:string){
+    return this.http.get<Tree>(`${BASE_URL}/lessons/tree/${id}`);
   }
 }

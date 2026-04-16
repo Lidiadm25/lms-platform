@@ -1,0 +1,21 @@
+<div class="p-2">
+  <h2 mat-dialog-title>Tarea</h2>
+  <mat-dialog-content>
+    <p>Tarea: {{ data.title }}</p>
+
+    @if (!this.projectInfo()) {
+      <p>ERROR</p>
+    } @else {
+      <p>{{ this.projectInfo()?.project_title}} - {{this.projectInfo()?.section_title}}</p>
+    }
+
+    <p>Estado: {{ this.status() }}</p>
+
+    <br>
+
+    <a href="" class="mt-7">Ver tarea</a>
+
+    
+    <p>{{ this.start() | date: 'short' }} - {{ this.end() | date: 'short' }}</p>
+  </mat-dialog-content>
+</div>

@@ -1,23 +1,15 @@
+
+
 import { User } from '../../auth/interfaces/user.interface';
+
 
 export interface ProjectsResponse {
   count: number;
   pages: number;
   projects: Project[];
 }
-/*
-export interface FullProjectResponse{
-  id:          string;
-  title:       string;
-  image:       string;
-  category:    string
-  description: string;
-  duration:    number;
-  units:       Unit[];
-  author: User;
-} */
 
-// quitar
+
 export interface Project {
   id: string;
   title: string;
@@ -32,7 +24,7 @@ export interface Project {
 }
 
 export interface Unit {
-  project: string;
+  project: Project;
   id: string;
   title: string;
   description: string;
@@ -49,15 +41,47 @@ export interface Lesson {
   tasks: Task[];
 }
 
+
 export interface Category {
   id: string;
   name: string;
 }
 export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  task_created: Date;
-  task_open: Date;
-  task_close: Date;
+
+    id:           string;
+    lesson_task: Lesson;
+    title:        string;
+    description:  string;
+    task_created: Date;
+    task_open:    Date;
+    task_close:   Date;
 }
+
+export interface Tree {
+  lesson_id:           string;
+  lesson_url_file:     string;
+  lesson_title:        string;
+  lesson_description:  string;
+  lesson_unitId:       string;
+  section_id:          string;
+  section_title:       string;
+  section_description: string;
+  section_projectId:   string;
+  project_id:          string;
+  project_title:       string;
+  project_image:       string;
+  project_description: string;
+  project_duration:    number;
+  project_isActive:    number;
+  project_authorId:    string;
+  project_categoryId:  string;
+  project_surveyId:    string;
+}
+
+
+
+
+
+
+
+
