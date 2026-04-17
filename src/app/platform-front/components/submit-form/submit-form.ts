@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
-import { FileInputManager } from "../file-input-manager/file-input-manager";
+import { ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../../projects/services/TaskService';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FileInputManager } from "../file-input-manager/file-input-manager";
 
 @Component({
   selector: 'app-submit-form',
@@ -14,16 +14,29 @@ export class SubmitForm {
    fileSize = input.required<number>();
    submitService = inject(TaskService)
    file! : File;
-
+  wasSaved = signal<boolean>(false);
+  hasError = signal<boolean>(false);
    imageUrl = signal<string>('');
    
   onSubmit(){
     console.log(this.imageUrl())
   
     
-    this.submitService.updateSubmission(this.submissionId(), this.file).subscribe((result)=> console.log(result))
+    this.submitService.updateSubmission(this.submissionId(), this.file) .subscribe((result) => (result.valueOf() ? this.success() : this.error()));
+  }
+  success() {
+    this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
   }
 
+  error() {
+    this.hasError.set(true);
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 3000);
+  }
  
  }
 

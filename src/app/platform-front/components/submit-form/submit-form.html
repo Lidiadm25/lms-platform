@@ -4,3 +4,13 @@
     <button class="btn btn-primary mr-5" (click)="onSubmit()"> Save changes </button>
 <button class="btn btn-secondary"> Cancel </button>
 </div>
+@if (wasSaved()) {
+    <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+      <span>Changes saved succesfully</span>
+    </div>
+  }
+  @if (hasError()) {
+    <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+      <span>Something went wrong</span>
+    </div>
+  }

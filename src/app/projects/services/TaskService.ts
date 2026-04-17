@@ -67,6 +67,7 @@ export class TaskService {
           switchMap((updatedSubmit) =>
             this.http.patch<Submit>(`${BASE_URL}/submit-task/${id}`, updatedSubmit),
           ),
+        catchError((error:any) => {return of(false)})
         );
       }
 
