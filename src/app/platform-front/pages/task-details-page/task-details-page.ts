@@ -22,15 +22,33 @@ export class TaskDetailsPage {
   task = signal<Task | null>(null);
   submit = signal<Submit | null> (null);
   status = signal<string>('Submit the task');
+  isActive = signal<boolean>(false);
 
   ngOnInit(){
-    this.taskService.getById(this.idTask).subscribe((result) => this.task.set(result));
+
+    this.taskService.getById(this.idTask).subscribe((result) => {
+      this.task.set(result)
+      this.verifyStatus();
+    });
+    
     this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
-      console.log(result)
+      
       this.submit.set(result)
-      if(this.submit()?.date_send != null) this.status.set("Submission info")
+      if(this.submit()?.date_send != null && this.isActive() == false) 
+      {
+        this.status.set("Submission info")
+      }
        });
 
+  }
+
+  verifyStatus(){
+    let open = new Date(this.task()!.task_open)
+    let close = new Date(this.task()!.task_close)
+    let now = new Date();
+
+   (now > close || now < open)? this.isActive.set(false) : this.isActive.set(true);
+    
   }
 
 }

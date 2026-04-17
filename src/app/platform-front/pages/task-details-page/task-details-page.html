@@ -15,12 +15,12 @@
   
     <!-- MODIFICADO POR COMPONENTE HIJO!! -->
     <p class="m-2">{{this.status()}}</p>
-    @if(this.submit()?.date_send != null){
+    @if(this.submit()?.date_send != null && this.isActive() == false){
         <!-- TABLA CON DATOS Y CALIFICACIÓN -->
 
          <app-submit-info/>
-    } @else {
-      <!-- TODO MAX SIZE-->
+    } @else if(this.isActive()) {
+      
         <app-submit-form [submissionId] = "this.submit()!.id" [fileSize]="this.task()!.fileSize" />
     }
   </div>
