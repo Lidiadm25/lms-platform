@@ -1,4 +1,4 @@
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -35,6 +35,9 @@ export class TaskService {
     return this.http.delete(`${BASE_URL}/tasks/${id}`)
   }
 
+
+  // SUBMISSIONS REQ
+
   getSubmissions(){
     let token = localStorage.getItem('token')
     if(!token) return;
@@ -47,5 +50,39 @@ export class TaskService {
 
     return this.http.get<Submit>(`${BASE_URL}/submit-task/${id}`)
   }
+
+  getSubmissionByTask(id: string){
+
+    return this.http.get<Submit>(`${BASE_URL}/submit-task/task/${id}`)
+  }
   
+  updateSubmission(id:string, file:File){
+    return this.uploadFile(file, "20000000").pipe(
+          map((fileName) => {
+            console.log(fileName);
+            return {
+              url_file: fileName.substring(40),
+            };
+          }),
+          switchMap((updatedSubmit) =>
+            this.http.patch<Submit>(`${BASE_URL}/submit-task/${id}`, updatedSubmit),
+          ),
+        );
+      }
+
+
+    uploadFile(file: File, size: string | undefined): Observable<string> {
+      const formData = new FormData();
+      formData.append('file', file);
+      if (size == undefined) size = 'DEFAULT';
+      formData.append('maxSize', size);
+      return this.http
+        .post<{
+          secureUrl: string;
+        }>(`${BASE_URL}/files/lesson`, formData)
+        .pipe(
+          map((resp) => resp.secureUrl),
+          tap((imageNames) => console.log({ imageNames })),
+        );
+    }
 }

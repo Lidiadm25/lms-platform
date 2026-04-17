@@ -6,6 +6,7 @@ import { Task } from '../../../projects/interfaces/project.interface';
 import { SubmitForm } from '../../components/submit-form/submit-form';
 import { SubmitInfo } from '../../components/submit-info/submit-info';
 import { ActivatedRoute } from '@angular/router';
+import { Submit } from '../../../projects/interfaces/tasks.interface.ts';
 
 @Component({
   selector: 'app-task-details-page',
@@ -19,10 +20,17 @@ export class TaskDetailsPage {
 
   taskService = inject(TaskService);
   task = signal<Task | null>(null);
+  submit = signal<Submit | null> (null);
+  status = signal<string>('Submit the task');
 
   ngOnInit(){
     this.taskService.getById(this.idTask).subscribe((result) => this.task.set(result));
-    //this.taskService.getSubmission()
+    this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
+      console.log(result)
+      this.submit.set(result)
+      if(this.submit()?.date_send != null) this.status.set("Submission info")
+       });
+
   }
 
 }

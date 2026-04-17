@@ -1,0 +1,10 @@
+
+<div class="bg-white rounded-xl p-5">
+    <p>Opens: {{ this.task()!.task_open | date:"short" }}</p>
+    <p>Closes: {{ this.task()!.task_close | date:"short" }} </p>
+    
+    <div class="divider"></div>
+    <p>{{ this.task()!.description }} </p>
+    <br>
+
+</div>
