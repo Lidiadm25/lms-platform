@@ -1,0 +1,24 @@
+<div class="bg-pink-50 h-full">
+    <div class="breadcrumbs text-sm">
+  <ul>
+    <li><a>Home</a></li>
+    <li><a>Documents</a></li>
+    <li>Add Document</li>
+  </ul>
+  <h1>{{ this.task()!.title }}</h1>
+  <div class="flex flex-col m-5  ">
+   @if(this.task() != null){
+     <app-task-info [task] = "this.task()"/>
+   }
+    <!-- MODIFICADO POR COMPONENTE HIJO!! -->
+    <p>TASK STATUS</p>
+    @if(this.task()){
+        <!-- TABLA CON DATOS Y CALIFICACIÓN -->
+
+         <app-submit-info/>
+    } @else {
+        <app-submit-form/>
+    }
+  </div>
+</div>
+

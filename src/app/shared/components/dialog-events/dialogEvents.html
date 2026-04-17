@@ -13,7 +13,9 @@
 
     <br>
 
-    <a href="" class="mt-7">Ver tarea</a>
+    <button mat-dialog-close>
+      <a [routerLink]="['/task', this.data.task_id ]" class="mt-7" >Ver tarea</a>
+    </button>
 
     
     <p>{{ this.start() | date: 'short' }} - {{ this.end() | date: 'short' }}</p>

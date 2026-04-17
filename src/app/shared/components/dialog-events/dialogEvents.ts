@@ -1,14 +1,15 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogContent } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogClose } from '@angular/material/dialog';
 import { TaskService } from '../../../projects/services/TaskService';
 import { DatePipe } from '@angular/common';
 import { LessonService } from '../../../projects/services/LessonService';
 import { Tree } from '../../../projects/interfaces/project.interface';
+import { RouterLink } from "@angular/router";
 
 
 @Component({
   selector: 'app-dialog-events',
-  imports: [MatDialogContent, DatePipe],
+  imports: [MatDialogContent, DatePipe, RouterLink, MatDialogClose],
   templateUrl: './dialogEvents.html',
   styleUrl: './dialogEvents.css',
 
