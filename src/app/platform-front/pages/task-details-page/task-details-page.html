@@ -21,7 +21,7 @@
          <app-submit-info/>
     } @else {
       <!-- TODO MAX SIZE-->
-        <app-submit-form [submissionId] = "this.submit()!.id" />
+        <app-submit-form [submissionId] = "this.submit()!.id" [fileSize]="this.task()!.fileSize" />
     }
   </div>
    }

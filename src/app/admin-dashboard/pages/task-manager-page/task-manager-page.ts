@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
 import { Task } from '../../../projects/interfaces/project.interface';
-import { TaskCreate } from '../../interfaces/task.interface';
+import { TaskCreate } from '../../../projects/interfaces/tasks.interface.ts';
 import { TaskService } from '../../../projects/services/TaskService';
+import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
 
 @Component({
   selector: 'app-task-manager-page',
@@ -24,6 +24,7 @@ export class TaskManagerPage {
     description: [''],
     task_open: [''],
     task_close: [''],
+    fileSize: [0],
   });
   edit = signal<boolean>(false);
   wasSaved = signal<boolean>(false);
@@ -47,6 +48,7 @@ export class TaskManagerPage {
             description: task.description,
             task_close: taskCloseDate.toISOString().slice(0, 16),
             task_open: taskOpenDate.toISOString().slice(0, 16),
+            fileSize: task.fileSize,
           });
         }
       });
@@ -59,7 +61,7 @@ export class TaskManagerPage {
   }
   onFilesChange(event: any) {}
   getSelectedSize() {
-    return this.taskForm.get('title') as FormControl;
+    return this.taskForm.get('fileSize') as FormControl;
   }
 
   OnSubmit() {

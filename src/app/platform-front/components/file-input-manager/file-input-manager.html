@@ -22,7 +22,7 @@
       </svg>
       <input id="dropzone-file-2" type="file" class="hidden" multiple (change)="onFilesChange($event)"  />
       <p class="mb-2 text-sm">Click the button below to upload</p>
-      <p class="text-xs mb-4">Max. File Size: <span class="font-semibold">30MB</span></p>
+      <p class="text-xs mb-4">Max. File Size: <span class="font-semibold">{{ this.size()}} MB</span></p>
       <!-- Upload Button -->
       <button
         type="button"

@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 })
 export class SubmitForm {
    submissionId = input.required<string>();
+   fileSize = input.required<number>();
    submitService = inject(TaskService)
    file! : File;
 
