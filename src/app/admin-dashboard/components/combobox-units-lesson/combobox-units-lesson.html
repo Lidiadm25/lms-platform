@@ -1,0 +1,51 @@
+@if (filteredUnits$ != undefined) {
+  <form [formGroup]="exFormGroup">
+    <mat-form-field class="w-100%" appearance="outline">
+      <mat-label>Units</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        matInput
+        formControlName="unitsController"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayWith"
+        showPanel="true"
+        class="example-bright-container"
+        (optionsScroll)="onScroll()"
+      >
+        @for (item of filteredUnits$ | async; track item) {
+          <mat-option [value]="item">
+            {{ item.title }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="w-100%" appearance="outline">
+      <mat-label>Lessons</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        #text
+        matInput
+        formControlName="lessonController"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+       
+        [displayWith]="displayWith"
+        showPanel="true"
+        (optionsScroll)="onScroll()"
+      >
+        @for (item of filteredUnits$ | async; track $index) {
+          <mat-option>
+            {{ item.title }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+}
