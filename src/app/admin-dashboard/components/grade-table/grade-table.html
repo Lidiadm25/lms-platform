@@ -1,21 +1,26 @@
-<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+<form   (ngSubmit)="onSubmit()" [formGroup]="submitForm" >
+  <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
   <legend class="fieldset-legend">Grade review</legend>
 
   <label class="label">Title of task</label>
   <input type="text" class="input" placeholder="Task title" />
 
   <label class="label">Min grade</label>
-  <input type="text" class="input" placeholder="0" />
+  <input type="text" class="input" placeholder="0"  formControlName="min_range"  />
 
   <label class="label">Max grade</label>
-  <input type="text" class="input" placeholder="10" />
+  <input type="text" class="input" placeholder="10"  formControlName="max_range"  />
 
   <label class="label">Grade</label>
-  <input type="text" class="input" placeholder="5" />
+  <input type="text" class="input" placeholder="5"  formControlName="total" />
 
   <label class="label mb-5">Feedback</label>
   <textarea
     class="peer h-full min-h-[100px] w-full resize-none rounded-[7px] border border-gray-300 bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
     placeholder="Include here your feedback"
+     formControlName="feedback" 
   ></textarea>
 </fieldset>
+
+<Button class="btn btn-secondary" type="submit">save grades</Button>
+</form>
