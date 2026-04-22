@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Lesson, Tree } from '../interfaces/project.interface';
+import { Lesson, LessonResponse, Tree } from '../interfaces/project.interface';
 import { map, Observable, switchMap, tap } from 'rxjs';
 const BASE_URL = environment.baseUrl;
 @Injectable({
@@ -19,7 +19,7 @@ export class LessonService {
     const { maxSize, ...rest } = lessonLike;
     const payload = { ...rest, unit };
     if (!file) {
-      return this.http.post<Lesson>(`${BASE_URL}/lessons`, rest);
+      return this.http.post<Lesson>(`${BASE_URL}/lessons`, payload);
     }
     return this.uploadFile(file, maxSize).pipe(
       map((fileName) => {
@@ -72,5 +72,10 @@ export class LessonService {
 
   getTree(id:string){
     return this.http.get<Tree>(`${BASE_URL}/lessons/tree/${id}`);
+  }
+
+  getLessonsByUnit(id:string){
+
+    return this.http.get<Lesson[]>(`${BASE_URL}/lessons/unit-id/${id}`)
   }
 }

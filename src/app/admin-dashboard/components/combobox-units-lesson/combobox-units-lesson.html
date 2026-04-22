@@ -32,16 +32,17 @@
         #text
         matInput
         formControlName="lessonController"
-        [matAutocomplete]="auto"
+        [matAutocomplete]="auto2"
+        
       />
       <mat-autocomplete
-       
+        #auto2 ="matAutocomplete"
         [displayWith]="displayWith"
         showPanel="true"
         (optionsScroll)="onScroll()"
       >
-        @for (item of filteredUnits$ | async; track $index) {
-          <mat-option>
+        @for (item of filteredLessons$ | async; track $index) {
+          <mat-option [value]="item" (onSelectionChange)="emitLesson(item.id)">
             {{ item.title }}
           </mat-option>
         }
