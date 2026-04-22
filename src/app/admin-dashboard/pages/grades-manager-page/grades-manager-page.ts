@@ -1,17 +1,16 @@
-import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatOption } from "@angular/material/autocomplete";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
-import { debounceTime, exhaustMap, filter, Observable, of, scan, startWith, Subject, switchMap, takeWhile, tap } from 'rxjs';
-import { Project, Unit } from '../../../projects/interfaces/project.interface';
+import { Project } from '../../../projects/interfaces/project.interface';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { ComboboxUnitsLesson } from "../../components/combobox-units-lesson/combobox-units-lesson";
+import { GradeTable } from "../../components/grade-table/grade-table";
 import { ListUsers } from "../../components/list-users/list-users";
 import { SubmissionVisualizer } from "../../components/submission-visualizer/submission-visualizer";
-import { GradeTable } from "../../components/grade-table/grade-table";
+import { TaskService } from '../../../projects/services/TaskService';
+import { Submit } from '../../../projects/interfaces/tasks.interface.ts';
 @Component({
   selector: 'app-grades-manager-page',
   imports: [MatAutocompleteModule, ReactiveFormsModule, MatInputModule, ComboboxUnitsLesson, ListUsers, SubmissionVisualizer, GradeTable],
@@ -29,13 +28,22 @@ export class GradesManagerPage {
   fb = inject(FormBuilder)
   projectId: string = this.activatedRoute.snapshot.params['idProject'];
   userId = signal<string>('');
-  submitId = signal<string>('');
+  taskId = signal<string>('');
+  submit = signal<Submit | null>(null)
 
-  ngOnInit(): void {
-   
-    }
+  taskService = inject(TaskService)
+
+  constructor(){
+    effect(()=>{
+      if(this.taskId() && this.userId()) {
+        this.taskService.findByUserTask(this.userId(), this.taskId()).subscribe((x)=> this.submit.set(x))
+      }
+    })
+  }
     
+  submitGrades(){
 
+  }
 }
 
 

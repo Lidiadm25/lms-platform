@@ -1,6 +1,6 @@
 <h2>GRADE REVIEWS</h2> 
 
-  <app-combobox-units-lesson [projectId]= "this.projectId" (submission)="submitId.set($event)"/>
+  <app-combobox-units-lesson [projectId]= "this.projectId" (task)="taskId.set($event)"/>
 
 
  <section class="flex flex-col-3 gap-5 justify-between h-full">
@@ -12,6 +12,9 @@
     <app-submission-visualizer />
   </div>
   <div class="flex-auto">
-    <app-grade-table [userId] = "this.userId()" [submit]="this.userId()"/>
+    <app-grade-table [userId] = "this.userId()" [submit]="this.submit()"/>
   </div>
-</section> 
+
+  
+</section>
+
