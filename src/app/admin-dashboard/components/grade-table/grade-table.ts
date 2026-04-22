@@ -1,6 +1,8 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Submit } from '../../../projects/interfaces/tasks.interface.ts';
+import { GradeCreate } from '../../../projects/interfaces/grade.interface';
+import { Submit } from '../../../projects/interfaces/tasks.interface';
+import { GradeService } from '../../../projects/services/GradeService';
 
 @Component({
   selector: 'app-grade-table',
@@ -11,12 +13,12 @@ export class GradeTable {
   userId = input.required<string>();
   submit = input.required<Submit | null>();
   fb = inject(FormBuilder);
-
+  gradeService = inject(GradeService);
   submitForm = this.fb.group({
-    min_range: '',
-    max_range: '',
+    min_range: 0,
+    max_range: 0,
     feedback: '',
-    total: '',
+    total: 0,
   });
 
   constructor() {
@@ -33,5 +35,11 @@ export class GradeTable {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const gradeLike: GradeCreate = {
+      ...(this.submitForm.value as any),
+      taskSubmitId: this.submit()!.id,
+    };
+    this.gradeService.create(gradeLike).subscribe((x) => console.log(x));
+  }
 }
