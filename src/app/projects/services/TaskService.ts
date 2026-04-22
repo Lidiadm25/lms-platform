@@ -35,6 +35,10 @@ export class TaskService {
     return this.http.delete(`${BASE_URL}/tasks/${id}`)
   }
 
+  getByLessonId(id:string){
+    
+    return this.http.get<Task[]>(`${BASE_URL}/tasks/lesson-id/${id}`)
+  }
 
   // SUBMISSIONS REQ
 
@@ -85,5 +89,10 @@ export class TaskService {
           map((resp) => resp.secureUrl),
           tap((imageNames) => console.log({ imageNames })),
         );
+    }
+
+
+    findByUserTask(id:string, task:string){
+     return this.http.get<Submit>(`${BASE_URL}/submit-task/review-task/${id}/${task}`)
     }
 }
