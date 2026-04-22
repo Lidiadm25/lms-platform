@@ -20,10 +20,12 @@ import {
 import {
   Lesson,
   Project,
+  Task,
   Unit
 } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
 import { ProjectService } from '../../../projects/services/ProjectService';
+import { TaskService } from '../../../projects/services/TaskService';
 
 @Component({
   selector: 'app-combobox-units-lesson',
@@ -46,15 +48,16 @@ export class ComboboxUnitsLesson {
   project = signal<Project | null>(null);
   filteredUnits$: Observable<Unit[]> | undefined;
   filteredLessons$: Observable<Lesson[]> | undefined;
+  filteredTasks$: Observable<Task[]> | undefined;
   public studentsFilterCtrl: FormControl = new FormControl();
   private unitList: Unit[] = [];
   private nextPage$ = new Subject<void>();
   exFormGroup: any;
 
-  lesson = output<string>();
+  task = output<string>();
 
   lessonService = inject(LessonService);
-
+  taskService = inject(TaskService);
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -67,6 +70,7 @@ export class ComboboxUnitsLesson {
     this.exFormGroup = this.formBuilder.group({
       unitsController: '',
       lessonController: '',
+      taskController: '',
     });
 
  
@@ -98,7 +102,7 @@ export class ComboboxUnitsLesson {
     const filterLessons$ = this.exFormGroup.get('unitsController').valueChanges.pipe(
     
       startWith(''),
-      debounceTime(200),
+      debounceTime(500),
       filter((value): value is Unit => typeof value === 'object' && value !== null),
       switchMap((unit:Unit)=> this.lessonService.getLessonsByUnit(unit.id)),
       
@@ -106,6 +110,17 @@ export class ComboboxUnitsLesson {
     );
   
        this.filteredLessons$ = filterLessons$
+
+    
+       const filterTask$ = this.exFormGroup.get('lessonController').valueChanges.pipe(
+        startWith(''),
+      debounceTime(500),
+      filter((value): value is Lesson => typeof value === 'object' && value !== null),
+      switchMap((lesson:Lesson)=> this.taskService.getByLessonId(lesson.id)),
+      tap((x)=> console.log(x))
+       )
+
+       this.filteredTasks$ = filterTask$;
    
     // .pipe(
     //   switchMap((filter) => {
@@ -134,7 +149,7 @@ export class ComboboxUnitsLesson {
   // }
 
   getUnitsList(startsWith: any, page: number): Observable<Unit[]> {
-    const take = 3;
+    const take = 10;
     const skip = page > 0 ? (page - 1) * take : 0;
     const filtered = this.unitList.filter((option) =>
       option.title.toLowerCase().startsWith(startsWith.toLowerCase()),
@@ -177,7 +192,7 @@ export class ComboboxUnitsLesson {
   //   })
   // }
 
-  emitLesson(id: string) {
-    this.lesson.emit(id);
+  emitTask(id: string) {
+    this.task.emit(id);
   }
 }

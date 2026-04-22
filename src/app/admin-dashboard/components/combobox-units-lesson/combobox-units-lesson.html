@@ -42,7 +42,32 @@
         (optionsScroll)="onScroll()"
       >
         @for (item of filteredLessons$ | async; track $index) {
-          <mat-option [value]="item" (onSelectionChange)="emitLesson(item.id)">
+          <mat-option [value]="item">
+            {{ item.title }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+     <mat-form-field class="w-100%" appearance="outline">
+      <mat-label>Tasks</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        #text
+        matInput
+        formControlName="taskController"
+        [matAutocomplete]="auto3"
+        
+      />
+      <mat-autocomplete
+        #auto3 ="matAutocomplete"
+        [displayWith]="displayWith"
+        showPanel="true"
+        (optionsScroll)="onScroll()"
+      >
+        @for (item of filteredTasks$ | async; track $index) {
+          <mat-option [value]="item" (onSelectionChange)="emitTask(item.id)">
             {{ item.title }}
           </mat-option>
         }
