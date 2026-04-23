@@ -1,4 +1,4 @@
-export interface GradeCreate {
+export interface Grade {
     min_range: number;
     max_range:number;
     total: number;
