@@ -11,9 +11,7 @@ import { RouterLink } from "@angular/router";
   selector: 'app-dialog-events',
   imports: [MatDialogContent, DatePipe, RouterLink, MatDialogClose],
   templateUrl: './dialogEvents.html',
-  styleUrl: './dialogEvents.css',
 
- 
 })
 export class DialogEvents { 
   data = inject(MAT_DIALOG_DATA)
@@ -28,8 +26,9 @@ export class DialogEvents {
 
   ngOnInit(){
     // Datos de la tarea
+    
     this.taskService.getSubmission(this.data.id).subscribe((result)=>{
-      console.log(result)
+      
       if(result.date_send !=null){
         this.status.set ("DELIVERED")
       }
@@ -40,9 +39,9 @@ export class DialogEvents {
 
     // Tree data
     this.lessonService.getTree(this.data.lesson_id).subscribe((result) => {
-      console.log(result);
+    
       this.projectInfo.set(result);
-      console.log(this.projectInfo());
+
     })
 
   }
@@ -51,7 +50,7 @@ export class DialogEvents {
   constructor(){
     effect(()=>{
       const info= this.projectInfo();
-      console.log("Info: ", info);
+ 
       
     })
   }

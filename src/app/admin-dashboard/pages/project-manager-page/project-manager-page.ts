@@ -109,7 +109,7 @@ export class ProjectManagerPage {
     }
     this.projectId = this.projectLoaded()!.id;
 
-    // TODO users inscription WHEN CREATE
+
     if (this.users.length > 0) {
       await this.userProjectService
         .addUsers(this.usersEmails)

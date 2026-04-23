@@ -1,5 +1,5 @@
 import { EventInput } from "@fullcalendar/core/index.js";
-import { SubmitTaskResponse } from "../interfaces/tasks.interface.ts";
+import { SubmitTaskResponse } from "../interfaces/tasks.interface";
 const TODAY_STR = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
 export class DateEventMapper{
 

@@ -7,6 +7,7 @@ import { jwtToken } from '../../auth/interfaces/auth-response.interface';
 import {
   UserProject,
   UserProjectCreate,
+  UserProjectsResponse,
   UsersProjectResponse,
 } from '../../auth/interfaces/user.interface';
 import { ProjectsResponse } from '../interfaces/project.interface';
@@ -54,6 +55,6 @@ export class UsersProjectService {
     if (!token) return;
     let decoded = jwtDecode<jwtToken>(token);
 
-    return this.http.get<ProjectsResponse>(`${BASE_URL}/user-projects/projects/${decoded.id}`);
+    return this.http.get<UserProjectsResponse>(`${BASE_URL}/user-projects/projects/${decoded.id}`);
   }
 }

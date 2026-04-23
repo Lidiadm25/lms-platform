@@ -1,35 +1,31 @@
 <div class="overflow-x-auto">
   <table class="table table-zebra">
     <!-- head -->
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
+   
     <tbody>
       <!-- row 1 -->
       <tr>
         <th>Status of submission</th>
-        <td>Status no available</td>
+        <td>{{this.statusSubmission()}}</td>
       </tr>
       <!-- row 2 -->
       <tr>
         <th>Status of grade</th>
-        <td>No available grade</td>
+        <td>{{this.grade()?.total}}</td>
       </tr>
       <!-- row 3 -->
       <tr>
         <th>Limit date</th>
-        <td>31/12/9999</td>
+        <td>{{this.submit()!.date_send}}</td>
       </tr>
       <tr>
-        <th>Feedback of the submission</th>
+       <th>Files sent</th>
         <td>x</td>
       </tr>
         <tr>
-        <th>Files sent</th>
-        <td>x</td>
+           <th>Feedback of the submission</th>
+        <td>{{this.grade()?.feedback}}</td>
+        
       </tr>
     </tbody>
   </table>

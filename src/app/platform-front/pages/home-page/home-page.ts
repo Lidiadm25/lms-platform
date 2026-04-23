@@ -38,10 +38,12 @@ export class HomePage {
       this.cd.detectChanges();
     });
   }
-  // todo  copy of the object, make your change, and then reassign it.
+
 
   handleEventClick(clickInfo: EventClickArg) {
+
     this.dialog.open(DialogEvents, {
+      
       data: {
         id: clickInfo.event.id,
         title: clickInfo.event.title,

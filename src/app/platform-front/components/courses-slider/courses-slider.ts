@@ -1,8 +1,8 @@
-import { ProjectsResponse } from './../../../projects/interfaces/project.interface';
 import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 
-import { UsersProjectService } from '../../../projects/services/UsersProjectService';
+import { UserProjectsResponse } from '../../../auth/interfaces/user.interface';
 import { ProjectCard } from '../../../projects/components/project-card/project-card';
+import { UsersProjectService } from '../../../projects/services/UsersProjectService';
 
 
 
@@ -17,8 +17,11 @@ import { ProjectCard } from '../../../projects/components/project-card/project-c
 export class CoursesSlider { 
 
  userProjectService = inject(UsersProjectService)
- projects = signal<ProjectsResponse | null>(null);
+ projects = signal<UserProjectsResponse | null>(null);
   ngOnInit(){
-    this.userProjectService.getProjects()?.subscribe((result) => this.projects.set(result))
+    this.userProjectService.getProjects()?.subscribe((result) => {
+      this.projects.set(result)
+
+    })
   }
 }

@@ -6,13 +6,12 @@ import { Task } from '../../../projects/interfaces/project.interface';
 import { SubmitForm } from '../../components/submit-form/submit-form';
 import { SubmitInfo } from '../../components/submit-info/submit-info';
 import { ActivatedRoute } from '@angular/router';
-import { Submit } from '../../../projects/interfaces/tasks.interface.ts';
+import { Submit } from '../../../projects/interfaces/tasks.interface';
 
 @Component({
   selector: 'app-task-details-page',
   imports: [TaskInfo, SubmitForm, SubmitInfo],
   templateUrl: './task-details-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskDetailsPage {
   activatedRoute = inject(ActivatedRoute);
@@ -32,9 +31,9 @@ export class TaskDetailsPage {
     });
     
     this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
-      
+      console.log(result)
       this.submit.set(result)
-      if(this.submit()?.date_send != null && this.isActive() == false) 
+      if(this.isActive() == false) 
       {
         this.status.set("Submission info")
       }

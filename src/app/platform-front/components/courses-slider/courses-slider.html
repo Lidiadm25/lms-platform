@@ -5,7 +5,7 @@
       @for (item of projects()?.projects; track $index) {
       <swiper-slide > 
   
-        <app-project-card [project] = "item"/>
+        <app-project-card [project] = "item.project"/>
        
       </swiper-slide>
       }

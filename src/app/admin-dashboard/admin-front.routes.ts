@@ -9,6 +9,7 @@ import { UsersProjectPage } from './pages/users-project-page/users-project-page'
 
 import { UnitsManagerPage } from './pages/units-manager-page/units-manager-page';
 import { TaskManagerPage } from './pages/task-manager-page/task-manager-page';
+import { GradesManagerPage } from './pages/grades-manager-page/grades-manager-page';
 
 
 export const platformFrontRoutes: Routes = [
@@ -49,6 +50,10 @@ export const platformFrontRoutes: Routes = [
             {
                 path:'tasks-manager/:idLesson/:idTask',
                 component: TaskManagerPage
+            },
+            {
+                path:'grades-manager/:idProject',
+                component: GradesManagerPage
             }
 
         ]

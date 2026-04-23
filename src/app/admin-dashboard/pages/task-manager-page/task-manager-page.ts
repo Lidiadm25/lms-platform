@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@ang
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Task } from '../../../projects/interfaces/project.interface';
-import { TaskCreate } from '../../../projects/interfaces/tasks.interface.ts';
+import { TaskCreate } from '../../../projects/interfaces/tasks.interface';
 import { TaskService } from '../../../projects/services/TaskService';
 import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
 

@@ -1,6 +1,6 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { GradeCreate } from '../../../projects/interfaces/grade.interface';
+import { Grade } from '../../../projects/interfaces/grade.interface';
 import { Submit } from '../../../projects/interfaces/tasks.interface';
 import { GradeService } from '../../../projects/services/GradeService';
 
@@ -36,7 +36,7 @@ export class GradeTable {
   }
 
   onSubmit() {
-    const gradeLike: GradeCreate = {
+    const gradeLike: Grade = {
       ...(this.submitForm.value as any),
       taskSubmitId: this.submit()!.id,
     };

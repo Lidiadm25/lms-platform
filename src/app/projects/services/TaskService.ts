@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { jwtToken } from '../../auth/interfaces/auth-response.interface';
 import { Task } from '../interfaces/project.interface';
-import { Submit, SubmitTaskResponse, TaskCreate } from '../interfaces/tasks.interface.ts';
+import { TaskCreate, SubmitTaskResponse, Submit } from '../interfaces/tasks.interface';
+
 
 const BASE_URL = environment.baseUrl;
 @Injectable({

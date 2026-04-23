@@ -2,10 +2,11 @@ import { AuthService } from './../../../auth/services/authService';
 import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 
 import { RouterLink, RouterOutlet } from "@angular/router";
+import { Navbar } from "../navbar/navbar";
 
 @Component({
   selector: 'app-drawer',
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink, Navbar, RouterOutlet],
   templateUrl: './drawer.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
