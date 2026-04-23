@@ -6,6 +6,7 @@ import { CategoryProjectPage } from './pages/category-project-page/category-proj
 import { ProjectDetails } from './pages/project-details/project-details';
 import { SettingsPage } from './pages/settings-page/settings-page';
 import { TaskDetailsPage } from './pages/task-details-page/task-details-page';
+import { ProjectViewPage } from './pages/project-view-page/project-view-page';
 
 
 
@@ -39,6 +40,9 @@ export const platformFrontRoutes: Routes = [
             {
             path: 'home',
             component: HomePage 
+            },
+            {path: 'project/:idProject',
+            component: ProjectViewPage
             }
         ]
         

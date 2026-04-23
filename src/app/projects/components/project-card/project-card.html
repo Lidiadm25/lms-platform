@@ -1,5 +1,5 @@
-<a [routerLink]="['/project-details', project().id]" >
-  <div class="card bg-base-100 w-96 shadow-sm">
+<!-- <a [routerLink]="['/project-details', project().id]" > -->
+  <div class="card bg-base-100 w-96 shadow-sm" (click)="navigateToPage()">
   <figure>
     <img class="object-cover w-full rounded-lg size-60"
       src="{{imageUrl()}}" />
@@ -9,9 +9,12 @@
     <p>{{ project().description}}
         {{project().duration}}
     </p>
-    <div class="card-actions justify-end">
+
+    @if(this.in()==false){
+      <div class="card-actions justify-end">
       <button class="btn btn-primary" (click)= "inscription(project().id)">Start now</button>
     </div>
+    }
   </div>
 </div>
-</a>
+<!-- </a> -->

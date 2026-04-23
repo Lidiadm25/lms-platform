@@ -15,13 +15,13 @@ import { UsersProjectService } from '../../../projects/services/UsersProjectServ
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CoursesSlider { 
-
+ in = signal<boolean>(false);
  userProjectService = inject(UsersProjectService)
  projects = signal<UserProjectsResponse | null>(null);
   ngOnInit(){
     this.userProjectService.getProjects()?.subscribe((result) => {
       this.projects.set(result)
-
+      this.in.set(true)
     })
   }
 }

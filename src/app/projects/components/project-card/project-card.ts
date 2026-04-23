@@ -1,7 +1,7 @@
 import { AuthService } from './../../../auth/services/authService';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { Project } from '../../interfaces/project.interface';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { UsersProjectService } from '../../services/UsersProjectService';
 import { User, UserProjectCreate } from '../../../auth/interfaces/user.interface';
@@ -15,6 +15,8 @@ import { User, UserProjectCreate } from '../../../auth/interfaces/user.interface
 })
 export class ProjectCard {
   project = input.required<Project>();
+  in = input<boolean>(false);
+  router = inject(Router)
   imageUrl = computed(() => {
     const nombre = this.project().image;
     return nombre? `http://localhost:3000/api/files/project/${this.project().image}` : 'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg' ;
@@ -25,6 +27,7 @@ export class ProjectCard {
   authService = inject(AuthService);
   user!: User;
 
+  // todo hacer decode de jwt en vez de esta mierda
   inscription(id: string) {
     if (this.authService.user() !== null) {
       this.user = this.authService.user() as User;
@@ -38,5 +41,16 @@ export class ProjectCard {
       next: (res) => console.log(res),
       error: (res) => console.log(res),
     });
+  }
+
+
+  navigateToPage(){
+    if(this.in()== true){
+      this.router.navigateByUrl(
+        "/project/"+ this.project().id
+      )
+    } else{
+      this.router.navigateByUrl('/project-details/' + this.project().id)
+    }
   }
 }
