@@ -1,7 +1,7 @@
 
-<div class="bg-white rounded-xl p-5">
-    <p>Opens: {{ this.task()!.task_open | date:"short" }}</p>
-    <p>Closes: {{ this.task()!.task_close | date:"short" }} </p>
+<div class="bg-white rounded-xl p-5 shadow-md ">
+    <p class="font-mono">Opens: {{ this.task()!.task_open | date:"short" }}</p>
+    <p  class="font-mono">Closes: {{ this.task()!.task_close | date:"short" }} </p>
     
     <div class="divider"></div>
     <p>{{ this.task()!.description }} </p>
