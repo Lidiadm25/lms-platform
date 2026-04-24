@@ -17,7 +17,7 @@
         <tr>
           <td>{{ project.id }}</td>
           <td>{{ project.title }}</td>
-          <td>{{ project.description }}</td>
+          <td class="max-w-xs"><div [innerHTML]="project.description" class="truncate" ></div></td>
           <td>{{ project.duration }} h</td>
           <td>{{ project.studentsCount }}</td>
           <td>
@@ -28,7 +28,7 @@
           }
             </td>
           <td>
-            <button [routerLink]="['/admin/project-manager', project.id]"  class="btn btn-ghost">
+            <button [routerLink]="['/admin/manager', project.id]"  class="btn btn-ghost">
               <svg
              xmlns="http://www.w3.org/2000/svg"
               fill="none"

@@ -6,9 +6,8 @@
   </figure>
   <div class="card-body">
     <h2 class="card-title">{{ project().title }}</h2>
-    <p>{{ project().description}}
-        {{project().duration}}
-    </p>
+      <div [innerHTML]="project().description" class="truncate"></div>
+       <p> {{project().duration}}</p>
 
     @if(this.in()==false){
       <div class="card-actions justify-end">

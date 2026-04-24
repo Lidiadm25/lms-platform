@@ -1,15 +1,15 @@
-import { AuthService } from './../../../auth/services/authService';
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Project } from '../../interfaces/project.interface';
-import { Router, RouterLink } from '@angular/router';
+import { AuthService } from './../../../auth/services/authService';
 
-import { UsersProjectService } from '../../services/UsersProjectService';
 import { User, UserProjectCreate } from '../../../auth/interfaces/user.interface';
+import { UsersProjectService } from '../../services/UsersProjectService';
 
 
 @Component({
   selector: 'app-project-card',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './project-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

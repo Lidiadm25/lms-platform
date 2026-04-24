@@ -5,7 +5,7 @@
     class="w-full size-30"
   />
   <h2 class="">{{ projectResource.value()?.title }}</h2>
-  <h3>{{ projectResource.value()?.description }}</h3>
+  <div [innerHTML]="projectResource.value()?.description"></div>
   <!-- que se vea encima de la imagen   -->
   <!-- Rating a la derecha junto a user author-->
 
