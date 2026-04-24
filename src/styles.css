@@ -2,3 +2,4 @@
 
 @import "tailwindcss";
 @plugin "daisyui";
+@import "quill/dist/quill.snow.css";
