@@ -7,10 +7,11 @@ import { firstValueFrom } from 'rxjs';
 import { Location } from '@angular/common';
 import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
 import { TaskCard } from "../../components/task-card/task-card";
+import { TableAccordeon } from "../../components/table-accordeon/table-accordeon";
 
 @Component({
   selector: 'app-lesson-manager-page',
-  imports: [FormsModule, ReactiveFormsModule, DynamicSize, TaskCard],
+  imports: [FormsModule, ReactiveFormsModule, DynamicSize, TaskCard, TableAccordeon],
   templateUrl: './lesson-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -23,23 +24,38 @@ export class LessonManagerPage {
   lessonLoaded = signal<Lesson | null>(null);
   fileUrl = signal<string>('');
   edit = signal(false);
-  lessonId: string = this.activatedRoute.snapshot.params['idLesson'];
+  lessonId = signal<string>('create');
   unitId: string = this.activatedRoute.snapshot.params['idUnit'];
+  projectId = signal<string>('')
 
   constructor(private location: Location) {
-    if (this.lessonId != 'create') {
+    effect(() => {
+       this.activatedRoute.parent!.paramMap.subscribe(params => {
+      const id = params.get('idProject') ?? 'create'; // cambiarlo para que te lleve a not found page
+      
+      this.projectId.set(id); 
+      
+    });
+    this.activatedRoute.paramMap.subscribe( params => {
+      const lesson = params.get('idLesson') ?? 'create';
+      this.lessonId.set(lesson);
+    })
+
+    if (this.lessonId() != 'create') {
       this.edit.set(true);
       this.lessonService
-        .getById(this.lessonId)
+        .getById(this.lessonId())
         .subscribe((result) => this.lessonLoaded.set(result));
 
-      effect(() => {
+      
+       
         const lesson = this.lessonLoaded();
         if (lesson) {
           this.lessonForm.patchValue(lesson);
         }
-      });
+      
     }
+    })
   }
 
   file: File | undefined = undefined;
@@ -65,7 +81,7 @@ export class LessonManagerPage {
     if (this.verifySize(this.file, this.lessonForm.value.maxSize)) {
       const lessonLike: Partial<Lesson> = { ...(this.lessonForm.value as any) };
       if (this.edit()) {
-        await firstValueFrom(this.lessonService.updateLesson(this.lessonId, lessonLike, this.file));
+        await firstValueFrom(this.lessonService.updateLesson(this.lessonId(), lessonLike, this.file));
       } else {
         await firstValueFrom(this.lessonService.create(this.unitId, lessonLike, this.file));
       }
@@ -90,7 +106,7 @@ export class LessonManagerPage {
     }
   }
   deleteLesson() {
-    this.lessonService.delete(this.lessonId).subscribe(() => console.log('Lesson deleted'));
+    this.lessonService.delete(this.lessonId()).subscribe(() => console.log('Lesson deleted'));
     this.location.back();
   }
 
@@ -98,13 +114,13 @@ export class LessonManagerPage {
   hasError = signal<boolean>(false)
   router = inject(Router)
   verifyStatus() {
-    if (!this.wasSaved() && this.lessonId == 'create') {
+    if (!this.wasSaved() && this.lessonId() == 'create') {
       this.hasError.set(true);
       setTimeout(() => {
         this.hasError.set(false);
       }, 3000);
     } else {
-      let route: string = '/admin/tasks-manager/' + this.lessonId + '/create';
+      let route: string = '/admin/tasks-manager/' + this.lessonId() + '/create';
       this.router.navigate([route], { replaceUrl: true });
     }
   }

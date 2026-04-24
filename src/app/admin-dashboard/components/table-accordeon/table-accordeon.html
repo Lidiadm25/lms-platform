@@ -1,21 +1,45 @@
- <section class="w-1/6 flex items-center justify-center flex-col gap-5">
-    <h2>Units</h2>
 
-@if (this.projectLoaded()) {
+
+<section class="w-1/6 flex items-center justify-center flex-col gap-5">
+  <!-- <h2><a [routerLink]="['/admin/manager/', this.idProject(), 'create']">Units</a></h2>
+
+  @if (this.projectLoaded()) {
     <table>
-        @for (item of projectLoaded()!.units; track $index) {
-      <th (click)="navigateUnits(item.id)">{{item.title}}</th>
-      @for (lesson of item.lessons; track $index) {
-      <tr>
-        <td (click)="navigateLesson(item.id,lesson.id)">{{lesson.title}}</td>
-      </tr>
+      @for (item of projectLoaded()!.units; track $index) {
+        <th (click)="navigateUnits(item.id)">{{ item.title }}</th>
+        @for (lesson of item.lessons; track $index) {
+          <tr>
+            <td (click)="navigateLesson(item.id, lesson.id)">{{ lesson.title }}</td>
+          </tr>
+        }
       }
+    </table>
+  } @else {
+    <h2>No units</h2>
+  } -->
+</section>
+@if (this.projectLoaded()) {
+<ul class="menu menu-xs bg-base-200 rounded-box max-w-xs w-full">
+
+  @for (unit of this.projectLoaded()?.units; track $index) {
+    <li>
+      @if (unit?.lessons && unit.lessons.length > 0) {
+        <details open>
+          <summary>
+            {{ unit.title }}
+          </summary>
+
+          <ul>
+            @for (lesson of unit.lessons; track $index) {
+             <app-lesson-accordeon [lessonId] ="lesson.id" />
+            }
+          </ul>
+        </details>
+      } @else {
+        <span>{{ unit.title }}</span>
       }
-      
-</table>
-} @else {
-  <h2>No units</h2>
+    </li>
+  }
+
+</ul>
 }
-
-
-  </section>

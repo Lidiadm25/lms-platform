@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UnitService } from '../../../projects/services/UnitService';
 import { TableAccordeon } from '../../components/table-accordeon/table-accordeon';
-import { LessonCard } from '../../components/units-list/unit-card/lesson-card/lesson-card';
 import { Unit } from './../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-units-manager-page',
   imports: [ReactiveFormsModule, TableAccordeon],
   templateUrl: './units-manager-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnitsManagerPage {
   fb = inject(FormBuilder);
@@ -24,7 +22,7 @@ export class UnitsManagerPage {
   edit = signal(false);
   unitService = inject(UnitService);
   projectId: string = this.activatedRoute.parent?.snapshot.params['idProject'];
-  unitId: string = this.activatedRoute.snapshot.params['idUnit'];
+  unitId = signal<string>('create')
   router = inject(Router);
   route = inject(ActivatedRoute);
   unitLoaded = signal<Unit | null>(null);
@@ -32,13 +30,25 @@ export class UnitsManagerPage {
   hasError = signal<boolean>(false);
 
   constructor() {
-    if (this.unitId != 'create') {
+    
+    effect(()=>{
+     this.route.paramMap.subscribe(params => {
+      const id = params.get('idUnit') ?? 'create';
+      this.unitId.set(id); 
+    })
+      if (this.unitId() != 'create') {
+       
       this.edit.set(true);
-      this.unitService.getById(this.unitId).subscribe((result) => {
+      this.unitService.getById(this.unitId()
+      ).subscribe((result) => {
         this.unitLoaded.set(result);
         this.unitForm.patchValue(result);
+        console.log(result)
       });
+    } else {
+      this.unitForm.reset();
     }
+    })
   }
 
   async OnSubmit() {
@@ -60,19 +70,19 @@ export class UnitsManagerPage {
   }
 
   verifyStatus() {
-    if (!this.wasSaved() && this.unitId == 'create') {
+    if (!this.wasSaved() && this.unitId() == 'create') {
       this.hasError.set(true);
       setTimeout(() => {
         this.hasError.set(false);
       }, 3000);
     } else {
-      let route: string = '/admin/lesson-manager/' + this.unitId + '/create';
+      let route: string = '/admin/manager/'+this.projectId +'/' +this.unitId() + '/create';
       this.router.navigate([route], { replaceUrl: true });
     }
   }
 
   deleteUnit() {
-    this.unitService.delete(this.unitId).subscribe(() => console.log('unit deleted'));
+    this.unitService.delete(this.unitId()).subscribe(() => console.log('unit deleted'));
 
     this.wasSaved.set(true);
     setTimeout(() => {

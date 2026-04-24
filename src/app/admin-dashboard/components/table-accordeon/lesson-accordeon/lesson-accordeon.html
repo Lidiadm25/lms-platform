@@ -1,0 +1,19 @@
+<li>
+  @if (lesson()?.tasks && lesson()!.tasks.length > 0) {
+    <details open>
+      <summary>
+        {{ lesson()?.title }}
+      </summary>
+
+      <ul>
+        @for (task of lesson()?.tasks; track $index) {
+          <li>
+            <a>{{ task.title }}</a>
+          </li>
+        }
+      </ul>
+    </details>
+  } @else {
+    <span>{{ lesson()?.title }}</span>
+  }
+</li>

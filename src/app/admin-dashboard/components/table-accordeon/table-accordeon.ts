@@ -1,14 +1,16 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, input, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Project } from '../../../projects/interfaces/project.interface';
 import { ProjectService } from './../../../projects/services/ProjectService';
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { LessonAccordeon } from "./lesson-accordeon/lesson-accordeon";
+
 
 @Component({
   selector: 'app-table-accordeon',
-  imports: [],
+  imports: [LessonAccordeon],
   templateUrl: './table-accordeon.html',
-  styleUrl: './table-accordeon.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
+
 })
 export class TableAccordeon {
   idProject = input<string>('')
