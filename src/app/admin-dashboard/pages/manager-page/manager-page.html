@@ -1,0 +1,36 @@
+<div class="h-20 bg-sky-200 flex flex-col-4 items-center justify-center gap-6 sticky top-16 z-7">
+  <a [routerLink]="['/admin/manager/', this.projectId]">General</a>
+  <a [routerLink]="['/admin/manager/', this.projectId, 'create']">Content</a>
+  <!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
+  <button
+    class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
+    popovertarget="popover-1"
+    style="anchor-name: --anchor-1"
+  >
+    Students
+  </button>
+  <ul
+    class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+    popover
+    id="popover-1"
+    style="position-anchor: --anchor-1"
+  >
+    <li><a onclick="my_modal_1.showModal()">Add students</a></li>
+    <li><a [routerLink]="['/admin/users-project', this.projectId]">Remove students</a></li>
+  </ul>
+  <a class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
+    popovertarget="popover-1"
+    style="anchor-name: --anchor-1" [routerLink]="['/admin/grades-manager/', this.projectId]">Review grades</a>
+</div>
+
+<div class="flex flex-col-2 my-5">
+ 
+
+  <section class="w-5/6 mr-10">
+    <!-- <app-project-manager-page /> -->
+    <router-outlet/>
+  </section>
+
+  
+</div>
+

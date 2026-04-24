@@ -1,14 +1,15 @@
-import { Unit } from './../../../projects/interfaces/project.interface';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { UnitService } from '../../../projects/services/UnitService';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { UnitService } from '../../../projects/services/UnitService';
+import { TableAccordeon } from '../../components/table-accordeon/table-accordeon';
 import { LessonCard } from '../../components/units-list/unit-card/lesson-card/lesson-card';
+import { Unit } from './../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule, LessonCard],
+  imports: [ReactiveFormsModule, TableAccordeon],
   templateUrl: './units-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -22,7 +23,7 @@ export class UnitsManagerPage {
 
   edit = signal(false);
   unitService = inject(UnitService);
-  projectId: string = this.activatedRoute.snapshot.params['idProject'];
+  projectId: string = this.activatedRoute.parent?.snapshot.params['idProject'];
   unitId: string = this.activatedRoute.snapshot.params['idUnit'];
   router = inject(Router);
   route = inject(ActivatedRoute);
