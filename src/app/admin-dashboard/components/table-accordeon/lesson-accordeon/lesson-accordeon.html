@@ -2,18 +2,18 @@
   @if (lesson()?.tasks && lesson()!.tasks.length > 0) {
     <details open>
       <summary>
-        {{ lesson()?.title }}
+        <span (dblclick)="navigateLesson()"> {{ lesson()?.title }}</span>
       </summary>
 
       <ul>
         @for (task of lesson()?.tasks; track $index) {
           <li>
-            <a>{{ task.title }}</a>
+            <span (click)="navigateTask(task.id)">{{ task.title }}</span>
           </li>
         }
       </ul>
     </details>
   } @else {
-    <span>{{ lesson()?.title }}</span>
+    <span (click)="navigateLesson()">{{ lesson()?.title }}</span>
   }
 </li>

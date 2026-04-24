@@ -32,7 +32,5 @@ export class TableAccordeon {
     this.router.navigateByUrl("/admin/manager/"+this.idProject()+"/" + id) 
   }
 
-  navigateLesson(unitId:string,id:string){
-    this.router.navigateByUrl("/admin/manager/"+this.idProject()+"/"+unitId+"/" + id) 
-  }
+ 
  }
