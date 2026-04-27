@@ -21,7 +21,4 @@ export class Drawer {
     }
   });
 
-  logout(){
-    this.authService.logout()
-  }
  }

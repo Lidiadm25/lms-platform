@@ -19,4 +19,8 @@ export class Navbar {
     }
     return 'home'
   }
+
+   logout(){
+    this.authService.logout()
+  }
  }
