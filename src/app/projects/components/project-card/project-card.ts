@@ -47,7 +47,7 @@ export class ProjectCard {
   navigateToPage(){
     if(this.in()== true){
       this.router.navigateByUrl(
-        "/project/"+ this.project().id
+        "/course/"+ this.project().id
       )
     } else{
       this.router.navigateByUrl('/project-details/' + this.project().id)

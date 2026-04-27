@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { Lesson } from '../../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../../projects/services/LessonService';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,18 +16,22 @@ export class LessonAccordeon {
   lessonService = inject(LessonService)
   router = inject(Router)
   activatedRoute = inject(ActivatedRoute)
-   projectId: string = this.activatedRoute.parent?.snapshot.params['idProject'];
+   projectId = input.required<string>();
   ngOnInit(){
-    this.lessonService.getById(this.lessonId()).subscribe((x)=>this.lesson.set(x) )
+    this.lessonService.getById(this.lessonId()).subscribe((x)=>this.lesson.set(x) );
+
+   
   }
+
+ 
 
    navigateLesson(){
     
-    this.router.navigateByUrl("/admin/manager/"+this.projectId+"/"+this.unitId()+"/" +this.lessonId()) 
+    this.router.navigateByUrl("/admin/manager/"+this.projectId()+"/"+this.unitId()+"/" +this.lessonId()) 
   }
 
   navigateTask(id:string){
    
-    this.router.navigateByUrl("/admin/manager/"+this.projectId+"/"+this.unitId()+"/" +this.lessonId() +"/"+ id) 
+    this.router.navigateByUrl("/admin/manager/"+this.projectId()+"/"+this.unitId()+"/" +this.lessonId() +"/"+ id) 
   }
  }

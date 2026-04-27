@@ -3,12 +3,11 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UnitService } from '../../../projects/services/UnitService';
-import { TableAccordeon } from '../../components/table-accordeon/table-accordeon';
 import { Unit } from './../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule, TableAccordeon],
+  imports: [ReactiveFormsModule],
   templateUrl: './units-manager-page.html',
 })
 export class UnitsManagerPage {
@@ -22,7 +21,7 @@ export class UnitsManagerPage {
   edit = signal(false);
   unitService = inject(UnitService);
   projectId: string = this.activatedRoute.parent?.snapshot.params['idProject'];
-  unitId = signal<string>('create')
+  unitId = signal<string>('create');
   router = inject(Router);
   route = inject(ActivatedRoute);
   unitLoaded = signal<Unit | null>(null);
@@ -30,25 +29,22 @@ export class UnitsManagerPage {
   hasError = signal<boolean>(false);
 
   constructor() {
-    
-    effect(()=>{
-     this.route.paramMap.subscribe(params => {
-      const id = params.get('idUnit') ?? 'create';
-      this.unitId.set(id); 
-    })
-      if (this.unitId() != 'create') {
-       
-      this.edit.set(true);
-      this.unitService.getById(this.unitId()
-      ).subscribe((result) => {
-        this.unitLoaded.set(result);
-        this.unitForm.patchValue(result);
-        console.log(result)
+    effect(() => {
+      this.route.paramMap.subscribe((params) => {
+        const id = params.get('idUnit') ?? 'create';
+        this.unitId.set(id);
       });
-    } else {
-      this.unitForm.reset();
-    }
-    })
+      if (this.unitId() != 'create') {
+        this.edit.set(true);
+        this.unitService.getById(this.unitId()).subscribe((result) => {
+          this.unitLoaded.set(result);
+          this.unitForm.patchValue(result);
+          console.log(result);
+        });
+      } else {
+        this.unitForm.reset();
+      }
+    });
   }
 
   async OnSubmit() {
@@ -76,7 +72,7 @@ export class UnitsManagerPage {
         this.hasError.set(false);
       }, 3000);
     } else {
-      let route: string = '/admin/manager/'+this.projectId +'/' +this.unitId() + '/create';
+      let route: string = '/admin/manager/' + this.projectId + '/' + this.unitId() + '/create';
       this.router.navigate([route], { replaceUrl: true });
     }
   }
