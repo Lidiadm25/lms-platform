@@ -1,19 +1,15 @@
-<div class="bg-sky-50 h-full rounded-xl">
-  <div class="breadcrumbs text-sm p-7">
-    <ul>
-      <li><a> Home </a></li>
-      <li><a>Documents</a></li>
-      <li>Add Document</li>
-    </ul>
 
-    <h2 class="text-2xl my-7">Course title</h2>
+<div class=" bg-white h-full rounded-xl p-7 shadow-sm">
+ 
+    <h2 class="text-2xl mb-10">{{this.project()?.title}}</h2>
 
-    <div class="space-y-2 border border-gray-200 rounded-lg">
+    @for (unit of this.project()!.units; track $index) {
+      <div class="space-y-6 border border-gray-200 rounded-lg my-2">
       <details class="group [&amp;_summary::-webkit-details-marker]:hidden">
         <summary
           class="flex cursor-pointer items-center justify-between gap-4 bg-white px-4 py-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg "
         >
-          <span>UNIT X</span>
+          <span>{{unit.title}} </span>
 
           <svg
             class="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180"
@@ -31,7 +27,10 @@
           </svg>
         </summary>
 
-        <div class="p-4 bg-white px-4 py-3 font-medium text-gray-900 rounded-b-lg flex flex-col-2">
+        @for (item of unit.lessons; track $index) {
+          
+          <div class="p-4 bg-white px-4 py-3 font-medium text-gray-900 rounded-b-lg flex flex-col-2 ">
+           
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -47,12 +46,14 @@
             />
           </svg>
 
-          <p class="text-gray-700 bg-white ml-5">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt similique, quae hic
-            dicta 
-          </p>
+          <a class="text-gray-700 bg-white ml-5" [routerLink]="['lesson', item.id]">
+            {{item.title}}
+          </a>
         </div>
+        }
+
       </details>
     </div>
-  </div>
+    }
+ 
 </div>

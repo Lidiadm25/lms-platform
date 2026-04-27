@@ -1,4 +1,15 @@
-<div class="navbar bg-base-100 ">
+<div class="navbar w-full bg-base-300 shadow-sm ">
+
+
+  <div class="flex-none">
+    <label for="my-drawer-4" class="btn btn-square btn-ghost">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+</svg>
+
+    </label>
+  </div>
+
   <div class="navbar-start">
   
     <a [routerLink]="['/', home()]" class="btn btn-ghost text-xl font-montserrat">
@@ -62,7 +73,8 @@
         <span class="badge badge-xs badge-primary indicator-item"></span>
       </div>
     </button>
-    <button class="btn btn-ghost btn-circle">
+    <!-- -->
+    <button class="btn btn-ghost btn-circle" popovertarget="popover-1" style="anchor-name:--anchor-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -78,5 +90,36 @@
         />
       </svg>
     </button>
+
+    <ul class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+  popover id="popover-1" style="position-anchor:--anchor-2">
+  <li><a routerLink="/auth" (click)="logout()">Log out</a></li>
+ 
+</ul>
+
   </div>
 </div>
+ <!-- <button
+            class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+            data-tip="Log out"
+            routerLink="/auth"
+            (click) = "logout()"
+          >
+          
+            <svg
+               xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="my-1.5 inline-block size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+              />
+            </svg>
+            </button> -->

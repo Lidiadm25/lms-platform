@@ -1,6 +1,6 @@
 
 @if (this.projectLoaded()) {
-<ul class="menu menu-m bg-base-200 rounded-box w-full min-w-70">
+<ul class="menu bg-base-100 rounded-xl shadow-sm w-full text-base-content">
 
   @for (unit of this.projectLoaded()?.units; track $index) {
     <li>
@@ -12,7 +12,7 @@
 
           <ul>
             @for (lesson of unit.lessons; track $index) {
-             <app-lesson-accordeon [lessonId] ="lesson.id" [unitId]="unit.id" />
+             <app-lesson-accordeon [lessonId] ="lesson.id" [unitId]="unit.id" [projectId]="this.projectLoaded()!.id" />
             }
           </ul>
         </details>

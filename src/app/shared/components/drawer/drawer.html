@@ -1,18 +1,21 @@
 <div class="drawer lg:drawer-open">
   <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content" >
+  <div class="drawer-content flex flex-col h-screen overflow-hidden" >
 
-    <app-navbar class="w-full sticky top-0 z-10"/>
+    <app-navbar/>
+    <div class="flex-1 overflow-y-auto bg-base-100">
+      
     <router-outlet />
+    </div>
   </div>
 
   <div class="drawer-side is-drawer-close:overflow-visible ">
     <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
     <div
-      class="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64"
+      class="flex min-h-full flex-col items-start bg-base-300 is-drawer-close:w-14 is-drawer-open:w-64"
     >
       <!-- Sidebar content here -->
-      <ul class="menu w-full grow h-full">
+      <ul class="menu w-full grow h-full mt-20">
         <!-- List item -->
         <li>
           <button
@@ -39,41 +42,14 @@
             <span class="is-drawer-close:hidden">Homepage</span>
           </button>
         </li>
-        <li>
-          <button
-            class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-            data-tip="Log out"
-            routerLink="/auth"
-            (click) = "logout()"
-          >
-            <!-- Logout icon -->
-            <svg
-               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              fill="none"
-              stroke="currentColor"
-              class="my-1.5 inline-block size-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-              />
-            </svg>
-
-            <span class="is-drawer-close:hidden">Projects</span>
-          </button>
-        </li>
-        <li>
+       
+        <!-- <li>
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Settings"
             routerLink="/settings"
           >
-            <!-- Settings icon -->
+     
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -91,7 +67,7 @@
             </svg>
             <span class="is-drawer-close:hidden">Settings</span>
           </button>
-        </li>
+        </li> -->
         @if(authService._role()=="admin"){
         <!-- List item -->
         <li>

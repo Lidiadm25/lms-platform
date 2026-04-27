@@ -1,12 +1,10 @@
-
-
-<div class="flex flex-col-2 my-5 ml-10">
- 
-<app-table-accordeon [idProject]="this.projectId"/>
-  <section class="w-5/6 mr-10">
+<div class="w-full">
   
 
-<form (ngSubmit)="OnSubmit()" [formGroup]="unitForm">
+
+  
+
+<form (ngSubmit)="OnSubmit()" [formGroup]="unitForm" class="flex flex-col gap-6">
   <label>Title</label>
   <input
     class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
@@ -44,7 +42,7 @@
   </dialog>
 }
 
-<div class="flex flex-col gap-2">
+<!-- <div class="flex flex-col gap-2">
   <a class="flex flex-col-2 gap-3" (click)="verifyStatus()">
     <h2 class="text-2xl font-bold h-12">Add a new lesson</h2>
     <svg
@@ -61,7 +59,7 @@
         d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
       />
     </svg>
-  </a>
+  </a> -->
 
   <!-- @if (this.unitLoaded() != null && this.unitLoaded()!.lessons.length > 0) {
     @for (lesson of unitLoaded()!.lessons; track $index) {
@@ -81,9 +79,8 @@
       <span>You shall create an unit first</span>
     </div>
   }
-</div>
-  </section>
+<!-- </div> -->
 
-  
-</div>
 
+
+</div>
