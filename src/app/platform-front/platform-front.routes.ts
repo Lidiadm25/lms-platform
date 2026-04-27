@@ -7,48 +7,57 @@ import { ProjectDetails } from './pages/project-details/project-details';
 import { SettingsPage } from './pages/settings-page/settings-page';
 import { TaskDetailsPage } from './pages/task-details-page/task-details-page';
 import { ProjectViewPage } from './pages/project-view-page/project-view-page';
-
-
+import { LessonViewPage } from './pages/lesson-view-page/lesson-view-page';
+import { LayoutCourseView } from './components/top-bar-client/layout-course-view';
 
 export const platformFrontRoutes: Routes = [
-    {
-        path: '',
-        component: PlatformFrontLayout,
-        children: [
-            {
-            path: 'explore',
-            component: ExplorePage
-            },
-            {
-             path:'settings',
-             component:SettingsPage
-            },
-            
-            {
-            path:'category/:name',
-            component: CategoryProjectPage
-            },
-           
-            {
-            path:'project-details/:idProject',
-            component: ProjectDetails
-            },
-           {
-            path:'task/:idTask',
-            component: TaskDetailsPage
-           },
-            {
-            path: 'home',
-            component: HomePage 
-            },
-            {path: 'project/:idProject',
-            component: ProjectViewPage
-            }
-        ]
-        
-    },
-    
+  {
+    path: '',
+    component: PlatformFrontLayout,
+    children: [
+      {
+        path: 'explore',
+        component: ExplorePage,
+      },
+      {
+        path: 'settings',
+        component: SettingsPage,
+      },
 
+      {
+        path: 'category/:name',
+        component: CategoryProjectPage,
+      },
+
+      {
+        path: 'project-details/:idProject',
+        component: ProjectDetails,
+      },
+      {
+        path: 'task/:idTask',
+        component: TaskDetailsPage,
+      },
+      {
+        path: 'home',
+        component: HomePage,
+      },
+      {
+        path: 'course/:idProject',
+        component: LayoutCourseView,
+        children: [
+          { path: '', component: ProjectViewPage },
+          {
+            path: 'lesson/:idLesson',
+            component: LessonViewPage,
+          },
+          {
+            path: '**',
+            redirectTo: 'notfounpage',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export default platformFrontRoutes;
