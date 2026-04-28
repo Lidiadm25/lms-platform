@@ -110,11 +110,6 @@ export class ProjectManagerPage {
     this.projectId = this.projectLoaded()!.id;
 
 
-    if (this.users.length > 0) {
-      await this.userProjectService
-        .addUsers(this.usersEmails)
-        .subscribe(() => console.log('User added'));
-    }
 
     this.wasSaved.set(true);
     setTimeout(() => {
@@ -142,16 +137,5 @@ export class ProjectManagerPage {
     this.location.back();
   }
 
-  users: Array<string> = [];
-  usersEmails: UserProjectCreate[] = [];
-
-  usersInscription(event: any) {
-    this.users = event;
-    for (let index = 0; index < this.users.length; index++) {
-      this.usersEmails[index] = {
-        projectId: this.projectId,
-        userEmail: this.users[index],
-      };
-    }
-  }
+  
 }
