@@ -1,7 +1,8 @@
 
-<div class=" bg-white h-full rounded-xl p-7 shadow-sm">
+<div class="bg-white rounded-xl p-7 shadow-sm">
  
-    <h2 class="text-2xl mb-10">{{this.project()?.title}}</h2>
+   @if(this.project()){
+     <h2 class="text-2xl mb-10">{{this.project()!.title}}</h2>
 
     @for (unit of this.project()!.units; track $index) {
       <div class="space-y-6 border border-gray-200 rounded-lg my-2">
@@ -56,4 +57,12 @@
     </div>
     }
  
+   } @else {
+    
+  <div class="flex items-center gap-2">
+      <span class="loading loading-spinner"></span>
+      <span>Loading…</span>
+    </div>
+}
+   
 </div>

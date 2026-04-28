@@ -43,3 +43,14 @@
   
  
 </section>
+
+@if (wasSaved()) {
+  <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>User removed succesfully</span>
+  </div>
+}
+@if (hasError()) {
+  <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>There was an error</span>
+  </div>
+}

@@ -1,12 +1,13 @@
-<div class="h-20 bg-sky-700 flex sticky top-0 z-7 shadow-sm">
-  <ul class="ml-20 flex flex-col-4 items-center justify-start gap-6 text-white">
-    <li>Course</li>
-    <li>Calendar</li>
+<div class="h-20 bg-sky-700  sticky top-0 z-7 shadow-sm ">
+  <ul class=" h-full flex flex-col-3 items-center justify-center gap-6 align-middle text-white ">
+    <li [routerLink]="['/course/',this.idProject]">Course</li>
+    <li routerLink="calendar">Calendar</li>
     <li>Students</li>
   </ul>
 </div>
-<div class="bg-sky-50 h-full overflow-y-auto ">
-  <div class="breadcrumbs text-sm p-7">
+
+<div class="bg-sky-50 ">
+  <div class="breadcrumbs text-sm p-7  ">
     <ul>
       <li><a> Home </a></li>
       <li><a>Documents</a></li>
@@ -14,7 +15,7 @@
     </ul>
   </div>
 
-  <div class="m-10">
-    <router-outlet />
+  <div class="min-h-160 p-7 ">
+     <router-outlet /> 
   </div>
 </div>
