@@ -1,20 +1,31 @@
-<h2>GRADE REVIEWS</h2> 
+<div class="p-7">
+  <h2>GRADE REVIEWS</h2>
 
-  <app-combobox-units-lesson [projectId]= "this.projectId" (task)="taskId.set($event)"/>
+  <app-combobox-units-lesson [projectId]="this.projectId" (task)="taskId.set($event)" />
 
+  <section class="flex flex-col-3 gap-5 justify-between h-full">
+    <div class="bg-sky-50 w-1/5 flex-initial">
+      <app-list-users [projectId]="this.projectId" (userChosen)="userId.set($event)" />
+    </div>
 
- <section class="flex flex-col-3 gap-5 justify-between h-full">
-  <div class="bg-sky-50 w-1/5 flex-initial">
-   <app-list-users [projectId]="this.projectId" (userChosen)="userId.set($event)"/> 
-  </div>
+    <div class="min-w-3/5">
+      @if (this.submit()?.url_file) {
 
-  <div class="flex w-3/5 bg-base-100 justify-center items-center " >
-    <app-submission-visualizer />
-  </div>
-  <div class="flex-auto">
-    <app-grade-table [userId] = "this.userId()" [submit]="this.submit()"/>
-  </div>
+        @if(this.submit()?.url_file?.match('.pdf')){
+          <app-submission-visualizer [url]="this.submit()!.url_file" />
+        } @else {
+          
+        }
 
-  
-</section>
-
+        
+      } @else {
+        <div class=" flex justify-center items-center ">
+          <p>No files attached</p>
+        </div>
+      }
+    </div>
+    <div >
+      <app-grade-table [userId]="this.userId()" [submit]="this.submit()" />
+    </div>
+  </section>
+</div>

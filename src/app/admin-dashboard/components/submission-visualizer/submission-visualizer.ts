@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ExamplePdfViewerComponent } from "../../../example-pdf-viewer/example-pdf-viewer.component";
 
 @Component({
   selector: 'app-submission-visualizer',
-  imports: [],
+  imports: [ExamplePdfViewerComponent],
   templateUrl: './submission-visualizer.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SubmissionVisualizer { }
+export class SubmissionVisualizer {
+  url = input.required<string>();
+ }
