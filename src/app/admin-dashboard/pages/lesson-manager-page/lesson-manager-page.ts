@@ -6,10 +6,11 @@ import { firstValueFrom } from 'rxjs';
 import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
 import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-lesson-manager-page',
-  imports: [FormsModule, ReactiveFormsModule, DynamicSize],
+  imports: [FormsModule, ReactiveFormsModule, DynamicSize, QuillModule],
   templateUrl: './lesson-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -114,7 +115,7 @@ export class LessonManagerPage {
         this.hasError.set(false);
       }, 3000);
     } else {
-      let route: string = '/admin/tasks-manager/' + this.lessonId() + '/create';
+      let route: string = '/admin/manager/' + this.projectId() + '/' + this.unitId + '/' + this.lessonId() +'/create';
       this.router.navigate([route], { replaceUrl: true });
     }
   }

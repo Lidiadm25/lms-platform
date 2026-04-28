@@ -32,6 +32,6 @@ export class LessonAccordeon {
 
   navigateTask(id:string){
    
-    this.router.navigateByUrl("/admin/manager/"+this.projectId()+"/"+this.unitId()+"/" +this.lessonId() +"/"+ id) 
+    this.router.navigateByUrl("/admin/manager/"+this.projectId()+"/"+this.unitId()+"/" +this.lessonId() +"/"+ id, {replaceUrl:true}) 
   }
  }
