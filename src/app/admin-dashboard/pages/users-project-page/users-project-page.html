@@ -1,4 +1,4 @@
 
 @if (userProjectResource.hasValue()) {
-    <app-users-project-list [users] = "userProjectResource.value()"/>
+    <app-users-project-list [users] = "userProjectResource.value()" (changes)="refresh()"/>
 }

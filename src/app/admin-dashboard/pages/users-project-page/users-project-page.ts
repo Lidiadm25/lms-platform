@@ -25,4 +25,8 @@ export class UsersProjectPage {
 
   })
 
+  refresh(){
+    this.userProjectResource.reload()
+  }
+
  }

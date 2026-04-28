@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { UsersProjectResponse } from '../../../auth/interfaces/user.interface';
 import { UsersProjectService } from '../../services/UsersProjectService';
 
@@ -6,13 +6,16 @@ import { UsersProjectService } from '../../services/UsersProjectService';
   selector: 'app-users-project-list',
   imports: [],
   templateUrl: './users-project-list.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class UsersProjectList {
   users = input.required<UsersProjectResponse>();
   selectedAll = signal(false);
+  hasError = signal<boolean>(false);
+  wasSaved = signal<boolean>(false);
+  usersProjectService = inject(UsersProjectService);
 
-  usersProjectService = inject(UsersProjectService)
+  changes = output<boolean>();
 
   toggleAll(event: any) {
     let checkboxes = document.querySelectorAll('input');
@@ -27,11 +30,11 @@ export class UsersProjectList {
     });
   }
 
+  
+
   usersIds: string[] = [];
 
   usersInscriptionDelete(event: any) {
-
-
     let checkboxes = document.querySelectorAll('input');
     checkboxes.forEach((element) => {
       if (element.name == 'cb' && element.checked) {
@@ -39,8 +42,25 @@ export class UsersProjectList {
       }
     });
 
-    if(this.usersIds.length>0){
-      this.usersProjectService.removeUsers(this.usersIds).subscribe(() => console.log("Users removed"))
+    if (this.usersIds.length > 0) {
+      this.usersProjectService.removeUsers(this.usersIds).subscribe({
+        next: () => {
+          this.wasSaved.set(true);
+          setTimeout(() => {
+            this.wasSaved.set(false);
+          }, 3000);
+
+          this.changes.emit(true);
+        },
+        error: () => {
+          this.hasError.set(true);
+          setTimeout(() => {
+            this.wasSaved.set(false);
+          }, 3000);
+        },
+      });
+
+      
     }
     this.usersIds = [];
   }
