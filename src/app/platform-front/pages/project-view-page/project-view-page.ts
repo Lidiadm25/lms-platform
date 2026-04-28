@@ -8,7 +8,7 @@ import { ProjectService } from '../../../projects/services/ProjectService';
   selector: 'app-project-view-page',
   imports: [RouterLink],
   templateUrl: './project-view-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+ 
 })
 export class ProjectViewPage {
   activatedRoute = inject(ActivatedRoute)

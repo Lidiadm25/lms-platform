@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LessonService } from '../../../projects/services/LessonService';
 import { Lesson } from '../../../projects/interfaces/project.interface';
+import { SafeHTMLPipe } from "../../../pipes/safeHTML-pipe";
 
 @Component({
   selector: 'app-lesson-view-page',
-  imports: [],
+  imports: [SafeHTMLPipe, RouterLink],
   templateUrl: './lesson-view-page.html',
 
   changeDetection: ChangeDetectionStrategy.OnPush,

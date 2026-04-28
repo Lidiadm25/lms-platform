@@ -1,13 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from "@angular/router";
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink, RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'layout-course-view',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './layout-course-view.html',
  
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutCourseView { 
-
+export class LayoutCourseView {
+  
+  activatedRoute = inject(ActivatedRoute)
+idProject = this.activatedRoute.snapshot.params['idProject'];
 }
