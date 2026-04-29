@@ -11,6 +11,7 @@ import { UnitsManagerPage } from './pages/units-manager-page/units-manager-page'
 import { TaskManagerPage } from './pages/task-manager-page/task-manager-page';
 import { GradesManagerPage } from './pages/grades-manager-page/grades-manager-page';
 import { ManagerPage } from './pages/manager-page/manager-page';
+import { SurveyManagerPage } from './pages/survey-manager-page/survey-manager-page';
 
 export const platformFrontRoutes: Routes = [
   {
@@ -48,7 +49,7 @@ export const platformFrontRoutes: Routes = [
             component: ProjectManagerPage,
           },
           {
-            path: ':idUnit',
+            path: 'unit/:idUnit',
             component: UnitsManagerPage,
           },
           {
@@ -58,6 +59,12 @@ export const platformFrontRoutes: Routes = [
           {
             path: ':idUnit/:idLesson/:idTask',
             component: TaskManagerPage,
+          },
+          {
+            path: 'survey-manager',
+            component:SurveyManagerPage
+
+
           },
         ],
       },
