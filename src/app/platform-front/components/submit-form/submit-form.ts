@@ -16,7 +16,7 @@ export class SubmitForm {
    file! : File;
   wasSaved = signal<boolean>(false);
   hasError = signal<boolean>(false);
-   imageUrl = signal<string>('');
+   imageUrl = signal<string[]>([]);
    
   onSubmit(){
     console.log(this.imageUrl())
