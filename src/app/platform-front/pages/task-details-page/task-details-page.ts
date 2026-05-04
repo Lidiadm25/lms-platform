@@ -1,12 +1,12 @@
-import { TaskService } from './../../../projects/services/TaskService';
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TaskInfo } from '../../components/task-info/task-info';
+import { TaskService } from './../../../projects/services/TaskService';
 
+import { ActivatedRoute } from '@angular/router';
 import { Task } from '../../../projects/interfaces/project.interface';
+import { Submit } from '../../../projects/interfaces/tasks.interface';
 import { SubmitForm } from '../../components/submit-form/submit-form';
 import { SubmitInfo } from '../../components/submit-info/submit-info';
-import { ActivatedRoute } from '@angular/router';
-import { Submit } from '../../../projects/interfaces/tasks.interface';
 
 @Component({
   selector: 'app-task-details-page',
@@ -31,7 +31,7 @@ export class TaskDetailsPage {
     });
     
     this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
-      console.log(result)
+    
       this.submit.set(result)
       if(this.isActive() == false) 
       {

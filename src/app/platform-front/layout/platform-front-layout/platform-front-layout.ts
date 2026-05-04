@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from "@angular/router";
-import { Drawer } from '../../../shared/components/drawer/drawer';
-import { Navbar } from '../../../shared/components/navbar/navbar';
+
+import { MyDrawer } from "../../../shared/components/my-drawer/my-drawer";
 
 
 @Component({
   selector: 'app-platform-front-layout',
-  imports: [Drawer],
+  imports: [ MyDrawer],
   templateUrl: './platform-front-layout.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { AuthService } from './../../../auth/services/authService';
+import { ChangeDetectorRef, Component, computed, inject, Signal, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core'; // useful for typechecking
@@ -14,44 +15,5 @@ import { CoursesSlider } from '../../components/courses-slider/courses-slider';
   templateUrl: './home-page.html',
 })
 export class HomePage {
-  dialog = inject(MatDialog);
-
-  events = signal<EventInput[]>([]);
-
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin],
-    height: 650,
-    events: [],
-    eventClick: this.handleEventClick.bind(this),
-  };
-
-  taskService = inject(TaskService);
-  // todo toggle calendar visible
-  constructor(private cd: ChangeDetectorRef) {}
-  ngOnInit() {
-    // recoger tareas del user
-    this.taskService.getSubmissions()?.subscribe((result) => {
-      this.events.set(DateEventMapper.mapSubmitToEvent(result));
-
-      this.calendarOptions.events = this.events();
-      this.cd.detectChanges();
-    });
-  }
-
-
-  handleEventClick(clickInfo: EventClickArg) {
-
-    this.dialog.open(DialogEvents, {
-      
-      data: {
-        id: clickInfo.event.id,
-        title: clickInfo.event.title,
-        start: clickInfo.event.start,
-        end: clickInfo.event.end,
-        lesson_id: clickInfo.event.extendedProps['lesson_task'],
-        task_id: clickInfo.event.extendedProps['task_id'],
-      },
-    });
-  }
+ 
 }

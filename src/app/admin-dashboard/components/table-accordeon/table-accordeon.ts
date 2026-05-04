@@ -29,7 +29,7 @@ export class TableAccordeon {
   }
 
   navigateUnits(id:string){
-    this.router.navigateByUrl("/admin/manager/"+this.idProject()+"/" + id) 
+    this.router.navigateByUrl("/admin/manager/"+this.idProject()+"/unit/" + id) 
   }
 
  

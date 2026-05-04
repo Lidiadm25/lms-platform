@@ -4,7 +4,7 @@ import {  NgxExtendedPdfViewerModule,NgxExtendedPdfViewerService, pdfDefaultOpti
 @Component({
   selector: 'app-example-pdf-viewer',
   templateUrl: './example-pdf-viewer.component.html',
-  styleUrls: ['./example-pdf-viewer.component.css'], 
+ 
   standalone: true,
   imports: [NgxExtendedPdfViewerModule],
   providers: [NgxExtendedPdfViewerService],

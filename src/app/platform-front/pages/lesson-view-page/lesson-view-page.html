@@ -24,7 +24,7 @@
         />
       </svg>
       <p>{{ item.title }}</p>
-      <a class="flex-1 text-end mr-10 underline md:underline-offset-3 decoration-[0.12rem] hover:cursor-pointer text-blue-700/100" [routerLink]="['/task/', ]"> See task </a>
+      <a class="flex-1 text-end mr-10 underline md:underline-offset-3 decoration-[0.12rem] hover:cursor-pointer text-blue-700/100" [routerLink]="['/task/', item.id ]"> See task </a>
     </div>
   }
   </div>

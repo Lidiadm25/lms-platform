@@ -34,11 +34,16 @@ export interface Unit {
 export interface Lesson {
   section: string;
   id: string;
-  url_file: null;
+  url_file: string;
   title: string;
   description: string;
   maxSize?: string;
   tasks: Task[];
+}
+
+export interface LessonResponse {
+  lessons: Lesson[];
+  count:number;
 }
 
 
@@ -47,7 +52,7 @@ export interface Category {
   name: string;
 }
 export interface Task {
-
+    fileSize: number;
     id:           string;
     lesson_task: Lesson;
     title:        string;

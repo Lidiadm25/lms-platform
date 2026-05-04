@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuthService } from '../../../auth/services/authService';
-import { Navbar } from "../../../shared/components/navbar/navbar";
-import { Drawer } from "../../../shared/components/drawer/drawer";
+
+import { MyDrawer } from "../../../shared/components/my-drawer/my-drawer";
 
 
 @Component({
   selector: 'app-dashboard-layout',
-  imports: [Navbar, Drawer],
+  imports: [MyDrawer],
   templateUrl: './dashboard-layout.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -18,7 +18,7 @@ export interface  SubmitTaskResponse{
 
 export interface Submit {
     id:string;
-    
+    url_file:string;
     task: Task;
     date_send : Date
 }
