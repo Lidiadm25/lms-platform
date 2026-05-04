@@ -1,23 +1,15 @@
-
-  <h2 class="text-2xl font-bold h-12">General</h2>
+<h2 class="text-2xl font-bold h-12">General</h2>
 <form
   [formGroup]="projectForm"
   class="grid grid-cols-1 sm:grid-cols-2 gap-4"
   (ngSubmit)="onSubmit()"
 >
   <!-- CUADRO IZQUIERDA-->
-   
+
   <div class="flex flex-col gap-2">
-  
     <input type="text" class="input input-bordered w-full" formControlName="title" />
 
-   
-    <quill-editor formControlName="description" class="h-70">
-
-    </quill-editor >
-
-    
-
+    <quill-editor formControlName="description" class="h-70"> </quill-editor>
   </div>
 
   <!-- CUADRO DERECHA -->
@@ -32,7 +24,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- <div class="flex flex-col gap-2">
     <div class="flex center-items gap-4">
       <h2 class="text-2xl font-bold h-12">Manage students</h2>
@@ -111,34 +103,30 @@
       />
     }
   </div> -->
-  
-    <button class="btn btn-secondary" type="submit">
-      <!-- <span class="loading loading-spinner loading-sm"></span> -->
 
-      save
-    </button>
+  <button class="btn btn-secondary" type="submit">
+    <!-- <span class="loading loading-spinner loading-sm"></span> -->
 
-    @if (this.projectLoaded()) {
-      <label for="my_modal_6" class="btn btn-primary">Delete</label>
+    save
+  </button>
 
-      <!-- TODO: se manda el submit automaticamente!!-->
-      <input type="checkbox" id="my_modal_6" class="modal-toggle" />
-      <div class="modal" role="dialog">
-        <div class="modal-box">
-          <h3 class="text-lg font-bold">Delete project</h3>
-          <p class="py-4">If there's units assigned to the project, they will also be deleted.</p>
-          <div class="modal-action">
-            <button class="btn" (click)="deleteProject()">Delete</button>
-            <label for="my_modal_6" class="btn">Close</label>
-          </div>
+  @if (this.projectLoaded()) {
+    <label for="my_modal_6" class="btn btn-primary">Delete</label>
+    <input type="checkbox" id="my_modal_6" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold">Delete project</h3>
+        <p class="py-4">If there's units assigned to the project, they will also be deleted.</p>
+        <div class="modal-action">
+          <button class="btn" (click)="deleteProject()">Delete</button>
+          <label for="my_modal_6" class="btn">Close</label>
         </div>
       </div>
-    }
+    </div>
+  }
 </form>
 
 <!-- MODAL PARA AGREGAR POR CORREO -->
-
-
 
 @if (wasSaved()) {
   <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
