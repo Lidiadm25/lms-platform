@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@a
 import { AuthService } from '../../../auth/services/authService';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Navbar } from "../navbar/navbar";
-import { UiService } from '../drawer/uiService';
+import {UiService} from './uiService'
 
 @Component({
   selector: 'app-my-drawer',
