@@ -11,7 +11,6 @@ import { UsersProjectService } from '../../../projects/services/UsersProjectServ
   imports: [ProjectCard,],
   templateUrl: './courses-slider.html',
   
-  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CoursesSlider { 
