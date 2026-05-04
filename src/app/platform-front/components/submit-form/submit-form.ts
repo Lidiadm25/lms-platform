@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../../projects/services/TaskService';
 import { FileInputManager } from "../file-input-manager/file-input-manager";
+import { Task } from '../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-submit-form',
@@ -11,23 +12,33 @@ import { FileInputManager } from "../file-input-manager/file-input-manager";
 })
 export class SubmitForm {
    submissionId = input.required<string>();
-   fileSize = input.required<number>();
+   fileSize = signal<number>(0)
+   id = signal<string>('')
    submitService = inject(TaskService)
-   file! : File;
+
+   task = input.required<Task | null>();
+     file = model<File[]>([]);
   wasSaved = signal<boolean>(false);
   hasError = signal<boolean>(false);
-   imageUrl = signal<string[]>([]);
-   
+
+   ngOnInit(){
+  if(this.task != null){
+      this.id.set(this!.task()!.id)
+    this.fileSize.set(this!.task()!.fileSize)
+  }
+   }
+
   onSubmit(){
-    console.log(this.imageUrl())
+    
   
     
-    this.submitService.updateSubmission(this.submissionId(), this.file) .subscribe((result) => (result.valueOf() ? this.success() : this.error()));
+    this.submitService.updateSubmission(this.submissionId(), this.file(), this.id()).subscribe((x)=> console.log(x))
   }
   success() {
     this.wasSaved.set(true);
     setTimeout(() => {
       this.wasSaved.set(false);
+    
     }, 3000);
   }
 

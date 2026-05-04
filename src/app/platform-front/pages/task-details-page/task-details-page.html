@@ -23,7 +23,7 @@
          <app-submit-info [submit] = "this.submit()"/>
     } @else if(this.isActive()) {
         
-        <app-submit-form [submissionId] = "this.submit()!.id" [fileSize]="this.task()!.fileSize" />
+        <app-submit-form [submissionId] = "this.submit()!.id" [task]="this.task()" />
     }
     </div>
   </div>

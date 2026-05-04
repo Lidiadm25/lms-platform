@@ -1,11 +1,11 @@
-import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
-import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { jwtToken } from '../../auth/interfaces/auth-response.interface';
 import { Task } from '../interfaces/project.interface';
-import { TaskCreate, SubmitTaskResponse, Submit } from '../interfaces/tasks.interface';
+import { Submit, SubmitTaskResponse, TaskCreate } from '../interfaces/tasks.interface';
 
 
 const BASE_URL = environment.baseUrl;
@@ -27,10 +27,7 @@ export class TaskService {
     return this.http.post<TaskCreate>(`${BASE_URL}/tasks`, task)
   }
   update(id: string, task: TaskCreate){
-    return this.http.patch<TaskCreate>(`${BASE_URL}/tasks/${id}`, task).pipe
-    (
-      catchError((error:any) => {return of(false)})
-    )
+    return this.http.patch<TaskCreate>(`${BASE_URL}/tasks/${id}`, task)
   }
   delete(id:string){
     return this.http.delete(`${BASE_URL}/tasks/${id}`)
@@ -61,20 +58,33 @@ export class TaskService {
     return this.http.get<Submit>(`${BASE_URL}/submit-task/task/${id}`)
   }
   
-  updateSubmission(id:string, file:File){
-    return this.uploadFile(file, "20000000").pipe(
-          map((fileName) => {
-            console.log(fileName);
-            return {
-              url_file: fileName.substring(40),
-            };
-          }),
-          switchMap((updatedSubmit) =>
-            this.http.patch<Submit>(`${BASE_URL}/submit-task/${id}`, updatedSubmit),
-          ),
-        catchError((error:any) => {return of(false)})
-        );
-      }
+ updateSubmission(id: string, files: File[], idTask: string) {
+  const formData = new FormData();
+  
+  for (let index = 0; index < files.length; index++) {
+    const file = files[index];
+    formData.append('documents', file, file.name);
+  }
+
+  return this.http.post<string[]>(`${BASE_URL}/files/bulk/${idTask}`, formData).pipe(
+    
+    switchMap(response => {
+      console.log(response)
+      const payload = {url_file: response};
+      console.log(payload)
+      return this.http.patch(`${BASE_URL}/submit-task/${id}`, payload);
+    })
+  );
+}
+
+    uploadFiles(files:File[]): Observable<string[]>{
+      if(!files) return of([])
+
+        const uploadObservables = Array.from(files).map((file)=> this.uploadFile(file, undefined));
+        return forkJoin(uploadObservables).pipe(
+          tap((fileNames)=> console.log({fileNames}))
+        )
+    }
 
 
     uploadFile(file: File, size: string | undefined): Observable<string> {
@@ -96,4 +106,6 @@ export class TaskService {
     findByUserTask(id:string, task:string){
      return this.http.get<Submit>(`${BASE_URL}/submit-task/review-task/${id}/${task}`)
     }
+
+    
 }

@@ -13,11 +13,11 @@ interface fileData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileInputManager {
-  file = model<File | undefined>(undefined);
-  fileUrl = model<string[]>();
+  file = model<File[]>([]);
+
   fileSize = input.required<number>();
   dialog = inject(MatDialog);
-  fileList: FileList | undefined = undefined;
+
   size = signal<string>('2 GB');
   tempFilesNames = signal<fileData[]>([]);
   ngOnInit() {
@@ -28,39 +28,47 @@ export class FileInputManager {
   }
 
   // TODO multiple files
-  onFilesChange(event: any) {
-    const fileList = (event.target as HTMLInputElement).files;
-    if (fileList != null) {
-      var newNames = Array.from(fileList ?? []).map((file) => ({
-        name: file.name,
-        type: file.name.slice(file.name.length - 3),
-      }));
+ onFilesChange(event: any) {
+  const input = event.target as HTMLInputElement;
+  const fileList = input.files;
 
-      this.fileList = fileList;
-      this.file.set(fileList[0]);
-      let filesArray = Array.from(fileList ?? []).map((file) => URL.createObjectURL(file));
+  if (fileList && fileList.length > 0) {
+    const currentFiles = this.file();
+    const newFilesArray = Array.from(fileList);
 
-      this.fileUrl.update((array) => array!.concat(filesArray));
+    const uniqueNewFiles = newFilesArray.filter(
+      (newFile) => !currentFiles.some(
+        (existing) => existing.name === newFile.name && existing.size === newFile.size
+      )
+    );
 
-      for (let index = 0; index < newNames.length; index++) {
-        const element = newNames[index];
-        if (element.type == 'pdf') {
-          newNames[index].type = './assets/pdf.svg';
-        } else if (element.type == 'jpg' || element.type == 'png' || element.type == 'jpeg') {
-          newNames[index].type = './assets/image.svg';
-        } else {
-          newNames[index].type = './assets/zip.svg';
+    if (uniqueNewFiles.length > 0) {
+      const newVisualFiles = uniqueNewFiles.map((file) => {
+        const extension = file.name.split('.').pop()?.toLowerCase();
+        let iconPath = './assets/zip.svg';
+
+        if (extension === 'pdf') {
+          iconPath = './assets/pdf.svg';
+        } else if (extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
+          iconPath = './assets/image.svg';
         }
-      }
 
-      this.tempFilesNames.update((names) => names.concat(newNames));
-      console.log(this.tempFilesNames());
-    } else {
-      this.tempFilesNames.set([]);
+        return {
+          name: file.name,
+          type: iconPath
+        };
+      });
+
+      this.file.update((current) => [...current, ...uniqueNewFiles]);
+      this.tempFilesNames.update((names) => [...names, ...newVisualFiles]);
     }
+  } else if (this.file().length === 0) {
+    this.file.set([]);
+    this.tempFilesNames.set([]);
   }
 
-  removeFiles() {}
+  input.value = '';
+}
 
   openModal(name: string) {
     let dialogRef = this.dialog.open(ModalDeleteConfirmation, {
@@ -70,15 +78,13 @@ export class FileInputManager {
     //dialogRef.afterClosed().
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result)
-         const filtered =this.tempFilesNames().filter(
-          (file) =>
-            typeof file.name === 'string' &&
-            typeof result === 'string' &&
-           ! file.name.toLowerCase().includes(result.toLowerCase()),
+        const filtered = this.tempFilesNames().filter(
+          (file) => file.name !== result
         );
-        this.tempFilesNames.set(filtered)
-        console.log(this.tempFilesNames());
+        const filteredReal = this.file()!.filter((file) =>  file.name !== result);
+        this.tempFilesNames.set(filtered);
+        this.file.set(filteredReal);
+        console.log(this.file());
       }
     });
   }
