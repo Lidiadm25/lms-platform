@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-survey-manager-page',
@@ -7,4 +8,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SurveyManagerPage { }
+export class SurveyManagerPage { 
+  fb = inject(FormBuilder)
+
+  surveyGroup = this.fb.group({
+    description: [],
+    type: [],
+  })
+
+ 
+}
