@@ -1,0 +1,25 @@
+@if(gradeResource.isLoading()){
+    <span>loading</span>
+}
+
+@if(gradeResource.hasValue()){
+ 
+
+
+  <table class="table">
+    <th>TASK</th>
+    <th>GRADE</th>
+    <th>RANGE</th>
+    <th>FEEDBACK</th>
+    @for (item of gradeResource.value(); track $index) {
+        <tr>
+            <td>{{item.tasks_title}}</td>
+            <td>{{item.grades_total}}</td>
+            <td>{{item.grades_total}} / {{item.grades_max_range}}</td>
+            <td class="truncate">{{item.grades_feedback}}</td>
+            <td><a  class="link">See more</a></td>
+        </tr>
+    }
+  </table>
+
+  }

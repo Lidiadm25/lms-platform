@@ -10,6 +10,7 @@ import { ProjectViewPage } from './pages/project-view-page/project-view-page';
 import { LessonViewPage } from './pages/lesson-view-page/lesson-view-page';
 import { LayoutCourseView } from './components/top-bar-client/layout-course-view';
 import { CalendarPage } from './pages/calendar-page/calendar-page';
+import { GradesViewPage } from './pages/grades-view-page/grades-view-page';
 
 export const platformFrontRoutes: Routes = [
   {
@@ -55,6 +56,10 @@ export const platformFrontRoutes: Routes = [
             path:'calendar',
             component: CalendarPage
           },
+          {
+            path:'grades',
+            component: GradesViewPage
+          }
           
           
         ],
