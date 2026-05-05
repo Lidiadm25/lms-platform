@@ -1,9 +1,10 @@
 @if (filteredUnits$ != undefined) {
-  <form [formGroup]="exFormGroup">
-    <mat-form-field class="w-100%" appearance="outline">
+  <form [formGroup]="exFormGroup" class="flex flex-col-1 gap-3">
+    <mat-form-field  appearance="outline" >
       <mat-label>Units</mat-label>
       <input
         type="text"
+        
         placeholder="Pick one"
         matInput
         formControlName="unitsController"
@@ -13,11 +14,12 @@
         #auto="matAutocomplete"
         [displayWith]="displayWith"
         showPanel="true"
-        class="example-bright-container"
+        hideSingleSelectionIndicator="true"
+        
         (optionsScroll)="onScroll()"
       >
         @for (item of filteredUnits$ | async; track item) {
-          <mat-option [value]="item">
+          <mat-option [value]="item" >
             {{ item.title }}
           </mat-option>
         }

@@ -15,14 +15,9 @@ import {
   startWith,
   switchMap,
   takeWhile,
-  tap
+  tap,
 } from 'rxjs';
-import {
-  Lesson,
-  Project,
-  Task,
-  Unit
-} from '../../../projects/interfaces/project.interface';
+import { Lesson, Project, Task, Unit } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { TaskService } from '../../../projects/services/TaskService';
@@ -39,7 +34,7 @@ import { TaskService } from '../../../projects/services/TaskService';
     MatInputModule,
   ],
   templateUrl: './combobox-units-lesson.html',
-
+  styleUrl:'./cb.styles.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboboxUnitsLesson {
@@ -63,7 +58,7 @@ export class ComboboxUnitsLesson {
   ngOnInit(): void {
     this.projectService.getById(this.projectId()).subscribe((result) => {
       this.project.set(result);
-      
+
       this.getUnitList();
     });
 
@@ -72,8 +67,6 @@ export class ComboboxUnitsLesson {
       lessonController: '',
       taskController: '',
     });
-
- 
 
     // Note: listen for search text changes
     const filter$ = this.exFormGroup.get('unitsController').valueChanges.pipe(
@@ -84,69 +77,38 @@ export class ComboboxUnitsLesson {
 
     this.filteredUnits$ = filter$.pipe(
       switchMap((filter) => {
-        //Note: Reset the page with every new seach text
         let currentPage = 1;
         return this.nextPage$.pipe(
           startWith(currentPage),
-          // Note: Until the backend responds, ignore NextPage requests.
+
           exhaustMap((_) => this.getUnitsList(filter, currentPage)),
           tap(() => currentPage++),
-          
+
           takeWhile((p) => p.length > 0),
           scan((allProducts: any, newProducts: any) => allProducts.concat(newProducts), []),
         );
       }),
     );
 
-
     const filterLessons$ = this.exFormGroup.get('unitsController').valueChanges.pipe(
-    
       startWith(''),
       debounceTime(500),
       filter((value): value is Unit => typeof value === 'object' && value !== null),
-      switchMap((unit:Unit)=> this.lessonService.getLessonsByUnit(unit.id)),
-      
-      
+      switchMap((unit: Unit) => this.lessonService.getLessonsByUnit(unit.id)),
     );
-  
-       this.filteredLessons$ = filterLessons$
 
-    
-       const filterTask$ = this.exFormGroup.get('lessonController').valueChanges.pipe(
-        startWith(''),
+    this.filteredLessons$ = filterLessons$;
+
+    const filterTask$ = this.exFormGroup.get('lessonController').valueChanges.pipe(
+      startWith(''),
       debounceTime(500),
       filter((value): value is Lesson => typeof value === 'object' && value !== null),
-      switchMap((lesson:Lesson)=> this.taskService.getByLessonId(lesson.id)),
-      tap((x)=> console.log(x))
-       )
+      switchMap((lesson: Lesson) => this.taskService.getByLessonId(lesson.id)),
+      tap((x) => console.log(x)),
+    );
 
-       this.filteredTasks$ = filterTask$;
-   
-    // .pipe(
-    //   switchMap((filter) => {
-        
-    //     let currentPage = 1;
-    //     return this.nextPage$.pipe(
-    //       startWith(currentPage),
-    //       // Note: Until the backend responds, ignore NextPage requests.
-    //       exhaustMap((_) => this.getLessonsList(filter, currentPage)),
-    //       tap(() => currentPage++),
-          
-    //       takeWhile((p) => p.length > 0),
-    //       scan((allProducts: any, newProducts: any) => allProducts.concat(newProducts), []),
-    //     );
-    //   }),
-    // );
-
-    
-
+    this.filteredTasks$ = filterTask$;
   }
-    
-  // fetchLessons(value: Unit): Observable<Lesson[]>{
-  
-  //   this.getLessonList(value.id);
-  //   return this.lessonService.getLessonsByUnit(value.id);
-  // }
 
   getUnitsList(startsWith: any, page: number): Observable<Unit[]> {
     const take = 10;
@@ -157,40 +119,19 @@ export class ComboboxUnitsLesson {
     return of(filtered.slice(skip, skip + take));
   }
 
-  // getLessonsList(startsWith: any, page: number): Observable<Lesson[]> {
-  //   const take = 3;
-  //   const skip = page > 0 ? (page - 1) * take : 0;
-  
-    
-  //   return of(this.lessonList.slice(skip, skip + take));
-  // }
-
   displayWith(element: any) {
-    console.log(element)
+    console.log(element);
 
     return element ? element.title : null;
   }
 
   onScroll() {
-    //Note: This is called multiple times after the scroll has reached the 80% threshold position.
     this.nextPage$.next();
   }
 
   getUnitList() {
-    // Here, you can call your api if you wants data from backend.
     this.unitList = this.project()!.units;
-
-    // for (let i = 1; i < 100; i++) {
-    //   this.unitList.push({ id: i, name: 'Student-' + i })
-    // }
   }
-
-  // getLessonList(value : string){
-  //   this.lessonService.getLessonsByUnit(value).subscribe((result)=>{
-  //     this.lessonList = result;
-      
-  //   })
-  // }
 
   emitTask(id: string) {
     this.task.emit(id);
