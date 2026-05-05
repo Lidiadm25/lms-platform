@@ -1,28 +1,27 @@
 <div class="flex flex-col h-screen w-screen">
-
-
-    <app-navbar class="sticky top-0 z-20"/>
+  <app-navbar class="sticky top-0 z-20" />
 
   <div class="flex flex-1">
-<div class="bg-base-300 fixed top-16 left-0 h-[calc(100%-4rem)]  z-50 duration-300 ease-in-out overflow-hidden" 
-(mouseenter)="uiService.notCollapsed()"
-(mouseleave)="uiService.isCollapsed()"
-
-[class.w-64]="!uiService.collapsed()"
-[class.w-14]="uiService.collapsed()"
->
-    
- <ul class="menu w-full h-max mt-20 overflow-hidden">
+    <div
+      class="bg-base-300 fixed top-16 left-0 h-[calc(100%-4rem)] z-50 duration-300 ease-in-out overflow-hidden"
+      (mouseenter)="uiService.notCollapsed()"
+      (mouseleave)="uiService.isCollapsed()"
+      [class.w-64]="!uiService.collapsed()"
+      [class.w-14]="uiService.collapsed()"
+    >
+      <ul class="menu w-full h-max mt-20 overflow-hidden">
        
+
         <li>
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Homepage"
-            [routerLink]="['/',this.home()]"
+            [routerLink]="['/', this.home()]"
           >
             <!-- Home icon -->
             <svg
-              xmlns="http://www.w3.org/2000/svg"ñ
+              xmlns="http://www.w3.org/2000/svg"
+              
               viewBox="0 0 24 24"
               stroke-linejoin="round"
               stroke-linecap="round"
@@ -39,20 +38,16 @@
             <span [class.opacity-0]="uiService.collapsed()">Homepage</span>
           </button>
         </li>
-       
-       
-        @if(authService._role()=="admin"){
-        <!-- List item -->
-        <li>
+         <li>
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-            data-tip="List of projects"
-            routerLink="/admin/projects"
+            data-tip="Homepage"
+            (click)="connect()"
           >
-           
-          
+            <!-- Home icon -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              
               viewBox="0 0 24 24"
               stroke-linejoin="round"
               stroke-linecap="round"
@@ -64,26 +59,47 @@
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+                d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
               />
             </svg>
 
-            <span  [class.opacity-0]="uiService.collapsed()">Projects</span>
+            <span [class.opacity-0]="uiService.collapsed()">Chat</span>
           </button>
         </li>
 
-       
+        @if (authService._role() == 'admin') {
+          <!-- List item -->
+          <li>
+            <button
+              class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+              data-tip="List of projects"
+              routerLink="/admin/projects"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2"
+                fill="none"
+                stroke="currentColor"
+                class="my-1.5 inline-block size-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+                />
+              </svg>
 
-        
-      }
-
+              <span [class.opacity-0]="uiService.collapsed()">Projects</span>
+            </button>
+          </li>
+        }
       </ul>
-      
-</div>
-    <div class="flex-1 ml-16 ">
-  <router-outlet />
-</div>
-        
-</div>
-
+    </div>
+    <div class="flex-1 ml-10">
+      <router-outlet />
+    </div>
+  </div>
 </div>

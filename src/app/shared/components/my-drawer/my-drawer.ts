@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
+import { connectToServer } from '../../../../socket-client';
 import { AuthService } from '../../../auth/services/authService';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Navbar } from "../navbar/navbar";
@@ -21,5 +22,12 @@ export class MyDrawer {
       return 'home'
     }
   });
+
+
+  connect(){
+    let token =    localStorage.getItem('token')
+    if(token)  connectToServer(token);
+  
+  }
 
  }
