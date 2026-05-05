@@ -26,12 +26,10 @@ export class LessonAccordeon {
  
 
    navigateLesson(){
-    
     this.router.navigateByUrl("/admin/manager/"+this.projectId()+"/"+this.unitId()+"/" +this.lessonId()) 
   }
 
   navigateTask(id:string){
-   
     this.router.navigateByUrl("/admin/manager/"+this.projectId()+"/"+this.unitId()+"/" +this.lessonId() +"/"+ id, {replaceUrl:true}) 
   }
  }
