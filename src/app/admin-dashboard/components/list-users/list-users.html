@@ -1,18 +1,29 @@
 <!-- TODO lista con scroll, igual que aparezcan las tareas entregadas al hacer-->
-<div class="relative flex flex-col rounded-lg border border-slate-200 bg-white shadow-sm">
-  <nav class="flex min-w-[240px] flex-col gap-1 p-1.5">
+  <h3>
+    Choose an student
+  </h3>
+<div class="flex flex-col  border border-slate-200 bg-white shadow-sm mt-2 overflow-y-auto p-2">
+  
+  
     @for (item of this.usersList()?.users; track $index) {
+       
       <div
         role="button"
         (click)="emitUser(item.user.id)"
-        class="text-slate-800 flex w-full items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+        class="text-slate-800 w-full items-center rounded-md p-3 hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100  "
+        
       >
-        <div>
-          <h6 class="text-slate-800 font-medium">
+
+          <p class="text-slate-800 font-medium text-center align-middle ">
             {{ item.user.fullName }}
-          </h6>
-        </div>
+          </p>
+     
+        
       </div>
+      @if( this.usersList()!.users.indexOf(item) < (this.usersList()!.users.length -1  ) ) {
+      <div class="border border-slate-200 my-1"></div>
+     }
     }
-  </nav>
+   
+  
 </div>
