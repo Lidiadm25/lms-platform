@@ -63,7 +63,7 @@
             @for (item of this.tempFilesNames(); track $index) {
               <div class="grid grid-cols-1 grid-rows-2 gap-2">
                 
-              <img [src]= item.type alt="Descripción de la imagen" width="50" height="50" (click)="openModal(item.name)">
+              <img [src]= item.type alt="" width="50" height="50" (click)="openModal(item.name)">
               <p class="w-20 truncate">{{ item.name}}</p>
               </div>
             }
