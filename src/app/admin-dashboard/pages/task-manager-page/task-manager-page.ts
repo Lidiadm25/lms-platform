@@ -5,10 +5,11 @@ import { Task } from '../../../projects/interfaces/project.interface';
 import { TaskCreate } from '../../../projects/interfaces/tasks.interface';
 import { TaskService } from '../../../projects/services/TaskService';
 import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-task-manager-page',
-  imports: [DynamicSize, ReactiveFormsModule],
+  imports: [DynamicSize, ReactiveFormsModule, QuillModule],
   templateUrl: './task-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

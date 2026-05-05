@@ -1,18 +1,25 @@
+<div class="flex flex-row justify-between mr-10">
+  <h2>Lesson manager</h2>
+  <div class="flex gap-2">
+    <button class="btn btn-soft btn-primary"  [routerLink]="['/admin/manager/',this.projectId(), this.unitId ,'create']">New lesson</button>
+    <button class="btn btn-soft btn-primary" (click)="verifyStatus()">New task</button>
+  </div>
+</div>
 <div class="flex flex-col-3 my-5 ml-10">
   <section class="w-6/6 mr-10">
     <form (ngSubmit)="OnSubmit()" [formGroup]="lessonForm">
-      <label>Title</label>
+      <label class="label">Title</label>
       <input
         class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
         type="text"
         formControlName="title"
       />
 
-      <label>Description</label> <br />
+      <label class="label">Description</label> <br />
 
       <quill-editor
         formControlName="description"
-        class="mb-15 h-90"
+        class="mb-15 h-40"
         format="html"
         [sanitize]="false"
       >
@@ -23,10 +30,8 @@
         class="file-input file-input-bordered w-full mt-4"
         (change)="onFilesChange($event)"
       />
-      <app-dynamic-size [control]="getSelectedSize()" />
     </form>
-    <div class="flex flex-col-2 w-full gap-2">
-      <button class="btn btn-secondary flex-1" type="submit">Save</button>
+    <div class="flex flex-col-2 w-full gap-2 my-4">
       <button class="btn btn-primary flex-1" onclick="my_modal_1.showModal()">Delete</button>
       <dialog id="my_modal_1" class="modal">
         <div class="modal-box">
@@ -40,56 +45,7 @@
           </div>
         </div>
       </dialog>
-    </div>
-    <!-- <div class="flex flex-col gap-2">
-  <a class="flex flex-col-2 gap-3" (click)="verifyStatus()">
-    <h2 class="text-2xl font-bold h-12">Tasks</h2>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="size-6"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-      />
-    </svg>
-  </a> -->
-    <!-- @if (!lessonLoaded()) {
-    <p>No tasks</p>
-  } @else {
-    @for (item of lessonLoaded()!.tasks; track $index) {
-      <app-task-card [taskId]="item.id" [lessonId]="this.lessonId()" />
-    }
-  } -->
-
-    <!-- </div> -->
-  </section>
-  <section class="flex justify-end w-1/9">
-    <div class="drawer drawer-end">
-      <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content">
-        <!-- Page content here -->
-        <label for="my-drawer-5" class="drawer-button btn btn-primary">See tasks</label>
-      </div>
-      <div class="drawer-side">
-        <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay"></label>
-        <ul class="menu bg-base-200 min-h-full w-80 p-4">
-          <!-- Sidebar content here -->
-          @for (item of lessonLoaded()?.tasks; track $index) {
-            <li>
-              <a> {{ item.title }}</a>
-            </li>
-          } @empty {
-            <li>No tasks</li>
-          }
-          <li><button class="btn btn-primary" (click)="verifyStatus()">Add new task</button></li>
-        </ul>
-      </div>
+      <button class="btn btn-secondary flex-1" type="submit">Save</button>
     </div>
   </section>
 </div>

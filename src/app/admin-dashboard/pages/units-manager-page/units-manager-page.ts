@@ -1,13 +1,13 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UnitService } from '../../../projects/services/UnitService';
 import { Unit } from './../../../projects/interfaces/project.interface';
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './units-manager-page.html',
 })
 export class UnitsManagerPage {

@@ -1,16 +1,15 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { QuillModule } from 'ngx-quill';
 import { firstValueFrom } from 'rxjs';
 import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
-import { DynamicSize } from '../../components/dynamic-size/dynamic-size';
-import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-lesson-manager-page',
-  imports: [FormsModule, ReactiveFormsModule, DynamicSize, QuillModule],
+  imports: [FormsModule, ReactiveFormsModule, QuillModule, RouterLink],
   templateUrl: './lesson-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

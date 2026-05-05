@@ -1,61 +1,66 @@
+<div class="flex flex-row justify-between ">
+  <h2>Task manager</h2>
+  <button class="btn btn-soft btn-primary">New task</button>
+</div>
 <form (ngSubmit)="OnSubmit()" [formGroup]="taskForm">
-  <label>Title</label>
+  <label class="label">Title</label>
+
   <input
-    class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+    class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none mb-5"
     type="text"
     formControlName="title"
-    
   />
 
-  <label>Description</label> <br />
+  <div class="flex flex-row-2 gap-3">
+    <label class="label self-center"> Starts</label>
+    <input type="datetime-local" class="input" formControlName="task_open" />
+    <label class="label self-center"> / </label>
 
-  <textarea
-    class="textarea textarea-bordered"
-    placeholder="Descripción"
-    rows="6"
-    formControlName="description"
-    
-  ></textarea>
-  <br />
-
-  <label > Task opens</label>
-  <input type="datetime-local" class="input"  formControlName="task_open"/> <br>
-    <label >Task closes</label>
     <input type="datetime-local" class="input" formControlName="task_close" />
-  <input
-    type="file"
-    multiple
-    class="file-input file-input-bordered w-full mt-4"
-    (change)="onFilesChange($event)"
-  />
-    <app-dynamic-size [control] = "getSelectedSize()"/>
+  </div>
 
-  <button class="btn btn-secondary" type="submit">Save</button>
+  <label class="label mt-4">Description</label>
+
+  <quill-editor formControlName="description" class="mb-15 h-40 w-full" format="html">
+  </quill-editor>
+
+  <div class="grid grid-cols-2">
+    <label class="label">Optional resources</label>
+   
+
+    <label class="label">Max file size for submission</label>
+     <input
+      type="file"
+      multiple
+      class="file-input file-input-bordered"
+      (change)="onFilesChange($event)"
+    />
+    <app-dynamic-size [control]="getSelectedSize()" />
+  </div>
 </form>
-
-<button class="btn btn-primary" onclick="my_modal_1.showModal()">Delete</button>
+<div class="grid sm:grid-cols-2 gap-5 mb-[-15px] mt-6">
+  <button class="btn btn-primary" onclick="my_modal_1.showModal()">Delete</button>
+  <button class="btn btn-secondary" type="submit">Save</button>
+</div>
 <dialog id="my_modal_1" class="modal">
   <div class="modal-box">
     <h3 class="text-lg font-bold">Delete lesson</h3>
     <p class="py-4">Are you sure you wanna delete the lesson?</p>
     <div class="modal-action">
       <form method="dialog">
-         <button class="btn" (click)="deleteTask()"> Delete</button>
+        <button class="btn" (click)="deleteTask()">Delete</button>
         <button class="btn">Close</button>
       </form>
     </div>
   </div>
 </dialog>
 @if (wasSaved()) {
-    <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
-      <span>Changes saved succesfully</span>
-    </div>
-  }
-  @if (hasError()) {
-    <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
-      <span>Something went wrong</span>
-    </div>
-  }
-
-
-
+  <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>Changes saved succesfully</span>
+  </div>
+}
+@if (hasError()) {
+  <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>Something went wrong</span>
+  </div>
+}
