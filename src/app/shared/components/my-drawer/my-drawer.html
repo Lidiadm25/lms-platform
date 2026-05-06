@@ -10,8 +10,6 @@
       [class.w-14]="uiService.collapsed()"
     >
       <ul class="menu w-full h-max mt-20 overflow-hidden">
-       
-
         <li>
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -21,7 +19,6 @@
             <!-- Home icon -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              
               viewBox="0 0 24 24"
               stroke-linejoin="round"
               stroke-linecap="round"
@@ -38,16 +35,41 @@
             <span [class.opacity-0]="uiService.collapsed()">Homepage</span>
           </button>
         </li>
-         <li>
+        <li>
+          <button
+           class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+            data-tip="Homepage"
+            [routerLink]="['/explore']"
+          >
+            <svg
+               xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="my-1.5 inline-block size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+                        <span [class.opacity-0]="uiService.collapsed()">Explore</span>
+          </button>
+        </li>
+
+        <li>
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-            data-tip="Homepage"
+            data-tip="Chat"
             (click)="connect()"
           >
-            <!-- Home icon -->
+            <!-- Chat icon -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              
               viewBox="0 0 24 24"
               stroke-linejoin="round"
               stroke-linecap="round"
@@ -98,7 +120,7 @@
         }
       </ul>
     </div>
-    <div class="flex-1 ml-10">
+    <div class="flex-1 ml-10 w-[99%]">
       <router-outlet />
     </div>
   </div>
