@@ -27,25 +27,25 @@
 </div>
 
 <!-- CONTENT -->
-<section class="flex-1 p-7">
-  <div class=" ">
-  <div class="flex flex-col lg:flex-row gap-6 items-start ">
+<section class="p-7  ">
+  
+  <div class="flex flex-col lg:flex-row gap-6 w-full">
 
-   
-    @if(!this.currentRoute.includes('survey-manager')) {
-       <app-table-accordeon [idProject]="this.projectId" class="w-full flex-shrink-0 lg:w-80 sticky-top-6" />
+    
+     @if(this.currentRoute.includes('survey-manager') || this.projectId()!='create') {
+      
+       <app-table-accordeon [idProject]="this.projectId()" class="flex-shrink-0 lg:w-80 max-w-80 " />
     }
-    <main class="flex-1bg-base-100 rounded-xl shadow-sm p-6 lg:p-8 w-full">
-      <!-- <div class="flex justify-between items-center mb-8 border-b border-base-200 pb-4"> -->
+  
+    <main class="flex-1 w-full bg-base-100 rounded-xl shadow-sm p-6 lg:p-8 h-[calc(100vh-25vh)]">
         <router-outlet/>
-      <!-- </div> -->
     </main>
   </div>
 
   
-</div>
+
 </section>
-<app-search-tags [projectId]="this.projectId" (onUsersPicked)="usersInscription($event)" />
+<app-search-tags [projectId]="this.projectId()" (onUsersPicked)="usersInscription($event)" />
 
 @if (wasSaved()) {
   <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">

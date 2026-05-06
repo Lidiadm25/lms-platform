@@ -15,7 +15,7 @@ import { TableAccordeon } from '../../components/table-accordeon/table-accordeon
 })
 export class ManagerPage {
   activatedRoute = inject(ActivatedRoute);
-  projectId: string = this.activatedRoute.snapshot.params['idProject'];
+  projectId = signal<string>('create')
   userProjectService = inject(UsersProjectService);
 
   wasSaved = signal<boolean>(false);
@@ -23,6 +23,8 @@ export class ManagerPage {
 
   currentRoute!: string;
   constructor(private router: Router) {
+   this.projectId.set( this.activatedRoute.snapshot.params['idProject']);
+   console.log(this.projectId())
    this.currentRoute =this.router.url;
 
    this.router.events.subscribe((event) => {     
@@ -38,7 +40,7 @@ export class ManagerPage {
     this.users = event;
     for (let index = 0; index < this.users.length; index++) {
       this.usersEmails[index] = {
-        projectId: this.projectId,
+        projectId: this.projectId(),
         userEmail: this.users[index],
       };
     }

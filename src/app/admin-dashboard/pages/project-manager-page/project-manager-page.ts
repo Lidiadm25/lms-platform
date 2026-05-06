@@ -3,19 +3,17 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProjectService } from '../../../projects/services/ProjectService';
-import { UserProjectCreate } from './../../../auth/interfaces/user.interface';
 
-import { Location } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { Project } from '../../../projects/interfaces/project.interface';
 import { UsersProjectService } from '../../../projects/services/UsersProjectService';
 import { CategoryDropdown } from '../../components/category-dropdown/category-dropdown';
 import { ImageInput } from '../../components/image-input/image-input';
-import { SearchTags } from '../../components/search-tags/search-tags';
 
 @Component({
   selector: 'app-project-manager-page',
-  imports: [ReactiveFormsModule, ImageInput, SearchTags, CategoryDropdown, QuillModule],
+  imports: [ReactiveFormsModule, ImageInput, CategoryDropdown, QuillModule, NgClass],
   templateUrl: './project-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

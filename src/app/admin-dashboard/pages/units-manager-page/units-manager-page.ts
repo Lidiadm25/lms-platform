@@ -4,10 +4,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UnitService } from '../../../projects/services/UnitService';
 import { Unit } from './../../../projects/interfaces/project.interface';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-units-manager-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, NgClass],
   templateUrl: './units-manager-page.html',
 })
 export class UnitsManagerPage {

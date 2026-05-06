@@ -77,6 +77,8 @@ export class TaskManagerPage {
       lesson: this.lessonId,
     };
 
+    console.log(task)
+
     if (this.taskId() == 'create') {
       this.taskService.create(task).subscribe({
         next: (x) => console.log(x),

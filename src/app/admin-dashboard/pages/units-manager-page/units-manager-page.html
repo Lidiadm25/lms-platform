@@ -1,4 +1,5 @@
-
+<div class="">
+  
 <div class="flex flex-row justify-between">
   <h2 class="">Unit manager</h2>
  <button class="btn btn-soft btn-primary" [routerLink]="['/admin/manager/',this.projectId, 'unit', 'create']">New unit</button>
@@ -17,21 +18,22 @@
   <label class="label">Description</label> 
 
   <textarea
-    class="textarea textarea-bordered w-full"
+  
+    [ngClass]="this.edit() ? 'textarea textarea-bordered w-full' : 'textarea textarea-bordered w-full h-70'"
     placeholder="Descripción"
     rows="6"
     formControlName="description"
   ></textarea>
   <br />
 
-  <div class=" grid sm:grid-cols-2 gap-5">
+  <div [ngClass]="this.edit() ? 'grid sm:grid-cols-2 gap-5' : 'grid grid-cols-1 gap-5'">
    
   @if (this.edit() == true) {
   <!-- Open the modal using ID.showModal() method -->
   <button class="btn btn-primary" onclick="my_modal_1.showModal()">Delete</button>
  
 }
- <button class="btn btn-secondary" type="submit">Save</button>
+ <button class="btn btn-secondary w-full" type="submit">Save</button>
   </div>
  <dialog id="my_modal_1" class="modal">
     <div class="modal-box">
@@ -61,7 +63,9 @@
       <span>You shall create an unit first</span>
     </div>
   }
-<!-- </div> -->
 
 
 
+
+
+</div>

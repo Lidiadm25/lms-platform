@@ -37,11 +37,12 @@
     />
     <app-dynamic-size [control]="getSelectedSize()" />
   </div>
-</form>
-<div class="grid sm:grid-cols-2 gap-5 mb-[-15px] mt-6">
+  <div class="grid sm:grid-cols-2 gap-5 mb-[-15px] mt-6">
   <button class="btn btn-primary" onclick="my_modal_1.showModal()">Delete</button>
   <button class="btn btn-secondary" type="submit">Save</button>
 </div>
+</form>
+
 <dialog id="my_modal_1" class="modal">
   <div class="modal-box">
     <h3 class="text-lg font-bold">Delete lesson</h3>
