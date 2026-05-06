@@ -1,31 +1,53 @@
-<div class="p-7">
-  <h2>GRADE REVIEWS</h2>
+<div class="p-10">
+  <h2 class="font-poppins">GRADE REVIEWS</h2>
 
   <app-combobox-units-lesson [projectId]="this.projectId" (task)="taskId.set($event)" />
 
-  <section class="flex flex-col-3 gap-5 justify-between h-full">
-    <div class="bg-sky-50 w-1/5 flex-initial">
-      <app-list-users [projectId]="this.projectId" (userChosen)="userId.set($event)" />
-    </div>
+  <section class="flex flex-row-3 gap-5 justify-between h-full">
+    
+      <app-list-users [projectId]="this.projectId" (userChosen)="userId.set($event)"/>
+    
 
-    <div class="min-w-3/5">
+
       @if (this.submit()?.url_file) {
 
-        @if(this.submit()?.url_file?.match('.pdf')){
-          <app-submission-visualizer [url]="this.submit()!.url_file" />
-        } @else {
-          
-        }
+         @for (item of this.submit()!.url_file; track $index) {
+           <div class="grid grid-cols-1 grid-rows-2 gap-2 mt-10 justify-normal">
+             @if(item.includes('.svg') || item.includes('.png') || item.includes('.jpg')){
+                <div>
+                  <a [href]=item download={{item}}>
+                    <img src="./assets/image.svg" class="h-20 w-20" />
+                <p class="truncate w-25">{{item.substring(35)}}</p>
+                  </a>
+                </div>
+                
+              }  @else if (item.includes('.pdf')) {
+            <div>
+                  <img src="./assets/pdf.svg" class="h-20 w-20"/>
+                <p class="truncate w-25">{{item.substring(35)}}</p>
+            </div>
+              } @else {
+               <div>
+                 <img src="./assets/zip.svg" class="h-20 w-20"/>
+                <p class="truncate w-25">{{item.substring(35)}}</p>
+               </div>
+              }
+              
+              </div>
+        } 
 
-        
+
+         @if (this.submit()?.url_file?.includes('.pdf')) {
+          <!-- <app-submission-visualizer [url]="this.submit()!.url_file" /> -->
+        } @else {} 
       } @else {
-        <div class=" flex justify-center items-center ">
+        <div class="flex justify-center items-center">
           <p>No files attached</p>
         </div>
       }
-    </div>
-    <div >
+    
+    
       <app-grade-table [userId]="this.userId()" [submit]="this.submit()" />
-    </div>
+   
   </section>
 </div>
