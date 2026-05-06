@@ -34,7 +34,7 @@ import { TaskService } from '../../../projects/services/TaskService';
     MatInputModule,
   ],
   templateUrl: './combobox-units-lesson.html',
-  styleUrl:'./cb.styles.scss',
+  
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboboxUnitsLesson {

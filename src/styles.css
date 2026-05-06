@@ -16,3 +16,25 @@
     @apply text-xl;
   }
 }
+
+@theme {
+   --font-poppins: Poppins, sans-serif;
+  
+
+}
+.mat-mdc-autocomplete-panel{
+  max-height: 144px!important;
+ 
+}
+
+.mat-mdc-form-field {
+ z-index: 0!important;
+}
+
+h1, h2, h3, p, a {
+  font-family: var(--font-poppins);
+}
+
+.active {
+  background:  var(--color-sky-200) ;
+}
