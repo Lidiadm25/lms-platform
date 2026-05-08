@@ -1,4 +1,5 @@
 export interface Grade {
+  id:string;
     min_range: number;
     max_range:number;
     total: number;

@@ -29,3 +29,11 @@ export interface UserProjectCreate {
     projectId:string;
     userEmail?:string;
 }
+
+export interface UserProjectsResponse {
+  count: number;
+  pages: number;
+  total: number;
+  projects: UserProject[];
+
+}
