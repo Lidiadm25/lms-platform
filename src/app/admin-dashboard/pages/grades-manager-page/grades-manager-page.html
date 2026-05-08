@@ -1,53 +1,63 @@
 <div class="p-10">
+
+  
   <h2 class="font-poppins">GRADE REVIEWS</h2>
+  <div class="flex flex-col-1 gap-40">
+    <app-combobox-units-lesson [projectId]="this.projectId" (task)="taskId.set($event)" />
 
-  <app-combobox-units-lesson [projectId]="this.projectId" (task)="taskId.set($event)" />
-
-  <section class="flex flex-row-3 gap-5 justify-between h-full">
-    
-      <app-list-users [projectId]="this.projectId" (userChosen)="userId.set($event)"/>
-    
-
-
-      @if (this.submit()?.url_file) {
-
-         @for (item of this.submit()!.url_file; track $index) {
-           <div class="grid grid-cols-1 grid-rows-2 gap-2 mt-10 justify-normal">
-             @if(item.includes('.svg') || item.includes('.png') || item.includes('.jpg')){
-                <div>
-                  <a [href]=item download={{item}}>
-                    <img src="./assets/image.svg" class="h-20 w-20" />
-                <p class="truncate w-25">{{item.substring(35)}}</p>
-                  </a>
-                </div>
-                
-              }  @else if (item.includes('.pdf')) {
-            <div>
-                  <img src="./assets/pdf.svg" class="h-20 w-20"/>
-                <p class="truncate w-25">{{item.substring(35)}}</p>
-            </div>
-              } @else {
-               <div>
-                 <img src="./assets/zip.svg" class="h-20 w-20"/>
-                <p class="truncate w-25">{{item.substring(35)}}</p>
-               </div>
-              }
-              
-              </div>
-        } 
-
-
-         @if (this.submit()?.url_file?.includes('.pdf')) {
-          <!-- <app-submission-visualizer [url]="this.submit()!.url_file" /> -->
-        } @else {} 
-      } @else {
-        <div class="flex justify-center items-center">
-          <p>No files attached</p>
-        </div>
-      }
-    
-    
-      <app-grade-table [userId]="this.userId()" [submit]="this.submit()" />
    
+         
+  
+  
+   
+   
+
+  <app-list-users [projectId]="this.projectId" (userChosen)="userId.set($event)" />
+  
+
+  </div>
+
+  <section class="flex flex-col-3 justify-between h-full gap-6">
+    
+    @if (this.submit()?.url_file) {
+        <div [ngClass]=" this.selectedPdf()? 'flex flex-col max-w-20 overflow-y-auto overflow-x-hidden bg-base-200  shadow-sm p-5 ' : 'grid grid-cols-3 grid-rows-2 gap-2 mt-10 auto-rows-max items-start'">
+
+      @for (item of this.submit()!.url_file; track $index) {
+           @if(item.includes('.svg') || item.includes('.png') || item.includes('.jpg')) {
+           
+              <a [href]="item" download="{{ item }}">
+                <img src="./assets/image.svg" class="h-15 w-15" />
+                <p class="truncate w-15">{{ item.substring(35) }}</p>
+              </a>
+            
+          } @else if (item.includes('.pdf')) {
+            <div (click)="openPdf(item)">
+              <img src="./assets/pdf.svg" class="h-15 w-15" />
+              <p class="truncate w-15">{{ item.substring(35) }}</p>
+            </div>
+          } @else {
+            <div>
+              <img src="./assets/zip.svg" class="h-15 w-15" />
+              <p class="truncate w-15">{{ item.substring(35) }}</p>
+            </div>
+          }
+        
+       
+      }
+
+       
+    </div>
+     @if (this.selectedPdf() != null) {
+         <app-submission-visualizer [url]="this.selectedPdf()?? '' "  class="w-full" /> 
+      }
+       
+    } @else {
+      <div class="flex justify-center items-center">
+        <p>No files attached</p>
+      </div>
+    }
+  
+
+    <app-grade-table [userId]="this.userId()" [submit]="this.submit()" />
   </section>
 </div>

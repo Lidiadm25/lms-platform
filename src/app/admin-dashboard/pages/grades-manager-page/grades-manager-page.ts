@@ -1,5 +1,6 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +12,7 @@ import { ComboboxUnitsLesson } from '../../components/combobox-units-lesson/comb
 import { GradeTable } from '../../components/grade-table/grade-table';
 import { ListUsers } from '../../components/list-users/list-users';
 import { SubmissionVisualizer } from '../../components/submission-visualizer/submission-visualizer';
+
 @Component({
   selector: 'app-grades-manager-page',
   imports: [
@@ -21,7 +23,8 @@ import { SubmissionVisualizer } from '../../components/submission-visualizer/sub
     ListUsers,
     SubmissionVisualizer,
     GradeTable,
-  ],
+    NgClass
+],
   templateUrl: './grades-manager-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -34,6 +37,7 @@ export class GradesManagerPage {
   userId = signal<string>('');
   taskId = signal<string>('');
   submit = signal<Submit | null>(null);
+  selectedPdf = signal<string| null>(null)
 
   taskService = inject(TaskService);
 
@@ -45,5 +49,9 @@ export class GradesManagerPage {
           .subscribe((x) => this.submit.set(x));
       }
     });
+  }
+
+  openPdf(url:string){
+    this.selectedPdf.set(url)
   }
 }
