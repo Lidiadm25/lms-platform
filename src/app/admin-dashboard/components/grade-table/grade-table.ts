@@ -1,8 +1,9 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Grade } from '../../../projects/interfaces/grade.interface';
 import { Submit } from '../../../projects/interfaces/tasks.interface';
 import { GradeService } from '../../../projects/services/GradeService';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-grade-table',
@@ -21,6 +22,11 @@ export class GradeTable {
     total: 0,
   });
 
+  wasSaved = signal<boolean>(false);
+  hasError = signal<boolean>(false);
+  edit = signal<boolean>(false);
+  grade = signal<Grade| null>(null);
+
   constructor() {
     effect(() => {
       const disabled = !this.submit();
@@ -32,7 +38,18 @@ export class GradeTable {
           control.enable({ emitEvent: false });
         }
       });
+
+      if (!disabled) {
+        this.gradeService
+          .getGradeFromSubmit(this.submit()!.id)
+          .subscribe((result) => {
+            this.grade.set(result)
+            this.edit.set(true);
+            this.submitForm.patchValue(result)});
+      }
     });
+
+
   }
 
   onSubmit() {
@@ -40,6 +57,33 @@ export class GradeTable {
       ...(this.submitForm.value as any),
       taskSubmitId: this.submit()!.id,
     };
-    this.gradeService.create(gradeLike).subscribe((x) => console.log(x));
+
+    var resultados;
+
+    this.edit() ? resultados=  this.gradeService.updateGrade(gradeLike, this.grade()!.id) : resultados= this.gradeService.create(gradeLike);
+
+    resultados.pipe(
+     catchError((error: any) => this.launchError())
+
+    ).subscribe((result)=>
+    {
+       this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
+    }
+    )
+
+
+    
+  }
+
+  launchError(){
+    this.hasError.set(true);
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 3000);
+
+      return of(false);
   }
 }

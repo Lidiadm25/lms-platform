@@ -1,4 +1,4 @@
-<form   (ngSubmit)="onSubmit()" [formGroup]="submitForm" class="mt-[-2px] mr-10" >
+<form   (ngSubmit)="onSubmit()" [formGroup]="submitForm" class="mt-[-18px] mr-10" >
   <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
   <legend class="fieldset-legend text-sm">Grade review</legend>
 
@@ -24,3 +24,14 @@
 
 <Button class="btn btn-secondary w-full mt-2" type="submit">save grades</Button>
 </form>
+
+@if (wasSaved()) {
+    <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+      <span>Changes saved succesfully</span>
+    </div>
+  }
+  @if (hasError()) {
+    <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+      <span>Something went wrong</span>
+    </div>
+  }
