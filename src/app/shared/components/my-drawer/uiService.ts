@@ -6,7 +6,7 @@ import { Injectable, signal } from '@angular/core';
 export class UiService {
 
   constructor() { }
-
+ chat = signal<boolean>(false);
   
   collapsed = signal<boolean>(true);
 
@@ -26,6 +26,17 @@ export class UiService {
   notCollapsed(){
     console.log(this.collapsed())
     this.collapsed.set(false);
+  }
+
+  
+  chatToggle(){
+   
+    this.chat.update((v)=> !v)
+  
+  }
+
+  hideChat(){
+    this.chat.set(false);
   }
 
 }

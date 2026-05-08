@@ -65,7 +65,8 @@
           <button
             class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Chat"
-            (click)="connect()"
+
+            (click)="uiService.chatToggle()"
           >
             <!-- Chat icon -->
             <svg
@@ -120,8 +121,20 @@
         }
       </ul>
     </div>
+    
     <div class="flex-1 ml-10 w-[99%]">
-      <router-outlet />
+
+      <div (click)="this.uiService.hideChat()">
+        
+      <router-outlet  />
+      </div>
+
+       @if(uiService.chat()){
+      <div class="fixed bottom-0 right-0 z-30 w-70 h-20% shadow-lg">
+      <app-chat-component/>
     </div>
+    }
+    </div>
+   
   </div>
 </div>
