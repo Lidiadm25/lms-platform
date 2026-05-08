@@ -1,5 +1,5 @@
 @if (filteredUnits$ != undefined) {
-  <form [formGroup]="exFormGroup" class="flex flex-col-1 gap-3">
+  <form [formGroup]="exFormGroup" class="flex flex-col-1 gap-3 mt-5">
     <mat-form-field  appearance="outline" >
       <mat-label>Units</mat-label>
       <input
@@ -16,7 +16,6 @@
         showPanel="true"
         hideSingleSelectionIndicator="true"
         
-        (optionsScroll)="onScroll()"
       >
         @for (item of filteredUnits$ | async; track item) {
           <mat-option [value]="item" >
@@ -41,7 +40,6 @@
         #auto2 ="matAutocomplete"
         [displayWith]="displayWith"
         showPanel="true"
-        (optionsScroll)="onScroll()"
       >
         @for (item of filteredLessons$ | async; track $index) {
           <mat-option [value]="item">
@@ -66,7 +64,7 @@
         #auto3 ="matAutocomplete"
         [displayWith]="displayWith"
         showPanel="true"
-        (optionsScroll)="onScroll()"
+   
       >
         @for (item of filteredTasks$ | async; track $index) {
           <mat-option [value]="item" (onSelectionChange)="emitTask(item.id)">
@@ -75,5 +73,31 @@
         }
       </mat-autocomplete>
     </mat-form-field>
+
+    <mat-form-field class="w-100%" appearance="outline">
+      <mat-label>Student</mat-label>
+      <input
+        type="text"
+        placeholder="Pick one"
+        #text
+        matInput
+        formControlName="studentsController"
+        [matAutocomplete]="auto9"
+        
+      />
+      <mat-autocomplete
+        #auto9 ="matAutocomplete"
+        [displayWith]="displayWith"
+        showPanel="true"
+   
+      >
+        @for (item of filteredStudents$ | async; track $index) {
+          <mat-option [value]="item" (onSelectionChange)="emitStudent(item.id)">
+            {{ item.user.fullName }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
   </form>
 }

@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatOption } from '@angular/material/autocomplete';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -21,6 +21,8 @@ import { Lesson, Project, Task, Unit } from '../../../projects/interfaces/projec
 import { LessonService } from '../../../projects/services/LessonService';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { TaskService } from '../../../projects/services/TaskService';
+import { UsersProjectService } from '../../../projects/services/UsersProjectService';
+import { UserProject } from './../../../auth/interfaces/user.interface';
 
 @Component({
   selector: 'app-combobox-units-lesson',
@@ -34,7 +36,7 @@ import { TaskService } from '../../../projects/services/TaskService';
     MatInputModule,
   ],
   templateUrl: './combobox-units-lesson.html',
-  
+
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboboxUnitsLesson {
@@ -42,17 +44,22 @@ export class ComboboxUnitsLesson {
   projectId = input.required<string>();
   project = signal<Project | null>(null);
   filteredUnits$: Observable<Unit[]> | undefined;
+  filteredStudents$: Observable<UserProject[]> | undefined;
   filteredLessons$: Observable<Lesson[]> | undefined;
   filteredTasks$: Observable<Task[]> | undefined;
-  public studentsFilterCtrl: FormControl = new FormControl();
+
   private unitList: Unit[] = [];
+  private studentList: UserProject[] = [];
   private nextPage$ = new Subject<void>();
   exFormGroup: any;
 
   task = output<string>();
+  student = output<string>();
 
   lessonService = inject(LessonService);
   taskService = inject(TaskService);
+  userService = inject(UsersProjectService);
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -60,6 +67,7 @@ export class ComboboxUnitsLesson {
       this.project.set(result);
 
       this.getUnitList();
+      this.getStudentList();
     });
 
     this.exFormGroup = this.formBuilder.group({
@@ -82,6 +90,27 @@ export class ComboboxUnitsLesson {
           startWith(currentPage),
 
           exhaustMap((_) => this.getUnitsList(filter, currentPage)),
+          tap(() => currentPage++),
+
+          takeWhile((p) => p.length > 0),
+          scan((allProducts: any, newProducts: any) => allProducts.concat(newProducts), []),
+        );
+      }),
+    );
+
+    const filterStudents$ = this.exFormGroup.get('studentsController').valueChanges.pipe(
+      startWith(''),
+      debounceTime(200),
+      filter((q) => typeof q === 'string'),
+    );
+
+    this.filteredStudents$ = filterStudents$.pipe(
+      switchMap((filter) => {
+        let currentPage = 1;
+        return this.nextPage$.pipe(
+          startWith(currentPage),
+
+          exhaustMap((_) => this.getUsersList(filter, currentPage)),
           tap(() => currentPage++),
 
           takeWhile((p) => p.length > 0),
@@ -119,6 +148,15 @@ export class ComboboxUnitsLesson {
     return of(filtered.slice(skip, skip + take));
   }
 
+  getUsersList(startsWith: any, page: number): Observable<UserProject[]> {
+    const take = 10;
+    const skip = page > 0 ? (page - 1) * take : 0;
+    const filtered = this.studentList.filter((option) =>
+      option.user.fullName.toLowerCase().startsWith(startsWith.toLowerCase()),
+    );
+    return of(filtered.slice(skip, skip + take));
+  }
+
   displayWith(element: any) {
     console.log(element);
 
@@ -133,7 +171,18 @@ export class ComboboxUnitsLesson {
     this.unitList = this.project()!.units;
   }
 
+  getStudentList() {
+    this.userService.getAll(this.projectId()).subscribe((result) => {
+      this.studentList = result;
+      console.log(result);
+    });
+  }
+
   emitTask(id: string) {
     this.task.emit(id);
+  }
+
+  emitStudent(id: string) {
+    this.student.emit(id);
   }
 }
