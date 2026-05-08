@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Task } from '../../../projects/interfaces/project.interface';
 import { TaskCreate } from '../../../projects/interfaces/tasks.interface';
 import { TaskService } from '../../../projects/services/TaskService';
@@ -16,10 +16,13 @@ import { QuillModule } from 'ngx-quill';
 export class TaskManagerPage {
   taskService = inject(TaskService);
   activatedRoute = inject(ActivatedRoute);
+  
+  router = inject(Router)
   fb = inject(FormBuilder);
   taskId = signal<string>('create');
   lessonId: string = this.activatedRoute.snapshot.params['idLesson'];
   taskLoaded = signal<Task | null>(null);
+  projectId = signal<string>('');
   taskForm = this.fb.group({
     title: [''],
     description: [''],
@@ -36,6 +39,8 @@ export class TaskManagerPage {
     effect(() => {
       this.activatedRoute.paramMap.subscribe((params) => {
         const id = params.get('idTask') ?? 'create';
+        const project = params.get('idProject') ?? 'create';
+        this.projectId.set(project)
         this.taskId.set(id);
       });
       if (this.taskId() != 'create') {
@@ -62,6 +67,12 @@ export class TaskManagerPage {
     });
   }
   //#endregion
+
+  newTask() {
+  this.router.navigate(['../', 'create'], {
+    relativeTo: this.activatedRoute,
+  });
+}
 
   deleteTask() {
     this.taskService.delete(this.taskId()).subscribe((result) => console.log(result));

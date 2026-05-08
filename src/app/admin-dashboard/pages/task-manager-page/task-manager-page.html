@@ -1,6 +1,6 @@
 <div class="flex flex-row justify-between ">
   <h2>Task manager</h2>
-  <button class="btn btn-soft btn-primary">New task</button>
+  <button class="btn btn-soft btn-primary" (click)="newTask()">New task</button>
 </div>
 <form (ngSubmit)="OnSubmit()" [formGroup]="taskForm">
   <label class="label">Title</label>
