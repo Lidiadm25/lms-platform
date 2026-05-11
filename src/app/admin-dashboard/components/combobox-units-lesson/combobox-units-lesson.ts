@@ -22,7 +22,7 @@ import { LessonService } from '../../../projects/services/LessonService';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { TaskService } from '../../../projects/services/TaskService';
 import { UsersProjectService } from '../../../projects/services/UsersProjectService';
-import { UserProject } from './../../../auth/interfaces/user.interface';
+import { User, UserProject } from './../../../auth/interfaces/user.interface';
 
 @Component({
   selector: 'app-combobox-units-lesson',
@@ -37,7 +37,7 @@ import { UserProject } from './../../../auth/interfaces/user.interface';
   ],
   templateUrl: './combobox-units-lesson.html',
 
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class ComboboxUnitsLesson {
   projectService = inject(ProjectService);
@@ -74,6 +74,7 @@ export class ComboboxUnitsLesson {
       unitsController: '',
       lessonController: '',
       taskController: '',
+      studentsController:'',
     });
 
     // Note: listen for search text changes
@@ -98,34 +99,16 @@ export class ComboboxUnitsLesson {
       }),
     );
 
-    const filterStudents$ = this.exFormGroup.get('studentsController').valueChanges.pipe(
-      startWith(''),
-      debounceTime(200),
-      filter((q) => typeof q === 'string'),
-    );
-
-    this.filteredStudents$ = filterStudents$.pipe(
-      switchMap((filter) => {
-        let currentPage = 1;
-        return this.nextPage$.pipe(
-          startWith(currentPage),
-
-          exhaustMap((_) => this.getUsersList(filter, currentPage)),
-          tap(() => currentPage++),
-
-          takeWhile((p) => p.length > 0),
-          scan((allProducts: any, newProducts: any) => allProducts.concat(newProducts), []),
-        );
-      }),
-    );
+   
 
     const filterLessons$ = this.exFormGroup.get('unitsController').valueChanges.pipe(
       startWith(''),
       debounceTime(500),
+     
       filter((value): value is Unit => typeof value === 'object' && value !== null),
       switchMap((unit: Unit) => this.lessonService.getLessonsByUnit(unit.id)),
     );
-
+    
     this.filteredLessons$ = filterLessons$;
 
     const filterTask$ = this.exFormGroup.get('lessonController').valueChanges.pipe(
@@ -133,10 +116,20 @@ export class ComboboxUnitsLesson {
       debounceTime(500),
       filter((value): value is Lesson => typeof value === 'object' && value !== null),
       switchMap((lesson: Lesson) => this.taskService.getByLessonId(lesson.id)),
-      tap((x) => console.log(x)),
+    
     );
 
     this.filteredTasks$ = filterTask$;
+
+     const filterStudents$ = this.exFormGroup.get('studentsController').valueChanges.pipe(
+      startWith(''),
+      debounceTime(200),
+      filter((q) => typeof q === 'string'),
+      switchMap((name: string)=> this.getUsersList(name))
+    );
+
+    this.filteredStudents$ = filterStudents$;
+    
   }
 
   getUnitsList(startsWith: any, page: number): Observable<Unit[]> {
@@ -148,19 +141,26 @@ export class ComboboxUnitsLesson {
     return of(filtered.slice(skip, skip + take));
   }
 
-  getUsersList(startsWith: any, page: number): Observable<UserProject[]> {
-    const take = 10;
-    const skip = page > 0 ? (page - 1) * take : 0;
+  getUsersList(startsWith: any): Observable<UserProject[]> {
+
     const filtered = this.studentList.filter((option) =>
       option.user.fullName.toLowerCase().startsWith(startsWith.toLowerCase()),
     );
-    return of(filtered.slice(skip, skip + take));
+    console.log(this.studentList)
+    console.log(filtered)
+    return of(filtered);
   }
 
   displayWith(element: any) {
     console.log(element);
 
     return element ? element.title : null;
+  }
+
+  displayName(element: any) {
+    console.log(element);
+
+    return element ? element.user.fullName : null;
   }
 
   onScroll() {

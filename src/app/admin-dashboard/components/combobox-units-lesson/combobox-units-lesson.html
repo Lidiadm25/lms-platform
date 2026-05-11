@@ -87,12 +87,12 @@
       />
       <mat-autocomplete
         #auto9 ="matAutocomplete"
-        [displayWith]="displayWith"
+        [displayWith]="displayName"
         showPanel="true"
    
       >
         @for (item of filteredStudents$ | async; track $index) {
-          <mat-option [value]="item" (onSelectionChange)="emitStudent(item.id)">
+          <mat-option [value]="item" (onSelectionChange)="emitStudent(item.user.id)">
             {{ item.user.fullName }}
           </mat-option>
         }
