@@ -5,12 +5,11 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { jwtToken } from '../../auth/interfaces/auth-response.interface';
 import {
-  UserProject,
   UserProjectCreate,
   UserProjectsResponse,
   UsersProjectResponse,
 } from '../../auth/interfaces/user.interface';
-import { ProjectsResponse } from '../interfaces/project.interface';
+import { UserProject } from './../../auth/interfaces/user.interface';
 
 const BASE_URL = environment.baseUrl;
 interface Options {
@@ -24,14 +23,23 @@ export class UsersProjectService {
   constructor() {}
   private http = inject(HttpClient);
 
-  getUsers(id: string, options: Options): Observable<UsersProjectResponse> {
-    const { limit = 10, offset = 0 } = options;
+  getUsers(id: string, options: Options | null): Observable<UsersProjectResponse> {
     return this.http.get<UsersProjectResponse>(`${BASE_URL}/user-projects/${id}`, {
       params: {
-        limit,
-        offset,
+        ...options,
       },
     });
+  }
+
+  finishCourse(idProject: string, dto: Partial<UserProject>) {
+    return this.http.patch<UserProject>(
+      `${BASE_URL}/user-projects/project/${idProject}/finish`,
+      dto,
+    );
+  }
+
+  getAll(id: string) {
+    return this.http.get<UserProject[]>(`${BASE_URL}/user-projects/project/${id}`);
   }
 
   addUser(userProjectLike: UserProjectCreate): Observable<UserProject> {

@@ -1,4 +1,5 @@
 export interface Survey {
+    id?: string;
     idProject: string;
     questions:Question[];
 }

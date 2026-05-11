@@ -15,4 +15,8 @@ export class SurveyService {
     createSurvey(payload: Survey){
       return  this.http.post<Survey>(`${BASE_URL}/survey`, payload)
     }
+
+    findOne(id:string){
+      return this.http.get<Survey>(`${BASE_URL}/survey/${id}`)
+    }
 }
