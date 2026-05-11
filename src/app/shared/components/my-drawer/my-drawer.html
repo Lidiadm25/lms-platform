@@ -1,7 +1,7 @@
-<div class="flex flex-col h-screen w-screen">
-  <app-navbar class="sticky top-0 z-20" />
+<div class="flex flex-col h-screen ">
+  <app-navbar class="h-16 shrink-0" />
 
-  <div class="flex flex-1">
+  <div class="flex flex-1 overflow-hidden">
     <div
       class="bg-base-300 fixed top-16 left-0 h-[calc(100%-4rem)] z-50 duration-300 ease-in-out overflow-hidden"
       (mouseenter)="uiService.notCollapsed()"
@@ -122,9 +122,9 @@
       </ul>
     </div>
     
-    <div class="flex-1 ml-10 w-[99%]">
+      <div class="flex-1 ml-10 w-[99%] overflow-y-auto">
 
-      <div (click)="this.uiService.hideChat()">
+        <div (click)="this.uiService.hideChat()">
         
       <router-outlet  />
       </div>

@@ -1,10 +1,10 @@
-import { AuthResponse } from './../interfaces/auth-response.interface';
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/user.interface';
+import { AuthResponse } from './../interfaces/auth-response.interface';
 
 
 // New type that will be used to save the state of authentication
