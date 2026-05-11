@@ -24,4 +24,8 @@ export class GradeService {
  getGradeFromSubmit(id:string){
   return this.http.get<Grade>(`${BASE_URL}/grade/submit/${id}`)
  }
+
+ updateGrade(grade: Grade, id: string){
+    return this.http.patch<Grade>(`${BASE_URL}/grade/${id}`, grade)
+ }
 }
