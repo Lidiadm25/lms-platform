@@ -1,93 +1,80 @@
 import { Component, computed, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { jwtDecode } from 'jwt-decode';
-import { jwtToken } from '../../../../auth/interfaces/auth-response.interface';
-import { NewMessageDto } from '../../../../auth/interfaces/messageDto';
 import { SocketService } from '../../../../auth/services/socketService';
 import { OnlineClient } from './interfaces/online.interface';
+
+export interface ChatMessage {
+  text: string;
+  isMine: boolean;
+}
 
 @Component({
   selector: 'app-chat-component',
   imports: [FormsModule],
   templateUrl: './chat-component.html',
-  styleUrl: './chat-component.css',
 })
 export class ChatComponent {
   name = signal<string>('Chat app');
   message = model<string>('');
-  messages = signal<string[]>([]);
+  messages = signal<ChatMessage[]>([]);
 
   onlineUsers = signal<OnlineClient[] | null>(null);
   searchTerm = signal<string>('');
 
-filteredUsers = computed(() => {
-  const users = this.onlineUsers();
- 
-  if (users == null) return [];
+  filteredUsers = computed(() => {
+    const users = this.onlineUsers();
+    console.log(users);
+    const term = this.searchTerm().trim().toLowerCase();
+    if (!users?.length) return [];
+    if (!term) return [];
+    if (term == '') return [];
 
-  const term = this.searchTerm()?.trim().toLowerCase();
-  if (!term) return [];
-  if(term == '') return []
- 
-  console.log(term)
-  return users.filter(user =>
-    user.user_fullname.toLowerCase().trim().includes(term)
-  );
-});
+    return users.filter((user) => user.user_fullname.toLowerCase().trim().includes(term));
+  });
 
   selectedUser = signal<string>('');
 
-  constructor(private socketService: SocketService) {
-    
-  }
+  constructor(private socketService: SocketService) {}
 
   openDropdown() {
-
     var dropdown = document.getElementById('dropdown-content');
     if (dropdown != null) dropdown.classList.toggle('hidden');
   }
 
   ngOnInit(): void {
     this.socketService.requestConnected();
-    this.socketService.onMessage((msg: NewMessageDto) => {
-      console.log(msg);
-      this.messages.update((array) => [...array, msg.message]);
-      console.log(this.messages());
+    this.socketService.onMessage().subscribe((msg: any) => {
+      this.messages.update((array) => [...array, { text: msg.message, isMine: false }]);
     });
 
-    this.socketService.getConnectedClients((online: OnlineClient[]) => {
-      console.log('usuarios recibidos: '+ online);
+    this.socketService.getConnectedClients().subscribe((online: OnlineClient[]) => {
       this.onlineUsers.set(online);
-      
     });
   }
 
   sendMessage(): void {
-    if (this.message().trim()) {
-      var newMessage: NewMessageDto;
-      let token = localStorage.getItem('token');
-      if (!token) return;
-      let decoded = jwtDecode<jwtToken>(token);
-      newMessage = {
+    if (this.message().trim() && this.selectedUser()) {
+      const payload = {
+        user_id: this.selectedUser(),
         message: this.message(),
-        user_id: decoded.id,
       };
-      this.socketService.sendMessage(newMessage);
+      this.socketService.sendMessage(payload);
+
+      this.messages.update((array) => [...array, { text: this.message(), isMine: true }]);
       this.message.set('');
-      console.log('valor del model: ' + this.message());
     }
   }
 
-  selectUserChat(client : OnlineClient){
-    this.selectedUser.set(client.user_id)
-    this.name.set(client.user_fullname)
-    console.log(client.user_id)
-    this.openDropdown()
+  selectUserChat(client: OnlineClient) {
+    this.selectedUser.set(client.user_id);
+    this.name.set(client.user_fullname);
+    console.log(client.user_id);
+    this.openDropdown();
+    this.messages.set([]);
   }
 
   searchUsers(event: Event) {
     console.log('entra aqui');
-    
 
     var input = event.target as HTMLInputElement;
     this.searchTerm.set(input.value);
