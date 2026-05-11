@@ -1,0 +1,29 @@
+@if (this.project() != undefined && this.project()!.units.length > 0) {
+  <ul class="menu bg-base-100 shadow-sm w-full text-base-content [&_li>*]:rounded-none [&_ul>*]:rounded-none [&_details>*]:rounded-none p-0">
+    @for (unit of this.project()?.units; track $index) {
+      <li class="border-1 border-slate-100" >
+        @if (unit?.lessons && unit.lessons.length > 0) {
+          <details close >
+            <summary>
+              <span> {{ unit.title }}</span>
+            </summary>
+
+            <ul>
+              @for (lesson of unit.lessons; track $index) {
+               <li>
+                 <div class="flex flex-col-2">
+                  <span>{{ lesson.title }}</span>
+                </div>
+               </li>
+              }
+            </ul>
+          </details>
+        } @else {
+          <div class="flex flex-col-2">
+            <span>{{ unit.title }}</span>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+}

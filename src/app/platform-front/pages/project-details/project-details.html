@@ -1,54 +1,56 @@
-<div>
-  <img
-    src="https://images.ctfassets.net/ihx0a8chifpc/pkPsn4xvlsW7rV74rsMhW/9b749af2555183d91e84b9879422c180/placehold-1280x720.jpg?w=1920&q=60&fm=webp"
-    alt=""
-    class="w-full size-30"
-  />
-  <h2 class="">{{ projectResource.value()?.title }}</h2>
-  <div [innerHTML]="projectResource.value()?.description"></div>
-  <!-- que se vea encima de la imagen   -->
-  <!-- Rating a la derecha junto a user author-->
+<div class="flex flex-col">
+  <!-- HEADER -->
+  <div class="bg-indigo-950 h-50 w-full px-15 pt-10">
+    <div class="flex flex-col-2 h-full">
+      <div class="flex flex-col w-[75%]">
+        <p class="text-white">{{ this.project()!.title }}</p>
+        <p class="text-white">{{this.project()?.snippet}}</p>
+        <p class="text-white">
+          Created by 
+          <span class="text-violet-400 link">{{ this.project()!.author.fullName }}</span>
+        </p>
+        <p class="text-white text-xs mt-auto pb-3">Last update : {{lastModified.substring(0,10)}}</p>
+      </div>
+      <div class="size-50 border border-slate-400 bg-white mx-auto">
+        <img [src]="this.project()?.image" alt="" />
+      </div>
+    </div>
+  </div>
+  <!-- BODY -->
+  <div class="px-15 pt-5 flex flex-col-2 justify-between">
+    <div class="w-[60%]">
+      <h2 class="my-5">What will you learn? </h2> 
 
-  <section class="flex gap-3">
-    <div class="flex-1">
-      @for (unit of projectResource.value()?.units; track $index) {
-        <div class="card card-border bg-base-80 w-1/2">
-          <div class="card-body">
-            <h2 class="card-title">1.- {{ unit.title }}</h2>
-            <div class="card-actions justify-end">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
-            @for (item of unit.lessons; track $index) {
-              <p>{{ item.title }}</p>
-            }
-          </div>
+      <div [innerHTML]="this.project()!.description"></div>
+
+      <h2 class="my-5"> Content of the course</h2>
+      <app-units-lessons-accordeon [project]="this.project()"  />
+    </div>
+    
+    <div>
+      
+    <div class="flex flex-col gap-5 mt-20">
+      <div class="flex flex-col-2 gap-6 border border-slate-200 rounded-lg p-5 w-80">
+      <div class="flex flex-col place-items-center border-r-1 border-slate-200 pr-6">
+        <p class="text-xl font-bold">4.2</p>
+        <div class="rating">
+          <div class="mask mask-star" aria-label="1 star"></div>
+          <div class="mask mask-star" aria-label="2 star"></div>
+          <div class="mask mask-star" aria-label="3 star" aria-current="true"></div>
+          <div class="mask mask-star" aria-label="4 star"></div>
+          <div class="mask mask-star" aria-label="5 star"></div>
         </div>
-      }
+      </div>
+
+      <div>
+        <p>Total students</p>
+        <p class="font-bold text-center"> {{this.usersNumber()}}</p>
+      </div>
     </div>
 
-    <div class="flex-1">
-      <div class="rating justify-center">
-      <div class="mask mask-star" aria-label="1 star"></div>
-      <div class="mask mask-star" aria-label="2 star"></div>
-      <div class="mask mask-star" aria-label="3 star" aria-current="true"></div>
-      <div class="mask mask-star" aria-label="4 star"></div>
-      <div class="mask mask-star" aria-label="5 star"></div>
+    <button class="btn btn-primary justify-center"> Start now</button>
     </div>
 
-    <h2> Author: {{projectResource.value()?.author?.fullName}}</h2>
     </div>
-    </section>
+  </div>
 </div>
