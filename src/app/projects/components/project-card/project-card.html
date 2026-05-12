@@ -1,19 +1,28 @@
-<!-- <a [routerLink]="['/project-details', project().id]" > -->
-  <div class="card bg-base-100 w-96 shadow-sm" (click)="navigateToPage()">
-  <figure>
-    <img class="object-cover w-full rounded-lg size-60"
-      src="{{imageUrl()}}" />
-  </figure>
-  <div class="card-body">
-    <h2 class="card-title">{{ project().title }}</h2>
-      <div [innerHTML]="project().description" class="truncate"></div>
-       <p> {{project().duration}}</p>
+<div
+  class="bg-base-100 shadow-sm rounded-lg flex flex-col  h-80"
+  (click)="navigateToPage()"
+>
 
-    @if(this.in()==false){
-      <div class="card-actions justify-end">
-      <button class="btn btn-primary" (click)= "inscription(project().id)">Start now</button>
-    </div>
-    }
+  <img
+    class="w-full h-40 object-cover rounded-lg bg-red-200"
+    [src]="imageUrl()"
+  />
+
+  <div class="p-5 flex flex-col min-w-0">
+    
+    <h2 class="truncate">
+      {{ project().title }}
+    </h2>
+
+    <div
+      class="truncate"
+      [innerHTML]="project().description"
+    ></div>
+
+    <p>
+      {{ project().duration }}
+    </p>
+
+
   </div>
 </div>
-<!-- </a> -->
