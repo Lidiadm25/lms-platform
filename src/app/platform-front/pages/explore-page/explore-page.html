@@ -1,48 +1,78 @@
-<h1 class="text-3xl font-bold font-montserrat w-auto">
-  All courses
-</h1>
+<div class="pl-10">
+  <div class="pt-10 px-4 md:px-6">
+    <h1 class="text-3xl font-bold font-montserrat w-auto">All courses</h1>
+    <div class="flex flex-col-2 gap-10">
+      <!-- BARRA DE BÚSQUEDA -->
 
-<section class="flex flex-col gap-4">
-    <input type="string"
-    placeholder="Search courses"
-    class="mt-3 border border-gray-300 rounded-md p-2"
-    [ngModel] = "search()"
-    (keydown.enter)="search.set($event.target.value); onSearch()"
-    #txtSearch
+      <input
+        type="string"
+        placeholder="Search courses"
+        class="mt-3 border border-gray-300 rounded-md p-2 w-2/3"
+        [ngModel]="search()"
+        (keydown.enter)="search.set($event.target.value); onSearch()"
+        #txtSearch
+      />
+   
+
+      <div class="mt-3 border border-gray-300 rounded-md p-2 w-1/6">
+        
+          <select
+          class="w-full"
+          (change)="setCategory($event)"
+          >
+          <option value="">All</option>
+            @for (item of categoryResource.value(); track $index) {
+              <option [value]="item.id">{{item.name}}</option>
+            }
+
+          </select>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.2"
+            stroke="currentColor"
+            class="h-5 w-5 ml-1 absolute top-2.5 right-2.5 text-slate-700"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+            />
+          </svg>
+        </div>
+      
+    </div>
+    <!-- GRID DE CARDS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5 min-w-0 justify-between">
+      @for (project of projectResource.value()?.projects; track $index) {
+        <app-project-card [project]="project" />
+      }
+      <!-- Empty -->
+      @empty {
+        <p>No courses</p>
+      }
+    </div>
+
+    @if (projectResource.isLoading()) {
+      <div class="flex items-center gap-2">
+        <span class="loading loading-spinner"></span>
+        <span>Loading…</span>
+      </div>
+    }
+
+    @if (projectResource.error()) {
+      <div class="alert alert-error">
+        <span>Failed to load: {{ projectResource.error()?.message ?? 'Unknown error' }}</span>
+        <button class="btn btn-sm ml-auto" (click)="reload()">Retry</button>
+      </div>
+    }
+  </div>
+  <div class="w-full flex justify-center">
+    <app-pagination
+      class="my-4"
+      [pages]="projectResource.value()?.pages ?? 0"
+      [currentPage]="paginationService.currentPage()"
     />
-</section>
-
-<!-- TODO -->
-<div
-  class="grid grid-flow-col grid-rows-3 gap-4 mt-5"
->
-
-  @for (project of projectResource.value()?.projects; track $index) {
-<app-project-card [project]="project" />
-
-  }
-  <!-- Empty -->
-  @empty {
-  <p>No courses</p>
-  }
+  </div>
 </div>
-
-@if(projectResource.isLoading()) {
-  <div class="flex items-center gap-2">
-      <span class="loading loading-spinner"></span>
-      <span>Loading…</span>
-    </div>
-}
-
-@if(projectResource.error()){
-  <div class="alert alert-error">
-      <span>Failed to load: {{ projectResource.error()?.message ?? 'Unknown error' }}</span>
-     <button class="btn btn-sm ml-auto" (click)="reload()">Retry</button>
-    </div>
-}
-
-<app-pagination
-  [pages]="projectResource.value()?.pages ?? 0"
-  [currentPage]="paginationService.currentPage()"
-/>
-

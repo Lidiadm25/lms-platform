@@ -1,3 +1,4 @@
+import { CategoryService } from './../../../auth/services/CategoryService';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ProjectCard } from "../../../projects/components/project-card/project-card";
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -6,6 +7,7 @@ import { PaginationService } from '../../../shared/components/pagination.compone
 import { PaginationComponent } from "../../../shared/components/pagination.component/pagination.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-explore-page',
@@ -19,14 +21,33 @@ export class ExplorePage {
   projectService = inject(ProjectService);
   paginationService = inject(PaginationService)
   query = '';
-  search = signal('');
+  search = signal(' ');
+  selectedCategory=signal<string>('');
+
+  categoryService = inject(CategoryService)
+
+  categoryResource = rxResource({
+    stream: ()=> {
+      return this.categoryService.getCategories()
+    }
+  }) 
+
+  setCategory(event:Event){
+    
+    this.selectedCategory.set((event.target as HTMLSelectElement).value)
+   
+    console.log(this.selectedCategory())
+     this.projectResource.reload();
+  }
+
    projectResource = rxResource({
-    params: () => ({ page: this.paginationService.currentPage() - 1, query: this.search() }),
+    params: () => ({ page: this.paginationService.currentPage() - 1, query: this.search() , category: this.selectedCategory()}),
     stream: ({params}) => {
-      if(params.query.length==0) {
-        return  this.projectService.getProjects({offset: params.page * 9, limit:9})
-      } 
-        return this.projectService.getFilteredProjects({offset: params.page * 9, limit: 9}, params.query)
+      if(params.query.length > 0 || params.category.length>0) {
+        return this.projectService.getFilteredProjects({offset: params.page * 6, limit: 6, category: params.category}, params.query)
+      } else  {
+        return  this.projectService.getProjects({offset: params.page * 6, limit:6})
+      }
     },
   });
  
@@ -42,7 +63,7 @@ export class ExplorePage {
 
   reload() {
     this.projectResource.reload();
-    this.search.set("a");
+   
   }
   
 }
