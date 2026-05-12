@@ -8,14 +8,14 @@
    </div>
 
   <section class="flex flex-col-3 justify-between h-full gap-6">
-    
+    <div></div>
     @if (this.submit()?.url_file) {
-        <div [ngClass]=" this.selectedPdf()? 'flex flex-col max-w-20 overflow-y-auto overflow-x-hidden bg-base-200  shadow-sm p-5 ' : 'grid grid-cols-3 grid-rows-2 gap-2 mt-10 auto-rows-max items-start'">
-
+        <div [ngClass]=" this.selectedPdf()? 'flex flex-col max-w-20 overflow-y-auto overflow-x-hidden bg-base-200  shadow-sm p-5 ' : 'grid grid-cols-3 grid-rows-2 gap-2 mt-10 auto-rows-max items-center align-middle'">
+          
       @for (item of this.submit()!.url_file; track $index) {
            @if(item.includes('.svg') || item.includes('.png') || item.includes('.jpg')) {
            
-              <a [href]="item" download="{{ item }}">
+              <a [href]="item" [download]="item ">
                 <img src="./assets/image.svg" class="h-15 w-15" />
                 <p class="truncate w-15">{{ item.substring(35) }}</p>
               </a>
@@ -42,6 +42,7 @@
       }
        
     } @else {
+      
       <div class="flex justify-center items-center">
         <p>No files attached</p>
       </div>

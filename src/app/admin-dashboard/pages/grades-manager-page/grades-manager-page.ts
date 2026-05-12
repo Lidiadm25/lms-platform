@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,6 @@ import { ProjectService } from '../../../projects/services/ProjectService';
 import { TaskService } from '../../../projects/services/TaskService';
 import { ComboboxUnitsLesson } from '../../components/combobox-units-lesson/combobox-units-lesson';
 import { GradeTable } from '../../components/grade-table/grade-table';
-import { ListUsers } from '../../components/list-users/list-users';
 import { SubmissionVisualizer } from '../../components/submission-visualizer/submission-visualizer';
 
 @Component({
@@ -20,7 +19,6 @@ import { SubmissionVisualizer } from '../../components/submission-visualizer/sub
     ReactiveFormsModule,
     MatInputModule,
     ComboboxUnitsLesson,
-    ListUsers,
     SubmissionVisualizer,
     GradeTable,
     NgClass
@@ -44,9 +42,11 @@ export class GradesManagerPage {
   constructor() {
     effect(() => {
       if (this.taskId() && this.userId()) {
+        this.selectedPdf.set(null)
         this.taskService
           .findByUserTask(this.userId(), this.taskId())
-          .subscribe((x) => this.submit.set(x));
+          .subscribe((x) => {this.submit.set(x)
+          });
       }
     });
   }
