@@ -3,12 +3,14 @@
   [slidesPerView]="3"
   [grid]="{ rows: 2, fill: 'row' }"
   [navigation]="true"
+  [spaceBetween]="20"
   [pagination]="{ clickable: true }"
+  class="max-h-90"
 >
 
     @for (item of projects()?.projects; track $index) {
       <swiper-slide>
-        <app-project-card [project]="item.project" [in]="this.in()" />
+        <app-project-card [project]="item.project" [in]="this.in()"  class="hover:cursor-pointer" />
       </swiper-slide>
     }
 
