@@ -1,12 +1,15 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rating-component',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './ratingComponent.html',
   styleUrl: './ratingComponent.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RatingComponent {
-  rating = input.required<number>()
+  rating = input.required<string>()
+  control = input.required<FormControl>()
+
 }

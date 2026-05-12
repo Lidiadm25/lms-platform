@@ -1,7 +1,7 @@
-<div class="rating">
-  <input type="radio" [name]="this.rating()" class="mask mask-star" aria-label="1 star" />
-  <input type="radio" [name]="this.rating()" class="mask mask-star" aria-label="2 star" />
-  <input type="radio" [name]="this.rating()" class="mask mask-star" aria-label="3 star" />
-  <input type="radio" [name]="this.rating()" class="mask mask-star" aria-label="4 star" />
-  <input type="radio" [name]="this.rating()" class="mask mask-star" aria-label="5 star" />
+<div class="rating" >
+  <input type="radio" [name]="this.rating()"  class="mask mask-star" aria-label="1 star" [value]="1" [formControl]="control()" />
+  <input type="radio" [name]="this.rating()"   class="mask mask-star" aria-label="2 star" [value]="2" [formControl]="control()" />
+  <input type="radio" [name]="this.rating()"class="mask mask-star" aria-label="3 star" [value]="3" [formControl]="control()"/>
+  <input type="radio" [name]="this.rating()"  class="mask mask-star" aria-label="4 star" [value]="4" [formControl]="control()"/>
+  <input type="radio" [name]="this.rating()"   class="mask mask-star" aria-label="5 star" [value]="5" [formControl]="control()"/>
 </div>
