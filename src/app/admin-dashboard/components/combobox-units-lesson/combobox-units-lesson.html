@@ -64,10 +64,10 @@
         #auto3 ="matAutocomplete"
         [displayWith]="displayWith"
         showPanel="true"
-   
+        (optionSelected)="emitTask($event.option.value.id)"
       >
         @for (item of filteredTasks$ | async; track $index) {
-          <mat-option [value]="item" (onSelectionChange)="emitTask(item.id)">
+          <mat-option [value]="item">
             {{ item.title }}
           </mat-option>
         }
@@ -83,16 +83,17 @@
         matInput
         formControlName="studentsController"
         [matAutocomplete]="auto9"
+        hideSingleSelectionIndicator="true"
         
       />
       <mat-autocomplete
         #auto9 ="matAutocomplete"
         [displayWith]="displayName"
         showPanel="true"
-   
+        (optionSelected)="emitStudent($event.option.value.user.id)"
       >
         @for (item of filteredStudents$ | async; track $index) {
-          <mat-option [value]="item" (onSelectionChange)="emitStudent(item.user.id)">
+          <mat-option [value]="item">
             {{ item.user.fullName }}
           </mat-option>
         }

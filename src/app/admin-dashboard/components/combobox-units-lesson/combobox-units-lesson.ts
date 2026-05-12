@@ -146,19 +146,18 @@ export class ComboboxUnitsLesson {
     const filtered = this.studentList.filter((option) =>
       option.user.fullName.toLowerCase().startsWith(startsWith.toLowerCase()),
     );
-    console.log(this.studentList)
-    console.log(filtered)
+  
     return of(filtered);
   }
 
   displayWith(element: any) {
-    console.log(element);
+  
 
     return element ? element.title : null;
   }
 
   displayName(element: any) {
-    console.log(element);
+
 
     return element ? element.user.fullName : null;
   }
@@ -174,15 +173,17 @@ export class ComboboxUnitsLesson {
   getStudentList() {
     this.userService.getAll(this.projectId()).subscribe((result) => {
       this.studentList = result;
-      console.log(result);
+      
     });
   }
 
   emitTask(id: string) {
+    
     this.task.emit(id);
   }
 
-  emitStudent(id: string) {
+  emitStudent(id: any) {
+    
     this.student.emit(id);
   }
 }
