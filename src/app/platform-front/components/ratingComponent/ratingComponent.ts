@@ -5,7 +5,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-rating-component',
   imports: [ReactiveFormsModule],
   templateUrl: './ratingComponent.html',
-  styleUrl: './ratingComponent.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RatingComponent {
