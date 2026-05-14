@@ -51,7 +51,7 @@ export class UnitsManagerPage {
   async OnSubmit() {
     const unit: Unit = {
       ...(this.unitForm.value as any),
-      id: this.unitId,
+      id: this.unitId(),
       project: this.projectId,
     };
     if (this.edit() == true) {
