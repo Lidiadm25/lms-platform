@@ -28,10 +28,9 @@ export class SurveyManagerPage {
   ngOnInit() {
     this.activatedRoute.parent!.paramMap.subscribe((params) => {
       const lesson = params.get('idProject') ?? '';
+      console.log(lesson)
       this.projectId.set(lesson);
     });
-
-
 
   }
 
@@ -42,9 +41,9 @@ export class SurveyManagerPage {
      })
 
 
-   
-    const payload = { idProject: this.projectId(), questions: questionsArray };
-    console.log(payload);
+
+    const payload = { projectsId: this.projectId(), questions: questionsArray };
+    
 
     this.surveyService.createSurvey(payload).subscribe((result)=> console.log(result))
   }
