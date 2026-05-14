@@ -1,7 +1,7 @@
 <!-- TOP BAR -->
-<div class="h-20 bg-sky-200 flex flex-col-4 items-center justify-center gap-6 sticky top-0 z-7 ">
+<div class="h-20 bg-sky-200 flex flex-col-4 items-center justify-center gap-6 sticky top-0 z-7">
   <a [routerLink]="['/admin/manager/', this.projectId()]">General</a>
-  <a [routerLink]="['/admin/manager/', this.projectId(), 'unit','create']">Content</a>
+  <a [routerLink]="['/admin/manager/', this.projectId(), 'unit', 'create']">Content</a>
   <!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
   <button
     class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
@@ -19,31 +19,30 @@
     <li><a onclick="addStudents.showModal()">Add students</a></li>
     <li><a [routerLink]="['/admin/users-project', this.projectId()]">Remove students</a></li>
   </ul>
-  <a class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
-    [routerLink]="['/admin/grades-manager/', this.projectId()]">Review grades</a>
+  <a
+    class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
+    [routerLink]="['/admin/grades-manager/', this.projectId()]"
+    >Review grades</a
+  >
 
-    <a class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
-    [routerLink]="['/admin/manager', this.projectId , 'survey-manager']">Survey</a>
+  <a
+    class="bg-sky-200 transition delay-150 duration-100 ease-in-out hover:bg-sky-100 p-2 rounded-lg"
+    [routerLink]="['/admin/manager', this.projectId(), 'survey-manager']"
+    >Survey</a
+  >
 </div>
 
 <!-- CONTENT -->
-<section class="p-7  ">
-  
+<section class="p-7">
   <div class="flex flex-col lg:flex-row gap-6 w-full">
-
-    
-     @if(this.currentRoute.includes('survey-manager') || this.projectId()!='create') {
-      
-       <app-table-accordeon [idProject]="this.projectId()" class="flex-shrink-0 lg:w-80 max-w-80 " />
+    @if (this.currentRoute.includes('survey-manager') || this.projectId() != 'create') {
+      <app-table-accordeon [idProject]="this.projectId()" class="flex-shrink-0 lg:w-80 max-w-80" />
     }
-  
+
     <main class="flex-1 w-full bg-base-100 rounded-xl shadow-sm p-6 lg:p-8 h-[calc(100vh-25vh)]">
-        <router-outlet/>
+      <router-outlet />
     </main>
   </div>
-
-  
-
 </section>
 <app-search-tags [projectId]="this.projectId()" (onUsersPicked)="usersInscription($event)" />
 

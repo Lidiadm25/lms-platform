@@ -1,21 +1,18 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UserProjectCreate } from '../../../auth/interfaces/user.interface';
 import { UsersProjectService } from '../../../projects/services/UsersProjectService';
-import { QuestionComponent } from '../../components/question-component/question-component';
 import { SearchTags } from '../../components/search-tags/search-tags';
 import { TableAccordeon } from '../../components/table-accordeon/table-accordeon';
 
 @Component({
   selector: 'app-manager-page',
-  imports: [RouterLink, RouterOutlet, SearchTags, TableAccordeon, QuestionComponent],
+  imports: [RouterLink, RouterOutlet, SearchTags, TableAccordeon],
   templateUrl: './manager-page.html',
-
-
 })
 export class ManagerPage {
   activatedRoute = inject(ActivatedRoute);
-  projectId = signal<string>('create')
+  projectId = signal<string>('create');
   userProjectService = inject(UsersProjectService);
 
   wasSaved = signal<boolean>(false);
@@ -23,19 +20,18 @@ export class ManagerPage {
 
   currentRoute!: string;
   constructor(private router: Router) {
-   this.projectId.set( this.activatedRoute.snapshot.params['idProject']);
-   console.log(this.projectId())
-   this.currentRoute =this.router.url;
+    this.projectId.set(this.activatedRoute.snapshot.params['idProject']);
 
-   this.router.events.subscribe((event) => {     
-      event instanceof NavigationEnd ?
-       this.currentRoute = event.url : this.currentRoute = ''
-         })
+    this.currentRoute = this.router.url;
+
+    this.router.events.subscribe((event) => {
+      event instanceof NavigationEnd ? (this.currentRoute = event.url) : (this.currentRoute = '');
+    });
   }
-  
 
   users: Array<string> = [];
   usersEmails: UserProjectCreate[] = [];
+
   async usersInscription(event: any) {
     this.users = event;
     for (let index = 0; index < this.users.length; index++) {

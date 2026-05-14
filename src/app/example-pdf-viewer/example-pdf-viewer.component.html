@@ -1,3 +1,6 @@
-
-<ngx-extended-pdf-viewer [src]="'/pdfs/pride-and-prejudice-jane-austen.pdf'">
+@if(this.url()!= null){
+    
+<ngx-extended-pdf-viewer [src]="this.url()">
 </ngx-extended-pdf-viewer>
+
+}

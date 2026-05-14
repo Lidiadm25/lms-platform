@@ -1,20 +1,41 @@
 <div class="flex flex-col-3 gap-2">
-  
-<h2>Satisfaction survey</h2>
+  <h2>Satisfaction survey</h2>
 </div>
 <form (ngSubmit)="onSubmit()" [formGroup]="surveyGroup">
-    <button class="btn btn-ghost">Save</button>
-<button class="btn btn-ghost">Edit</button>
+  <button class="btn btn-ghost">Save</button>
+  <button class="btn btn-ghost">Edit</button>
 
-
-
-<div class="divider"></div>
-<div class="flex flex-col gap-3" >
-<input type="text"  class="input input-bordered w-full" formControlName="question1" value="Do you consider the content of this course was hard for you?" />
-<input type="text" class="input input-bordered w-full" formControlName="question2" value="Do you think you earned new skills from this course?"/>
-<input type="text" class="input input-bordered w-full" formControlName="question3" value="Please evaluate the order of the content and teacher participation"/>
-<input type="text" class="input input-bordered w-full" formControlName="question4" value="What would you change?"/>
-<input type="text" class="input input-bordered w-full" formControlName="question5" value="Overall rating"/>
-
-</div>
+  <div class="divider"></div>
+  <div class="flex flex-col gap-3">
+    <input
+      type="text"
+      class="input input-bordered w-full"
+      formControlName="question1"
+      value="Do you consider the content of this course was hard for you?"
+    />
+    <input
+      type="text"
+      class="input input-bordered w-full"
+      formControlName="question2"
+      value="Do you think you earned new skills from this course?"
+    />
+    <input
+      type="text"
+      class="input input-bordered w-full"
+      formControlName="question3"
+      value="Please evaluate the order of the content and teacher participation"
+    />
+    <input
+      type="text"
+      class="input input-bordered w-full"
+      formControlName="question4"
+      value="What would you change?"
+    />
+    <input
+      type="text"
+      class="input input-bordered w-full"
+      formControlName="question5"
+      value="Overall rating"
+    />
+  </div>
 </form>

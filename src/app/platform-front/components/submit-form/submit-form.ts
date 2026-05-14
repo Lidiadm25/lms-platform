@@ -32,17 +32,12 @@ export class SubmitForm {
     
   
     
-    this.submitService.updateSubmission(this.submissionId(), this.file(), this.id()).subscribe((x)=> console.log(x))
-  }
-  success() {
-    this.wasSaved.set(true);
+    this.submitService.updateSubmission(this.submissionId(), this.file(), this.id()).subscribe((x)=> {this.wasSaved.set(true);
     setTimeout(() => {
       this.wasSaved.set(false);
     
-    }, 3000);
-  }
+    }, 3000);})
 
-  error() {
     this.hasError.set(true);
     setTimeout(() => {
       this.hasError.set(false);

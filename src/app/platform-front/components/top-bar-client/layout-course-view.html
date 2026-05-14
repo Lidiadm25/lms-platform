@@ -28,7 +28,7 @@
   </div>
 
   <!-- Open the modal using ID.showModal() method -->
-
+  <!-- MODAL VERIFICA-->
   <dialog id="complete" class="modal">
     <div class="modal-box">
       <h3 class="text-lg font-bold">Hello!</h3>
@@ -43,11 +43,13 @@
     </div>
   </dialog>
 
- @if(this.wasSaved()==true){
+  <!-- MODAL CON CUESTIONARIO -->
+
    <dialog id="surveyModal" class="modal">
     <div class="modal-box">
       <h3 class="text-lg font-bold mb-3">How much did you like the course?</h3>
-       <form method="dialog" [formGroup]="this.surveyForm" (ngSubmit)="sendAnswers()" >
+      @if(needsAnswer()==true){
+         <form method="dialog" [formGroup]="this.surveyForm" (ngSubmit)="sendAnswers()" >
       
           @for (question of this.survey()?.questions; track $index) {
             <div
@@ -68,9 +70,10 @@
           <button class="btn">Close</button>        
       </div>
     </form>
+      }
     </div>
   </dialog>
- }
+ 
 
   <!-- </div> -->
 </div>
