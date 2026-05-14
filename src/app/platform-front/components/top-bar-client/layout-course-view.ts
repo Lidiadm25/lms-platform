@@ -1,12 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UserProject } from '../../../auth/interfaces/user.interface';
-import { Survey } from '../../../projects/interfaces/survey.interface';
+import { Answer, Survey, SurveyUser } from '../../../projects/interfaces/survey.interface';
 import { SurveyService } from '../../../projects/services/SurveyService';
 import { SurveyUserService } from '../../../projects/services/SurveyUserService';
 import { UsersProjectService } from '../../../projects/services/UsersProjectService';
-import { RatingComponent } from "../ratingComponent/ratingComponent";
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RatingComponent } from '../ratingComponent/ratingComponent';
 
 @Component({
   selector: 'layout-course-view',
@@ -17,6 +23,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } f
 })
 export class LayoutCourseView {
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
   idProject = this.activatedRoute.snapshot.params['idProject'];
   userProjectService = inject(UsersProjectService);
   surveyService = inject(SurveyService);
@@ -26,9 +33,7 @@ export class LayoutCourseView {
   hasError = signal<boolean>(false);
   survey = signal<Survey | null>(null);
   needsAnswer = signal<boolean>(false);
-  fb = inject(FormBuilder)
-
-
+  fb = inject(FormBuilder);
 
   courseCompleted() {
     let update: Partial<UserProject>;
@@ -43,60 +48,66 @@ export class LayoutCourseView {
     });
   }
 
-  surveyForm !: FormGroup;
- 
-  checkSurvey() {
-    
+  surveyForm!: FormGroup;
 
-    this.surveyService.findOne(this.idProject).subscribe((data) => {
-      this.survey.set(data);
-      this.surveyForm = this.fb.group({
-       rating :  this.fb.array(
-     this.survey()!.questions.map(() => new FormControl<number | null>(null))
-  )
- })
-      if (this.survey() != null) {
-         this.wasSaved.set(true)
-         var modal = document.getElementById('surveyModal') as HTMLDialogElement;
-        this.surveyUserService.findOne(this.survey()!.id as string).subscribe({
-          error: (data) => {
-            modal.showModal();
-          },
+  checkSurvey() {
+    this.surveyService.findOne(this.idProject).subscribe({
+      next: (data) => {
+        this.survey.set(data);
+        this.surveyForm = this.fb.group({
+          rating: this.fb.array(
+            this.survey()!.questions.map(() => new FormControl<number | null>(null)),
+          ),
         });
-       
-      }
+        // Verifico que existe una survey
+        if (this.survey() != null) {
+          this.wasSaved.set(true);
+
+          // Busco si hay respuesta
+          this.surveyUserService.findOne(this.survey()!.id as string).subscribe({
+            error: (data) => {
+              this.needsAnswer.set(true);
+              var modal = document.getElementById('surveyModal') as HTMLDialogElement;
+              modal.showModal();
+            },
+          });
+        }
+      },
+      error: () => this.exitPage(),
     });
   }
 
-  getRatings(){
-    return this.surveyForm.get('rating') as FormArray
+  exitPage() {
+    this.router.navigateByUrl;
   }
 
-  getControl(index: number){
-    return (this.surveyForm.get('rating') as FormArray).at(index) as FormControl
+  getRatings() {
+    return this.surveyForm.get('rating') as FormArray;
   }
 
-  getAvgRating(){
-    var total = 0;
-    var array =  this.surveyForm.get('rating')!.value
-    
-    for (let index = 0; index <array.length; index++) {
-      var rating = array[index];
-      if(rating==null)
-      {
-        rating=0;
-      }
-      total += rating;
+  getControl(index: number) {
+    return (this.surveyForm.get('rating') as FormArray).at(index) as FormControl;
+  }
+
+  createAnswers() {
+    var array = this.surveyForm.get('rating')!.value;
+    var answers: Answer[] = [];
+    for (let index = 0; index < array.length; index++) {
+      var answer: Answer = {
+        questionsId: this.survey()!.questions[index].id as string,
+        rating: array[index] ?? 0,
+      };
+      answers.push(answer);
     }
-    return total;
+    return answers;
   }
 
-
-  sendAnswers(){
-  var  rating : number  = this.getAvgRating()
-  // TODO post con user service
-  // TODO post del response
-    //this.surveyUserService
-
+  sendAnswers() {
+    var answers: Answer[] = this.createAnswers();
+    const userAnswer: SurveyUser = {
+      surveyId: this.survey()!.id as string,
+      answers: answers,
+    };
+    this.surveyUserService.createSurveySubmit(userAnswer).subscribe((x) => console.log(x));
   }
 }
