@@ -72,7 +72,7 @@ export class LessonManagerPage {
   async OnSubmit() {
     if (this.verifySize(this.file, this.lessonForm.value.maxSize)) {
       const lessonLike: Partial<Lesson> = { ...(this.lessonForm.value as any) };
-      if (this.edit()) {
+      if (this.edit() == true) {
         await firstValueFrom(
           this.lessonService.updateLesson(this.lessonId(), lessonLike, this.file),
         );
