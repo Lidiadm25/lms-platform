@@ -32,15 +32,8 @@ export class ProjectCard {
     if (this.authService.user() !== null) {
       this.user = this.authService.user() as User;
     }
-    const userProjectLike: UserProjectCreate = {
-      userId: this.user.id,
-      projectId: id,
-    };
+    
 
-    this.userProjectService.addUser(userProjectLike).subscribe({
-      next: (res) => console.log(res),
-      error: (res) => console.log(res),
-    });
   }
 
 

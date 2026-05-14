@@ -6,6 +6,9 @@ import { ProjectService } from '../../../projects/services/ProjectService';
 import { map } from 'rxjs';
 import { UnitsLessonsAccordeon } from "../../components/units-lessons-accordeon/units-lessons-accordeon";
 import { UsersProjectService } from '../../../projects/services/UsersProjectService';
+import { UserProjectCreate } from '../../../auth/interfaces/user.interface';
+import { jwtDecode } from 'jwt-decode';
+import { jwtToken } from '../../../auth/interfaces/auth-response.interface';
 
 @Component({
   selector: 'app-project-details',
@@ -32,6 +35,25 @@ export class ProjectDetails {
     })
 
     this.usersProject.getUsers(this.idProject(), null).subscribe((data)=> this.usersNumber.set(data.count))
+  }
+
+  inscription(){
+    var token = localStorage.getItem('token');
+    if(token != null) {
+
+      let payload = jwtDecode<jwtToken>(token)
+   
+  const userProjectLike: UserProjectCreate = {
+      userId: payload.id,
+      projectId: this.idProject(),
+    };
+
+    
+    this.usersProject.addUser(userProjectLike).subscribe({
+      next: (res) => console.log(res),
+      error: (res) => console.log(res),
+    }); 
+  }
   }
  
 } 
