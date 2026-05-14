@@ -14,12 +14,16 @@ export interface Project {
   id: string;
   title: string;
   image: string;
+  snippet: string
   category: Category;
   description: string;
   duration: number;
   units: Unit[];
   isActive: boolean;
   author: User;
+  created_at: Date;
+  last_modified:Date;
+
   studentsCount: number;
 }
 
