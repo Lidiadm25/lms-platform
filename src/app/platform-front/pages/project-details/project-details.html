@@ -21,7 +21,7 @@
     <div class="w-[60%] pb-10">
       <h2 class="my-5">What will you learn? </h2> 
 
-      <div  [innerHTML]="this.project()!.description  | SafeHTML"></div>
+      <div  [innerHTML]="this.project()!.description  | SafeHTML" class="overflow-hidden break-words"></div>
 
       <h2 class="my-5"> Content of the course</h2>
       <app-units-lessons-accordeon [project]="this.project()" class=""/>

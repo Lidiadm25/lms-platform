@@ -11,7 +11,7 @@ export class UiService {
   collapsed = signal<boolean>(true);
 
   toggleDrawer(){
-    console.log(this.collapsed())
+ 
     let check = document.getElementById('my-drawer-1') as HTMLInputElement
     check.checked = this.collapsed();
 
@@ -19,12 +19,12 @@ export class UiService {
   }
 
   isCollapsed(){
-    console.log(this.collapsed())
+   
     this.collapsed.set(true);
   }
 
   notCollapsed(){
-    console.log(this.collapsed())
+ 
     this.collapsed.set(false);
   }
 

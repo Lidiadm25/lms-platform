@@ -23,7 +23,6 @@ export class ChatComponent {
 
   filteredUsers = computed(() => {
     const users = this.onlineUsers();
-    console.log(users);
     const term = this.searchTerm().trim().toLowerCase();
     if (!users?.length) return [];
     if (!term) return [];
@@ -68,13 +67,12 @@ export class ChatComponent {
   selectUserChat(client: OnlineClient) {
     this.selectedUser.set(client.user_id);
     this.name.set(client.user_fullname);
-    console.log(client.user_id);
     this.openDropdown();
     this.messages.set([]);
   }
 
   searchUsers(event: Event) {
-    console.log('entra aqui');
+
 
     var input = event.target as HTMLInputElement;
     this.searchTerm.set(input.value);

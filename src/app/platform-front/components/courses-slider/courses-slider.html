@@ -12,6 +12,8 @@
       <swiper-slide>
         <app-project-card [project]="item.project" [in]="this.in()"  class="hover:cursor-pointer" />
       </swiper-slide>
+    } @empty {
+      <a class="font-bold text-2xl text-center w-full" [routerLink]="['/explore']" > You're not enroll in any course, start now!</a>
     }
 
 </swiper-container>

@@ -1,15 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal, Signal } from '@angular/core';
-import { connectToServer } from '../../../../socket-client';
-import { AuthService } from '../../../auth/services/authService';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../auth/services/authService';
 import { Navbar } from "../navbar/navbar";
-import {UiService} from './uiService'
-import { ChatComponent } from "./chat-component/chat-component";
-import { NgClass } from '@angular/common';
+import { UiService } from './uiService';
 
 @Component({
   selector: 'app-my-drawer',
-  imports: [RouterLink, Navbar, RouterOutlet, ChatComponent],
+  imports: [RouterLink, Navbar, RouterOutlet],
   templateUrl: './my-drawer.html',
 
   changeDetection: ChangeDetectionStrategy.OnPush,

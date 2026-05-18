@@ -16,7 +16,6 @@ export class UnitService {
   }
 
   updateUnit(unitLike: Unit) {
-    console.log(unitLike);
     let id = unitLike.id;
     console.log(id);
     return this.http.patch<Unit>(`${BASE_URL}/sections/${id}`, unitLike);
