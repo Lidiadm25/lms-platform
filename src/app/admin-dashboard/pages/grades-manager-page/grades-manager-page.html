@@ -1,7 +1,7 @@
 <div class="p-10">
 
   
-  <h2 class="font-poppins">GRADE REVIEWS</h2>
+  <h2 class="font-bold tracking-tighter">GRADE REVIEWS</h2>
    <div class="flex flex-col-1 gap-40"> 
     <app-combobox-units-lesson [projectId]="this.projectId" (task)="taskId.set($event)" (student)="userId.set($event)" />
 
@@ -9,26 +9,26 @@
 
   <section class="flex flex-col-3 justify-between h-full gap-6">
     <div></div>
-    @if (this.submit()?.url_file) {
+    @if (this.submit()?.url_file && this.submit()!.url_file!.length > 0) {
         <div [ngClass]=" this.selectedPdf()? 'flex flex-col max-w-20 overflow-y-auto overflow-x-hidden bg-base-200  shadow-sm p-5 ' : 'grid grid-cols-3 grid-rows-2 gap-2 mt-10 auto-rows-max items-center align-middle'">
           
       @for (item of this.submit()!.url_file; track $index) {
-           @if(item.includes('.svg') || item.includes('.png') || item.includes('.jpg')) {
+           @if(item.mimeType.includes('image') && item.url != undefined) {
            
-              <a [href]="item" [download]="item ">
+              <a [href]="item" [download]="item.url ">
                 <img src="./assets/image.svg" class="h-15 w-15" />
-                <p class="truncate w-15">{{ item.substring(35) }}</p>
+                <p class="truncate w-15">{{ item.originalName}}</p>
               </a>
             
-          } @else if (item.includes('.pdf')) {
-            <div (click)="openPdf(item)">
+          } @else if (item.mimeType.includes('pdf') && item.url != undefined) {
+             <div (click)="openPdf(item!.url)" >
               <img src="./assets/pdf.svg" class="h-15 w-15" />
-              <p class="truncate w-15">{{ item.substring(35) }}</p>
+              <p class="truncate w-15">{{ item.originalName }}</p>
             </div>
           } @else {
             <div>
               <img src="./assets/zip.svg" class="h-15 w-15" />
-              <p class="truncate w-15">{{ item.substring(35) }}</p>
+              <p class="truncate w-15">{{ item.originalName}}</p>
             </div>
           }
         
@@ -49,6 +49,6 @@
     }
   
 
-    <app-grade-table [userId]="this.userId()" [submit]="this.submit()" />
+    <app-grade-table [userId]="this.userId()" [submit]="this.submit()"  [task]="this.task()"  />
   </section>
 </div>

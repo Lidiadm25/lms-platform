@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from '../../../projects/interfaces/project.interface';
+import { Project, Task } from '../../../projects/interfaces/project.interface';
 import { Submit } from '../../../projects/interfaces/tasks.interface';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { TaskService } from '../../../projects/services/TaskService';
@@ -36,7 +36,7 @@ export class GradesManagerPage {
   taskId = signal<string>('');
   submit = signal<Submit | null>(null);
   selectedPdf = signal<string| null>(null)
-
+  task = signal<Task | null>(null)
   taskService = inject(TaskService);
 
   constructor() {
@@ -45,8 +45,11 @@ export class GradesManagerPage {
         this.selectedPdf.set(null)
         this.taskService
           .findByUserTask(this.userId(), this.taskId())
-          .subscribe((x) => {this.submit.set(x)
+          .subscribe((data) => {
+            this.submit.set(data)
           });
+
+          this.taskService.getById(this.taskId()).subscribe((data)=> this.task.set(data) )
       }
     });
   }
