@@ -58,50 +58,20 @@ export class TaskService {
     return this.http.get<Submit>(`${BASE_URL}/submit-task/task/${id}`)
   }
   
- updateSubmission(id: string, files: File[], idTask: string) {
+ updateSubmission(id: string, files: File[]) {
   const formData = new FormData();
   
   for (let index = 0; index < files.length; index++) {
     const file = files[index];
-    formData.append('documents', file, file.name);
+    formData.append('files', file);
   }
 
-  return this.http.post<string[]>(`${BASE_URL}/files/bulk/${idTask}`, formData).pipe(
-    
-    switchMap(response => {
-      console.log(response)
-      const payload = {url_file: response};
-      console.log(payload)
-      return this.http.patch(`${BASE_URL}/submit-task/${id}`, payload);
-    })
-  );
+  return this.http.patch<Submit>(`${BASE_URL}/submit-task/${id}`, formData)
+ 
 }
 
-    uploadFiles(files:File[]): Observable<string[]>{
-      if(!files) return of([])
-
-        const uploadObservables = Array.from(files).map((file)=> this.uploadFile(file, undefined));
-        return forkJoin(uploadObservables).pipe(
-          tap((fileNames)=> console.log({fileNames}))
-        )
-    }
-
-
-    uploadFile(file: File, size: string | undefined): Observable<string> {
-      const formData = new FormData();
-      formData.append('file', file);
-      if (size == undefined) size = 'DEFAULT';
-      formData.append('maxSize', size);
-      return this.http
-        .post<{
-          secureUrl: string;
-        }>(`${BASE_URL}/files/lesson`, formData)
-        .pipe(
-          map((resp) => resp.secureUrl),
-          tap((imageNames) => console.log({ imageNames })),
-        );
-    }
-
+   
+    
 
     findByUserTask(id:string, task:string){
      return this.http.get<Submit>(`${BASE_URL}/submit-task/review-task/${id}/${task}`)
