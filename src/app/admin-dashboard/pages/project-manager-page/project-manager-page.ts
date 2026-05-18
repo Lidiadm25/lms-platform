@@ -28,13 +28,17 @@ export class ProjectManagerPage {
 
   // Variables
   projectId: string = this.activatedRoute.snapshot.params['idProject'];
-  file!: File;
+
+  file!: File | undefined;
+
+  imageUrl = model<string | undefined>(
+    'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
+  );
+
   edit = signal(false);
   projectLoaded = signal<Project | null>(null);
 
-  imageUrl = model<string>(
-    'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
-  );
+  
 
   constructor(private location: Location) {
     if (this.projectId != 'create') {
@@ -45,19 +49,19 @@ export class ProjectManagerPage {
       effect(() => {
         var toggle = document.getElementById('toggle') as HTMLInputElement;
         if (this.projectLoaded() != null) {
-          console.log(this.projectLoaded());
           this.edit.set(true);
 
           this.projectForm.patchValue({
             title: this.projectLoaded()?.title,
             description: this.projectLoaded()?.description,
-            image: this.projectLoaded()?.image,
+           // image: this.projectLoaded()?.image,
             category: this.projectLoaded()?.category.id,
           });
           if (this.projectLoaded()?.isActive) toggle.checked = true;
-          if (this.projectLoaded()!.image.length > 0) {
+          if (this.projectLoaded()!.image?.url) {
             this.imageUrl.set(
-              `http://localhost:3000/api/files/project/${this.projectLoaded()!.image}`,
+             
+              this.projectLoaded()!.image.url
             );
           } else {
             this.imageUrl.set(
@@ -74,7 +78,6 @@ export class ProjectManagerPage {
   projectForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    image: [''],
     category: [''],
   });
 

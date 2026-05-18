@@ -6,6 +6,7 @@ import { QuillModule } from 'ngx-quill';
 import { firstValueFrom } from 'rxjs';
 import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
+import { ProjectService } from '../../../projects/services/ProjectService';
 
 @Component({
   selector: 'app-lesson-manager-page',
@@ -18,9 +19,9 @@ export class LessonManagerPage {
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);
   // signals
-
+  projectService = inject(ProjectService)
   lessonLoaded = signal<Lesson | null>(null);
-  fileUrl = signal<string>('');
+  files = signal<File[]>([])
   edit = signal(false);
   lessonId = signal<string>('create');
   unitId: string = this.activatedRoute.snapshot.params['idUnit'];
@@ -30,7 +31,7 @@ export class LessonManagerPage {
     effect(() => {
       this.activatedRoute.parent!.paramMap.subscribe((params) => {
         const id = params.get('idProject') ?? 'create'; // cambiarlo para que te lleve a not found page
-
+        
         this.projectId.set(id);
       });
       this.activatedRoute.paramMap.subscribe((params) => {
@@ -50,55 +51,40 @@ export class LessonManagerPage {
     });
   }
 
-  file: File | undefined = undefined;
+
 
   lessonForm = this.fb.group({
     title: ['', []],
     description: ['', []],
-    maxSize: [''],
   });
 
-  getSelectedSize(): FormControl {
-    return this.lessonForm.get('maxSize') as FormControl;
-  }
+ 
   onFilesChange(event: any) {
     const fileList = (event.target as HTMLInputElement).files;
     if (fileList != null) {
-      this.file = fileList[0];
-      this.fileUrl.set(URL.createObjectURL(this.file));
+      this.files.set(Array.from(fileList))
     }
   }
 
   async OnSubmit() {
-    if (this.verifySize(this.file, this.lessonForm.value.maxSize)) {
+   
       const lessonLike: Partial<Lesson> = { ...(this.lessonForm.value as any) };
       if (this.edit() == true) {
         await firstValueFrom(
-          this.lessonService.updateLesson(this.lessonId(), lessonLike, this.file),
+          this.lessonService.updateLesson(this.lessonId(), lessonLike, this.files()),
         );
       } else {
-        await firstValueFrom(this.lessonService.create(this.unitId, lessonLike, this.file));
+        await firstValueFrom(this.lessonService.create(this.unitId, lessonLike, this.files()));
       }
 
       this.wasSaved.set(true);
       setTimeout(() => {
         this.wasSaved.set(false);
       }, 3000);
-    }
+    
   }
 
-  verifySize(file: File | undefined, size: string | null | undefined): boolean {
-    if (file == undefined) {
-      return true;
-    }
 
-    if (size == null || (size != null && file.size > +size)) {
-      console.log('error, file size is over max size');
-      return false;
-    } else {
-      return true;
-    }
-  }
   deleteLesson() {
     this.lessonService.delete(this.lessonId()).subscribe(() => console.log('Lesson deleted'));
     this.location.back();
@@ -114,7 +100,14 @@ export class LessonManagerPage {
         this.hasError.set(false);
       }, 3000);
     } else {
-      let route: string = '/admin/manager/' + this.projectId() + '/' + this.unitId + '/' + this.lessonId() +'/create';
+      let route: string =
+        '/admin/manager/' +
+        this.projectId() +
+        '/' +
+        this.unitId +
+        '/' +
+        this.lessonId() +
+        '/create';
       this.router.navigate([route], { replaceUrl: true });
     }
   }
