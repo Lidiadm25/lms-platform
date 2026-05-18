@@ -1,59 +1,32 @@
-# Frontend
+### Frontend InnovaLearn
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+Frontend used for project InnovaLearn, a LMS platform still in development for online teaching for everyone.
 
-## Development server
+## ✨ Features 
 
-To start a local development server, run:
+- **CRUD of Courses**: Teachers will be able to create courses, units, lessons with materials they can upload and even tasks.
+- **Grade reviews**: Teachers will be able to download and visualize the files submitted by users to a task.
+- **Explore**: Intuitive interface filtered by categories to search for the course that's more interesting for you.
+- **Text Formatting**: Teachers will be able to edit the description of their lessons, tasks and courses with a text editor. Also allowing embedded videos. 
+- **Calendar**: Users will be able to visualize past / active tasks in a all in one calendar.
+- **Graphics**: Teachers can visualize in the dashboard everything related to their courses and students.
+- **Messaging service**: Chat in web, where you can text anyone who's already online.
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 📌 TODO LIST
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Change logic in all related to manager-page, since the title doenst change and url dependency is problematic: 
+  * Solution would be to use a service to manage the state of the course.
+- Add a component to show the file list given by te teacher in lessons
+- Work in the styles of the pages.
+- Add accessibility features like Dark mode.
 
-```bash
-ng generate component component-name
-```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## How to deploy
+1.- Clone project
+2.- npm install
+3.- Change enviroment variables, just using your own backend url.
+4.- Make sure the backend is running already
+6.- Use npm run start:dev
