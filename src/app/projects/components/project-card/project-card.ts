@@ -18,8 +18,11 @@ export class ProjectCard {
   in = input<boolean>(false);
   router = inject(Router)
   imageUrl = computed(() => {
-    const nombre = this.project().image;
-    return nombre? `http://localhost:3000/api/files/project/${this.project().image}` : 'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg' ;
+    const nombre = this.project().image?.url;
+    if(nombre) return nombre
+
+    return  'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg' ;
+   
   });
 
   

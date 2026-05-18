@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 })
 export class ImageInput {
   file = model<File | undefined>(undefined);
-  imageUrl = model<string>(
+  imageUrl = model<string | undefined>(
     'https://as2.ftcdn.net/jpg/05/97/47/95/1000_F_597479556_7bbQ7t4Z8k3xbAloHFHVdZIizWK1PdOo.jpg',
   );
 
