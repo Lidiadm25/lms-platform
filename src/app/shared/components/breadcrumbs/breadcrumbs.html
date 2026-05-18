@@ -1,0 +1,7 @@
+<nav class="breadcrumbs text-sm">
+    <ul >
+        @for (item of this.breadcrumbs; track $index) {
+            <li [routerLink]="item.url">{{ item.label }}</li>
+        }
+    </ul>
+</nav>
