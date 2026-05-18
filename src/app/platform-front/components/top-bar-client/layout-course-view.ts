@@ -13,10 +13,11 @@ import { SurveyService } from '../../../projects/services/SurveyService';
 import { SurveyUserService } from '../../../projects/services/SurveyUserService';
 import { UsersProjectService } from '../../../projects/services/UsersProjectService';
 import { RatingComponent } from '../ratingComponent/ratingComponent';
+import { Breadcrumbs } from "../../../shared/components/breadcrumbs/breadcrumbs";
 
 @Component({
   selector: 'layout-course-view',
-  imports: [RouterOutlet, RouterLink, RatingComponent, ReactiveFormsModule],
+  imports: [RouterOutlet, RouterLink, RatingComponent, ReactiveFormsModule, Breadcrumbs],
   templateUrl: './layout-course-view.html',
 
   changeDetection: ChangeDetectionStrategy.OnPush,

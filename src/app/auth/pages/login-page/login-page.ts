@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/authService';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
   selector: 'app-login-page',
@@ -19,29 +18,21 @@ export class LoginPage {
   });
   hasError = signal(false);
   authService = inject(AuthService);
- 
+
 
   OnSubmit() {
     this.loginForm.markAllAsTouched();
-    if (this.loginForm.invalid) {
-      this.hasError.set(true);
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
-      return;
-    }
+   
 
-    const { email = '', password = '' } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
     this.authService.login(email!, password!).subscribe((isAuthenticated) => {
       if (isAuthenticated && this.authService.isAdmin()) {
+       // this.socketService.requestConnected();
         this.router.navigateByUrl('/admin');
       } else if (isAuthenticated) {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/home');
+       // this.socketService.requestConnected();
       }
-      this.hasError.set(true);
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
     });
   }
 }

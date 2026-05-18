@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal, Signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',

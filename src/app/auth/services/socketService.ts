@@ -1,61 +1,58 @@
-import { Injectable } from "@angular/core";
-import { environment } from "../../../environments/environment";
-import { Manager, Socket, io } from "socket.io-client";
-import { NewMessageDto } from "../interfaces/messageDto";
-import { OnlineClient } from "../../shared/components/my-drawer/chat-component/interfaces/online.interface";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Manager, Socket, io } from 'socket.io-client';
+import { OnlineClient } from '../../shared/components/my-drawer/chat-component/interfaces/online.interface';
+import { NewMessageDto } from '../interfaces/messageDto';
+let socket!: Socket;
+// export const connectToServer = (token: string) => {
+//   const manager = new Manager('http://localhost:3000', {
+//     extraHeaders: {
+//       authentication: token,
+//     },
+//   });
 
+//   socket = manager.socket('/');
+// };
 
-const baseUrl = environment.baseUrl;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SocketService {
-    private socket!: Socket;
-    manager!:Manager;
-    constructor(){
-        let token = localStorage.getItem('token');
-        if(token==null) throw new Error()
-       this.socket = io('http://localhost:3000' ,{
-    extraHeaders:{
-        authentication: token
-    }})
-       
-    }
+  constructor() {
+    let token = localStorage.getItem('token');
+    if (token == null) throw new Error();
+    socket = io('http://localhost:3000', {
+      extraHeaders: {
+        authentication: token,
+      },
+    });
+  }
 
-    disconnect(){
-        if(this.socket) this.socket.disconnect()
-    }
+  disconnect() {
+    if (socket) socket.disconnect();
+  }
 
-    requestConnected(){
-         this.socket.emit("get_online");
-    }
+  requestConnected() {
+    socket.emit('get_online');
+  }
 
-    getConnectedClients(): Observable<OnlineClient[]>{
-       return new Observable(observer => {
-        this.socket.on('clients-updated', (clients: OnlineClient[])=> {
-            console.log("SE RECIBEN CLIENTES")
-            observer.next(clients)
-        })
-       })
-    }
+  getConnectedClients(): Observable<OnlineClient[]> {
+    return new Observable((observer) => {
+      socket.on('clients-updated', (clients: OnlineClient[]) => {
+        observer.next(clients);
+      });
+    });
+  }
 
-    sendMessage(message:NewMessageDto){
-      
-        this.socket.emit('send_message_private', message )
-    }
+  sendMessage(message: NewMessageDto) {
+    socket.emit('send_message_private', message);
+  }
 
-    onMessage(){
-        return new Observable(observer => {
-            this.socket.on('receive_private_message', (data)=> { 
-                console.log("SE RECIBE UN MENSAJE")
-                observer.next(data)
-            })
-        })
-        
-       
-        
-    }
-
-
+  onMessage() {
+    return new Observable((observer) => {
+      socket.on('receive_private_message', (data) => {
+        observer.next(data);
+      });
+    });
+  }
 }
