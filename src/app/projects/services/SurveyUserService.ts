@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { datasetSurvey, SurveyUser } from '../interfaces/survey.interface';
+import { datasetQuestion, datasetSurvey, SurveyUser } from '../interfaces/survey.interface';
 
 
 const BASE_URL = environment.baseUrl;
@@ -22,4 +22,13 @@ export class SurveyUserService {
   getAvgFromSurvey(){
     return this.http.get<datasetSurvey[]>(`${BASE_URL}/survey-user/avg`)
   }
+
+  getSpecificAvg(id:string){
+    return this.http.get<number>(`${BASE_URL}/survey-user/${id}/avg`)
+  }
+   // QUESTIONS
+
+    getQuestionsAvg(id:string){
+      return this.http.get<datasetQuestion[]>(`${BASE_URL}/question/${id}/avg`)
+    }
 }
