@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { Project, ProjectsResponse } from '../interfaces/project.interface';
 import { environment } from '../../../environments/environment';
@@ -14,6 +14,8 @@ interface Options {
   providedIn: 'root',
 })
 export class ProjectService {
+  projectLoaded = signal<Project | null>(null);
+
   constructor() {}
 
   private http = inject(HttpClient);
@@ -35,60 +37,45 @@ export class ProjectService {
   }
 
   getById(id: string) {
-    return this.http.get<Project>(`${BASE_URL}/project/${id}`);
+    return this.http
+      .get<Project>(`${BASE_URL}/project/${id}`)
+      .pipe(tap((resp) => this.projectLoaded.set(resp)));
   }
 
   // Update
 
-  updateProject(id: string, project: Partial<Project>, imageFile?: File) {
-  
-    if (!imageFile) {
-      return this.http.patch<Project>(`${BASE_URL}/project/${id}`, project);
-    }
-    return this.uploadImage(imageFile).pipe(
-      map((fileName) => {
-        return {
-          ...project,
-          image: fileName.substring(40),
-        };
-      }),
-      switchMap((updatedProject) =>
-        this.http.patch<Project>(`${BASE_URL}/project/${id}`, updatedProject),
-      ),
-    );
-  }
-
-  uploadImage(imageFile: File): Observable<string> {
-    
+  updateProject(id: string, project: any, imageFile?: File) {
     const formData = new FormData();
-    formData.append('file', imageFile);
-    return this.http
-      .post<{
-        secureUrl: string;
-      }>(`${BASE_URL}/files/project`, formData)
-      .pipe(
-        map((resp) => resp.secureUrl),
-        tap((imageNames) => console.log({ imageNames })),
-      );
-  }
 
-  createProject(project: Project, imageFile: File): Observable<Project> {
-    if (imageFile == undefined) {
-      return this.http.post<Project>(`${BASE_URL}/project/`, project);
+    if (project) {
+      Object.keys(project).forEach((key) => {
+        formData.append(key, String(project[key]));
+      });
     }
 
-    return this.uploadImage(imageFile).pipe(
-      map((fileName) => {
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
 
-        return {
-          ...project,
-          image: fileName.substring(40),
-        };
-      }),
-      switchMap((updatedProject) =>
-        this.http.post<Project>(`${BASE_URL}/project/`, updatedProject),
-      ),
-    );
+    return this.http.patch<Project>(`${BASE_URL}/project/${id}`, formData);
+  }
+
+
+
+  createProject(project: any, imageFile?: File) {
+    const formData = new FormData();
+
+    if (project) {
+      Object.keys(project).forEach((key) => {
+        formData.append(key, String(project[key]));
+      });
+    }
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    return this.http.post<Project>(`${BASE_URL}/project`, formData);
   }
 
   delete(id: string) {
