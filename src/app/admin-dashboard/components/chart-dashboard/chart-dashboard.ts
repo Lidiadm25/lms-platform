@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { datasetQuestion, Question } from './../../../projects/interfaces/survey.interface';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { BarChart, PieChart } from 'echarts/charts';
-import { GridComponent, TooltipComponent } from 'echarts/components';
+import { GridComponent, LegendComponent, TitleComponent, TooltipComponent } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import { datasetSurvey } from '../../../projects/interfaces/survey.interface';
 import { SurveyUserService } from '../../../projects/services/SurveyUserService';
-echarts.use([BarChart, GridComponent, CanvasRenderer, PieChart, TooltipComponent]);
+import { EChartsOption } from 'echarts/types/dist/shared';
+echarts.use([BarChart, GridComponent, CanvasRenderer, PieChart, TooltipComponent, LegendComponent, TitleComponent]);
 @Component({
   selector: 'app-chart-dashboard',
   imports: [NgxEchartsDirective],
@@ -17,7 +19,10 @@ echarts.use([BarChart, GridComponent, CanvasRenderer, PieChart, TooltipComponent
 })
 export class ChartDashboard {
   surveyUserService = inject(SurveyUserService);
+
   data = signal<datasetSurvey[]>([]);
+  questionsData = signal<datasetQuestion[] | null>(null);
+  selectedCourse = signal<string | null>(null);
   constructor() {
     this.surveyUserService.getAvgFromSurvey().subscribe((x) => {
       this.data.set(x);
@@ -28,6 +33,7 @@ export class ChartDashboard {
             data: this.data().map((x) => ({
               value: parseInt(x.avg),
               name: x.course,
+              courseId: x.id,
             })),
           },
         ],
@@ -38,6 +44,10 @@ export class ChartDashboard {
   options = {
     tooltip: {
       trigger: 'item',
+    },
+    legend: {
+      bot: '5%',
+      left: 'center',
     },
 
     series: [
@@ -66,4 +76,55 @@ export class ChartDashboard {
       },
     ],
   };
+
+  options2 = computed<EChartsOption>(() => {
+    const data = this.questionsData();
+    return {
+      title: {
+        text: 'Answers to survey',
+        left: 'center',
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        },
+        formatter: (params:any)=>{
+          const dataIndex = params[0].dataIndex;
+          const fullQuestion = data![dataIndex].question;
+          const avgValue = params[0].data;
+
+          return `<b>${fullQuestion} </b> <br/> Average: ${avgValue}`
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: data!.map((item, index) => `${index+1}`),
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: data!.map((item) => item.avg),
+          type: 'bar',
+        },
+      ],
+    };
+  });
+
+  onCourseSelect(event: any) {
+    const id = event.data.courseId;
+
+    if (id) {
+      this.selectedCourse.set(id);
+      this.getQuestions(id);
+    }
+  }
+
+  getQuestions(id: string) {
+    this.surveyUserService.getQuestionsAvg(id).subscribe((data) => {this.questionsData.set(data)
+      console.log(data)
+    });
+  }
 }

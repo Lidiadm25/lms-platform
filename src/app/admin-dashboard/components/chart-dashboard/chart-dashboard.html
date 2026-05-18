@@ -1,2 +1,6 @@
 
-<div echarts id="main" [options]="options"  class="h-[400px] w-full"></div>
+<div echarts id="main" [options]="options" (chartClick)="onCourseSelect($event)" class="h-[400px] w-full"></div>
+
+ @if(selectedCourse()){
+    <div echarts id="main" [options]="options2()"  class="h-96 w-full mt-8"></div>
+} 
