@@ -31,9 +31,9 @@ export class TaskDetailsPage {
     });
     
     this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
-    
+   
       this.submit.set(result)
-      if(this.isActive() == false) 
+      if(this.isActive() == false || (this.isActive()== true && this.submit()!.date_send !=null)) 
       {
         this.status.set("Submission info")
       }
