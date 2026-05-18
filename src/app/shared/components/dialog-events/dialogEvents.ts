@@ -15,7 +15,7 @@ import { RouterLink } from "@angular/router";
 })
 export class DialogEvents { 
   data = inject(MAT_DIALOG_DATA)
-
+  statusTask = signal<string>("Send task")
   lessonService = inject(LessonService)
   taskService = inject(TaskService)
   status = signal<string>('PENDING');
@@ -31,6 +31,7 @@ export class DialogEvents {
       
       if(result.date_send !=null){
         this.status.set ("DELIVERED")
+        this.statusTask.set("See task")
       }
       this.start.set(new Date(this.data.start))
       this.end.set(new Date(this.data.end))
