@@ -15,47 +15,50 @@ export class LessonService {
     return this.http.get<Lesson>(`${BASE_URL}/lessons/${id}`);
   }
 
-  create(unit: string, lessonLike: Partial<Lesson>, file: File | undefined) {
-    const { maxSize, ...rest } = lessonLike;
-    const payload = { ...rest, unit };
-    if (!file) {
-      return this.http.post<Lesson>(`${BASE_URL}/lessons`, payload);
-    }
-    return this.uploadFile(file, maxSize).pipe(
-      map((fileName) => {
-        return {
-          ...payload,
-          url_file: fileName.substring(40),
-        };
-      }),
-      switchMap((updatedLesson) => this.http.post<Lesson>(`${BASE_URL}/lessons`, updatedLesson)),
-    );
+  create(unit: string, lessonLike: any, file: File[]) {
+     const formData = new FormData();
+   
+       if (lessonLike) {
+         Object.keys(lessonLike).forEach((key) => {
+           formData.append(key, String(lessonLike[key]));
+         });
+         formData.append("unit",unit)
+       }
+   
+       if (file && file.length > 0) {
+          file.forEach(element => {
+            formData.append("files", element)
+          });
+       }
+   
+       return this.http.post<Lesson>(`${BASE_URL}/lessons`, formData);
   }
-  updateLesson(id: string, lessonLike: Partial<Lesson>, file: File | undefined) {
-    const { maxSize, ...rest } = lessonLike;
-
-    if (!file) {
-      return this.http.patch<Lesson>(`${BASE_URL}/lessons/${id}`, rest);
-    }
-    return this.uploadFile(file, maxSize).pipe(
-      map((fileName) => {
-        console.log(fileName);
-        return {
-          ...rest,
-          url_file: fileName.substring(40),
-        };
-      }),
-      switchMap((updatedLesson) =>
-        this.http.patch<Lesson>(`${BASE_URL}/lessons/${id}`, updatedLesson),
-      ),
-    );
-  }
-
-  uploadFile(file: File, size: string | undefined): Observable<string> {
+  updateLesson(id: string, lessonLike: any, file: File[]) {
     const formData = new FormData();
-    formData.append('file', file);
-    if (size == undefined) size = 'DEFAULT';
-    formData.append('maxSize', size);
+   
+       if (lessonLike) {
+         Object.keys(lessonLike).forEach((key) => {
+           formData.append(key, String(lessonLike[key]));
+         });
+       }
+   
+       if (file && file.length > 0) {
+          file.forEach(element => {
+            formData.append("files", element)
+          });
+       }
+   
+       return this.http.patch<Lesson>(`${BASE_URL}/lessons/${id}`, formData);
+
+    
+   
+  }
+
+  uploadFile(fsize: string | undefined): Observable<string> {
+    const formData = new FormData();
+    // formData.append('file', file);
+    // if (size == undefined) size = 'DEFAULT';
+    // formData.append('maxSize', size);
     return this.http
       .post<{
         secureUrl: string;
