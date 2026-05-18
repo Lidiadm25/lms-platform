@@ -11,20 +11,20 @@
       <!-- row 2 -->
       <tr>
         <th>Status of grade</th>
-        <td>{{this.grade()?.total}}</td>
+        <td>{{this.grade()?.total ?? "Pending to grade"}}</td>
       </tr>
       <!-- row 3 -->
       <tr>
-        <th>Limit date</th>
+        <th>Task submitted</th>
         <td>{{this.submit()!.date_send}}</td>
       </tr>
       <tr>
        <th>Files sent</th>
-        <td>x</td>
+        <td>{{this.submit()?.url_file?.length ?? 0}}</td>
       </tr>
         <tr>
            <th>Feedback of the submission</th>
-        <td>{{this.grade()?.feedback}}</td>
+        <td>{{this.grade()?.feedback ?? "No feedback attached"}} </td>
         
       </tr>
     </tbody>
