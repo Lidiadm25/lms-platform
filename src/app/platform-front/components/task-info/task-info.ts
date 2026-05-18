@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { Task } from '../../../projects/interfaces/project.interface';
 import { DatePipe } from '@angular/common';
+import { SafeHTMLPipe } from '../../../pipes/safeHTML-pipe';
 
 @Component({
   selector: 'app-task-info',
-  imports: [DatePipe],
+  imports: [DatePipe,SafeHTMLPipe],
   templateUrl: './task-info.html',
   
 
