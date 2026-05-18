@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { jwtToken } from '../../auth/interfaces/auth-response.interface';
 import {
+  User,
   UserProjectCreate,
   UserProjectsResponse,
   UsersProjectResponse,
@@ -29,6 +30,18 @@ export class UsersProjectService {
         ...options,
       },
     });
+  }
+
+  getCurrent(){
+    return this.http.get<Partial<User[]>>(`${BASE_URL}/user-projects/students/per-teacher`)
+  }
+
+  finishAllCourses(){
+    return this.http.get<string>(`${BASE_URL}/user-projects/finish/all`)
+  }
+
+  getAllTime(){
+    return this.http.get<number>(`${BASE_URL}/user-projects/students/per-teacher/ever`)
   }
 
   finishCourse(idProject: string, dto: Partial<UserProject>) {
@@ -64,5 +77,9 @@ export class UsersProjectService {
     let decoded = jwtDecode<jwtToken>(token);
 
     return this.http.get<UserProjectsResponse>(`${BASE_URL}/user-projects/projects/${decoded.id}`);
+  }
+
+  checkEnroll(id:String){
+    return this.http.get<boolean>(`${BASE_URL}/user-projects/check-status/${id}`)
   }
 }
