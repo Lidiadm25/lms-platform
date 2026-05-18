@@ -44,7 +44,6 @@ export class AuthService {
   token = computed(this._token);
   isAdmin = computed(() => this._user()?.roles.includes('admin') ?? false);
 
-
   login(email: string, password: string): Observable<boolean> {
     return this.http
       .post<AuthResponse>(`${baseUrl}/auth/login`, {
@@ -91,6 +90,11 @@ export class AuthService {
         catchError((error: any) => this.handleAuthError(error)),
       );
   }
+
+  changeStatus(){
+    return this.http.patch<User>(`${baseUrl}/auth/be-teacher`, this._user)
+    
+  }
       
   /**
    * Receives token and user and assigns it to current signals
@@ -99,14 +103,14 @@ export class AuthService {
    * @returns 
    */
   private handleAuthSuccess({ token, user }: AuthResponse) {
-
+   
     this._role.set(user.roles[0]);
     this._user.set(user);
     this._authStatus.set('authenticated');
     this._token.set(token);
 
     localStorage.setItem('token', token);
-
+   // connectToServer(token);
     return true;
   }
 
