@@ -1,6 +1,8 @@
 
-
+@if(this.url() != null){
+    
 <div class="w-1/2 md:w-full">
     <app-example-pdf-viewer class="w-full" [url]="this.url()"/>
 
 </div>
+}
