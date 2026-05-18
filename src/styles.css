@@ -2,6 +2,12 @@
 
 @import "tailwindcss";
 @plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+ 
+}
 @import "quill/dist/quill.snow.css";
 
 @layer base {
@@ -20,8 +26,12 @@
 @theme {
    --font-poppins: Poppins, sans-serif;
   
-
 }
+
+* {
+    font-family: var(--font-poppins);
+}
+
 .mat-mdc-autocomplete-panel{
   max-height: 144px!important;
  
@@ -31,9 +41,9 @@
  z-index: 0!important;
 }
 
-h1, h2, h3, p, a {
-  font-family: var(--font-poppins);
-}
+/* h1, h2, h3, p, a {
+  
+} */
 
 .active {
   background:  var(--color-sky-200) ;

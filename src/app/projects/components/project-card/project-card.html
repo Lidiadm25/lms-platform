@@ -1,5 +1,5 @@
 <div
-  class="bg-base-100 shadow-sm rounded-lg flex flex-col  h-80"
+  class="bg-base-100 shadow-sm rounded-lg flex flex-col min-h-70 max-w-90 "
   (click)="navigateToPage()"
 >
 
@@ -18,10 +18,6 @@
       class="truncate"
       [innerHTML]="project().description"
     ></div>
-
-    <p>
-      {{ project().duration }}
-    </p>
 
 
   </div>

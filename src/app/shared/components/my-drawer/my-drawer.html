@@ -1,4 +1,4 @@
-<div class="flex flex-col h-screen ">
+<div class="flex flex-col h-screen">
   <app-navbar class="h-16 shrink-0" />
 
   <div class="flex flex-1 overflow-hidden">
@@ -37,12 +37,12 @@
         </li>
         <li>
           <button
-           class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+            class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
             data-tip="Homepage"
             [routerLink]="['/explore']"
           >
             <svg
-               xmlns="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               stroke-linejoin="round"
               stroke-linecap="round"
@@ -57,36 +57,7 @@
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
             </svg>
-                        <span [class.opacity-0]="uiService.collapsed()">Explore</span>
-          </button>
-        </li>
-
-        <li>
-          <button
-            class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-            data-tip="Chat"
-
-            (click)="uiService.chatToggle()"
-          >
-            <!-- Chat icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              fill="none"
-              stroke="currentColor"
-              class="my-1.5 inline-block size-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
-              />
-            </svg>
-
-            <span [class.opacity-0]="uiService.collapsed()">Chat</span>
+            <span [class.opacity-0]="uiService.collapsed()">Explore</span>
           </button>
         </li>
 
@@ -121,20 +92,11 @@
         }
       </ul>
     </div>
-    
-      <div class="flex-1 ml-10 w-[99%] overflow-y-auto">
 
-        <div (click)="this.uiService.hideChat()">
-        
-      <router-outlet  />
+    <div class="flex-1 ml-10 w-[99%]  overflow-y-auto">
+      <div (click)="this.uiService.hideChat()">
+        <router-outlet />
       </div>
-
-       @if(uiService.chat()){
-      <div class="fixed bottom-0 right-0 z-30 w-70 h-20% shadow-lg">
-      <app-chat-component/>
     </div>
-    }
-    </div>
-   
   </div>
 </div>

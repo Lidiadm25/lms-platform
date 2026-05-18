@@ -1,44 +1,52 @@
-
-  <div class="navbar w-full bg-base-300 shadow-sm ">
-
-
-
-
+<div class="navbar w-full bg-base-300 shadow-sm">
   <div class="navbar-start">
-  
-    <a [routerLink]="['/', home()]" class="btn btn-ghost text-xl font-montserrat">
+    <a [routerLink]="['/', home()]" class="btn btn-ghost text-xl">
       Innova
       <span class="text-primary">learn</span>
     </a>
-  
   </div>
-  <div class="navbar-center hidden lg:flex">
-    
-    
-  </div>
+  <div class="navbar-center hidden lg:flex"></div>
   <div class="navbar-end gap-4 mr-4">
-    <button class="btn btn-ghost" routerLink="home"> My courses</button>
-    <button class="btn btn-ghost btn-circle">
-      <div class="indicator">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-          />
-        </svg>
-        <span class="badge badge-xs badge-primary indicator-item"></span>
-      </div>
-    </button>
-    <!-- -->
-    <button class="btn btn-ghost btn-circle" popovertarget="popover-1" style="anchor-name:--anchor-2">
+
+
+    <button class="btn btn-ghost" onclick="be_teacher_modal.showModal()">Be a teacher!</button>
+
+     <button
+            class="btn btn-ghost btn-circle"
+            data-tip="Chat"
+            (click)="uiService.chatToggle()"
+          >
+            <!-- Chat icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="my-1.5 inline-block size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+              />
+            </svg>
+
+          </button>
+
+    @if (uiService.chat()) {
+        <div class="fixed bottom-0 right-0 z-30 w-70 h-20% shadow-lg">
+          <app-chat-component />
+        </div>
+      }
+
+    <button
+      class="btn btn-ghost btn-circle"
+      popovertarget="popover-1"
+      style="anchor-name: --anchor-2"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -55,35 +63,26 @@
       </svg>
     </button>
 
-    <ul class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
-  popover id="popover-1" style="position-anchor:--anchor-2">
-  <li><a routerLink="/auth" (click)="logout()">Log out</a></li>
- 
-</ul>
-
+    <ul
+      class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+      popover
+      id="popover-1"
+      style="position-anchor: --anchor-2"
+    >
+      <li><a routerLink="/auth" (click)="logout()">Log out</a></li>
+    </ul>
   </div>
 </div>
- <!-- <button
-            class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-            data-tip="Log out"
-            routerLink="/auth"
-            (click) = "logout()"
-          >
-          
-            <svg
-               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              fill="none"
-              stroke="currentColor"
-              class="my-1.5 inline-block size-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-              />
-            </svg>
-            </button> -->
+
+<dialog id="be_teacher_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Be a teacher!</h3>
+    <p class="py-4">By being a teacher, you will stop being able to enroll in other courses.</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn" (click)="beTeacher()">Start teaching now!</button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>

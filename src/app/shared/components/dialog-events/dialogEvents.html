@@ -1,23 +1,60 @@
-<div class="p-2">
-  <h2 mat-dialog-title>Tarea</h2>
-  <mat-dialog-content>
-    <p>Tarea: {{ data.title }}</p>
+<div class="">
+  <div class="flex flex-col">
+    <div class="bg-sky-100 p-5">
+      <p class="font-bold text-2xl text-zinc-700">{{ data.title }}</p>
+    </div>
+  </div>
 
+  <mat-dialog-content>
     @if (!this.projectInfo()) {
       <p>ERROR</p>
     } @else {
-      <p>{{ this.projectInfo()?.project_title}} - {{this.projectInfo()?.section_title}}</p>
+      <div class="flex flex-col-2 gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3"
+          />
+        </svg>
+          <p>{{ this.projectInfo()?.project_title }} - {{ this.projectInfo()?.section_title }}</p>
+      </div>
+      <div class="flex flex-col-2 gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        <p>{{ this.start() | date: 'short' }} - {{ this.end() | date: 'short' }}</p>
+      
+      </div>
     }
-
-    <p>Estado: {{ this.status() }}</p>
-
     <br>
+    <p>Status: {{ this.status() }}</p>
 
-    <button mat-dialog-close>
-      <a [routerLink]="['/task', this.data.task_id ]" class="mt-7" >Ver tarea</a>
-    </button>
+    <br />
 
     
-    <p>{{ this.start() | date: 'short' }} - {{ this.end() | date: 'short' }}</p>
+    <button mat-dialog-close class="flex justify-end w-full">
+      <a [routerLink]="['/task', this.data.task_id]" class="mt-7 link text-blue-700 "
+        >{{this.statusTask()}}</a
+      >
+    </button>
   </mat-dialog-content>
 </div>

@@ -4,7 +4,7 @@
     <p  class="font-mono">Closes: {{ this.task()!.task_close | date:"short" }} </p>
     
     <div class="divider"></div>
-    <p>{{ this.task()!.description }} </p>
+    <div [innerHTML]="this.task()!.description | SafeHTML"> </div>
     <br>
 
 </div>

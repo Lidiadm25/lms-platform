@@ -4,7 +4,7 @@
   <h2 class="">Unit manager</h2>
   <div class="flex gap-2">
      <button class="btn btn-soft btn-primary" [routerLink]="['/admin/manager/',this.projectId, 'unit', 'create']">New unit</button>
-     <button class="btn btn-soft btn-primary"  [routerLink]="['/admin/manager/',this.projectId, this.unitId() ,'create']">New lesson</button>
+     <button class="btn btn-soft btn-primary"  (click)="verifyStatus()">New lesson</button>
   </div>
 
 </div>

@@ -14,7 +14,8 @@
       </mat-chip-grid>
       <!-- LA BÚSQUEDA -->
 
-      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <div class=" flex flex-col-2">
+          <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <g
           stroke-linejoin="round"
           stroke-linecap="round"
@@ -31,6 +32,7 @@
         [matAutocomplete]="auto"
         (keydown.enter)="search.set($event.target.value); onSearch()"
       />
+      </div>
 
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         @for (option of searchResult(); track option) {
@@ -41,10 +43,10 @@
       </mat-autocomplete>
     </mat-form-field>
     <div class="modal-action">
-      <form method="dialog">
+      <form method="dialog" class="flex flex-col-2 gap-4">
         <!-- if there is a button in form, it will close the modal -->
-        <button class="btn">Close</button>
-        <button id="myBtn" class="btn btn-secondary" type="submit" disabled (click)="OnSaveUsers()">Add</button>
+        <button class="btn btn-outline btn-error">Close</button>
+        <button id="myBtn" class="btn btn-outline btn-success" type="submit" disabled (click)="OnSaveUsers()">Add</button>
       </form>
     </div>
   </div>

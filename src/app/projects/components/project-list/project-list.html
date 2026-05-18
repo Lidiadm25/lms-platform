@@ -1,75 +1,72 @@
-<section class="p-7">
-  <table class="table table-md mt-2 w-full text-center">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>description</th>
-        <th>duration</th>
-        <th>Students</th>
-        <th>Status</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (project of projects().projects; track project.id; let index = $index) {
-        <tr>
-          <td>{{ project.id }}</td>
-          <td>{{ project.title }}</td>
-          <td class="max-w-xs"><div [innerHTML]="project.description" class="truncate" ></div></td>
-          <td>{{ project.duration }} h</td>
-          <td>{{ project.studentsCount }}</td>
-          <td>
-            @if (project.isActive) {
-              <div aria-label="status" class="status status-accent"></div>
-          } @else {
-            <span class="status"></span>
-          }
-            </td>
-          <td>
-            <button [routerLink]="['/admin/manager', project.id]"  class="btn btn-ghost">
-              <svg
-             xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            </button>
-          </td>
-          <td>
-            <button [routerLink]="['/admin/users-project', project.id]"  class="btn btn-ghost">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-              />
-            </svg>
-            </button>
-          </td>
+@if (this.projects().count > 0) {
+  <section class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-5">
+    <table class="table w-full text-center">
+      <thead>
+        <tr class="bg-base-200">
+          <th>Title</th>
+          <th>Description</th>
+
+          <th>Students</th>
+          <th>Status</th>
+          <th colspan="2">Actions</th>
+          <th></th>
         </tr>
-      }
+      </thead>
+      <tbody>
+        @for (project of projects().projects; track project.id; let index = $index) {
+          <tr>
+            <td>{{ project.title }}</td>
+            <td [innerHTML]="project.description" class="truncate max-w-50"></td>
 
-      
-    </tbody>
-  </table>
-  
-
-  
-</section>
+            <td>{{ project.studentsCount }}</td>
+            <td>
+              @if (project.isActive) {
+                <div aria-label="status" class="status status-accent"></div>
+              } @else {
+                <span class="status"></span>
+              }
+            </td>
+            <td>
+              <button [routerLink]="['/admin/manager', project.id]" class="btn btn-ghost">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              </button>
+            </td>
+            <td>
+              <button [routerLink]="['/admin/users-project', project.id]" class="btn btn-ghost">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+} @else {
+  <h2 class="font-bold text-center">There's no courses... start teaching now!</h2>
+}

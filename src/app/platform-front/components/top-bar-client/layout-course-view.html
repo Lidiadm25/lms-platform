@@ -1,28 +1,23 @@
-<div class="w-full min-h-[calc(100vh-4rem)] bg-sky-50">
-  <div class="h-20 bg-sky-700 sticky top-0 z-7 shadow-sm">
+<div class="w-full min-h-[calc(100vh-4rem)] bg-slate-100">
+  <div class="h-20 bg-indigo-500 sticky top-0 z-7 shadow-sm">
     <ul class="h-full flex flex-col-3 items-center justify-center gap-6 align-middle text-white">
-      <li [routerLink]="['/course/', this.idProject]">Course</li>
-      <li routerLink="calendar">Calendar</li>
-      <li>Students</li>
-      <li routerLink="grades">Grades</li>
+      <li [routerLink]="['/course/', this.idProject]" class="hover:cursor-pointer">Course</li>
+      <li routerLink="calendar" class="hover:cursor-pointer">Calendar</li>
+      <!-- <li>Students</li> -->
+      <li routerLink="grades" class="hover:cursor-pointer">Grades</li>
     </ul>
   </div>
   <div class="flex flex-col flex-1">
-    <div class="breadcrumbs text-sm p-7">
-      <ul>
-        <li><a> Home </a></li>
-        <li><a>Documents</a></li>
-        <li>Add Document</li>
-      </ul>
-    </div>
+<!-- 
+    <app-breadcrumbs class="ml-20"/> -->
 
-    <div class="flex justify-end pr-15 mb-5">
+    <div class="flex justify-end pr-15 mb-5 mt-5">
       <button class="btn btn-primary" onclick="complete.showModal()">
         Mark course as complete
       </button>
     </div>
 
-    <div class="px-7">
+    <div class="px-7 pr-3">
       <router-outlet />
     </div>
   </div>

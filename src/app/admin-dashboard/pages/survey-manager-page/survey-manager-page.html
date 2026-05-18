@@ -3,7 +3,7 @@
 </div>
 <form (ngSubmit)="onSubmit()" [formGroup]="surveyGroup">
   <button class="btn btn-ghost">Save</button>
-  <button class="btn btn-ghost">Edit</button>
+  
 
   <div class="divider"></div>
   <div class="flex flex-col gap-3">
@@ -39,3 +39,13 @@
     />
   </div>
 </form>
+@if (wasSaved()) {
+  <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>Users saved succesfully</span>
+  </div>
+}
+@if (hasError()) {
+  <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>{{ messageError() ?? 'There was an error'}}</span>
+  </div>
+}

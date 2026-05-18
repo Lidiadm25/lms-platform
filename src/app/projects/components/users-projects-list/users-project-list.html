@@ -1,13 +1,17 @@
-<section class="p-7">
+<div class="p-10">
+  <div clasS="flex justify-end">
+    <button class="btn btn-soft btn-primary" type="submit" (click)="usersInscriptionDelete($event)" > Delete users </button>
+  </div>
+  <section class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-5">
   
-    <table class="table table-md mt-2 w-full text-center">
+    <table class="table table-md w-full text-center">
     <thead>
-      <tr>
+      <tr class="bg-base-200">
         <th><input type="checkbox" (change)="toggleAll($event)"></th>
         <th>Email of student</th>
         <th>Full name</th>
         <th>Project</th>
-        <th></th>
+      
       </tr>
     </thead>
     <tbody>
@@ -17,32 +21,19 @@
           <td>{{ user.user.email }}</td>
           <td>{{ user.user.fullName }}</td>
           <td>{{ user.project.title }}</td>
-          <td>
-            <svg
-             xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-          </td>
+          
          
         </tr>
       }
     </tbody>
   </table>
-  <button class="btn btn-secondary" type="submit" (click)="usersInscriptionDelete($event)" > Delete </button>
+
 
   
  
 </section>
+
+  
 
 @if (wasSaved()) {
   <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
@@ -51,6 +42,8 @@
 }
 @if (hasError()) {
   <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
-    <span>There was an error</span>
+    <span>{{this.message()}}</span>
   </div>
 }
+
+</div>

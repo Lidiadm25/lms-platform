@@ -1,6 +1,6 @@
 <div class="join place-content-center">
     @for (page of getPagesList(); track page) {
-    <button class="join-item btn"
+    <button class="join-item btn btn-soft"
     [class.btn-primary] ="page === activePage()"
     [routerLink]="[]"
     [queryParams] ="{page: page}"

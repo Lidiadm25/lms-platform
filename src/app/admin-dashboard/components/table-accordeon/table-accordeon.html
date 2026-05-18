@@ -1,5 +1,9 @@
+
+
 @if (this.projectLoaded()) {
-  <ul class="menu bg-base-100 rounded-xl shadow-sm w-full text-base-content">
+  <ul class="menu bg-base-100 rounded-b-lg shadow-sm w-full text-base-content">
+    <p class="font-bold text-center text-xl uppercase text-gray-700 p-2"> {{this.projectLoaded()?.title}}</p>
+      <div class="divider"></div>
     @for (unit of this.projectLoaded()?.units; track $index) {
       <li>
         @if (unit?.lessons && unit.lessons.length > 0) {
@@ -53,6 +57,9 @@
          </div>
         }
       </li>
+    } 
+    @empty {
+      <p class="alert alert-error alert-outline "> Theres no content yet!</p>
     }
   </ul>
 }

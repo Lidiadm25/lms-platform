@@ -1,7 +1,11 @@
-<h2 mat-dialog-title>Remove file</h2>
-<mat-dialog-content>This will remove the file {{data.name}} from the submission file list.</mat-dialog-content>
-<mat-dialog-actions>
-  <button matButton (click)="closing()">Cancel</button>
+ <div class="flex flex-col">
+    <div class="bg-sky-100 p-5">
+      <p class="font-bold text-2xl text-zinc-700">Remove file</p>
+    </div>
+  </div>
+<mat-dialog-content>This will remove the file <span class="font-bold">{{data.name}}</span> from the submission file list.</mat-dialog-content>
+<mat-dialog-actions class="flex flex-col-2 gap-4">
+  <button matButton (click)="closing()" class="btn btn-outline btn-success">Cancel</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button matButton (click)="deleteValue()">Delete</button>
+  <button matButton (click)="deleteValue()" class="btn btn-outline btn-error">Delete</button>
 </mat-dialog-actions>

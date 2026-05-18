@@ -17,7 +17,7 @@
     <!-- MODIFICADO POR COMPONENTE HIJO!! -->
     <p class="my-7 ml-1 text-2xl text-body">{{this.status()}}</p>
     <div class="bg-white rounded-xl shadow-md">
-       @if(this.isActive() == false || (this.isActive()== true && this.submit()?.date_send !=null)){
+       @if(this.isActive() == false || (this.isActive()== true && this.submit()!.date_send !=null)){
         <!-- TABLA CON DATOS Y CALIFICACIÓN -->
 
          <app-submit-info [submit] = "this.submit()"/>

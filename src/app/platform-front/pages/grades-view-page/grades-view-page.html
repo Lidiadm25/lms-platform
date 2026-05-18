@@ -1,25 +1,37 @@
-@if(gradeResource.isLoading()){
-    <span>loading</span>
-}
-
-@if(gradeResource.hasValue()){
- 
-
-
-  <table class="table">
-    <th>TASK</th>
-    <th>GRADE</th>
-    <th>RANGE</th>
-    <th>FEEDBACK</th>
-    @for (item of gradeResource.value(); track $index) {
-        <tr>
-            <td>{{item.tasks_title}}</td>
-            <td>{{item.grades_total}}</td>
-            <td>{{item.grades_total}} / {{item.grades_max_range}}</td>
-            <td class="truncate">{{item.grades_feedback}}</td>
-            <td><a  class="link">See more</a></td>
-        </tr>
-    }
-  </table>
-
+<div class="p-7 flex justify-center">
+  @if (gradeResource.isLoading()) {
+    <span>loading...</span>
   }
+
+  @if (gradeResource.hasValue()) {
+    <div class="overflow-x-auto rounded-box border border-blue-200 shadow-sm base-100 w-full ">
+      <table class="table ">
+        <thead class="bg-base-200">
+        <th>TASK</th>
+        <th>GRADE</th>
+        <th>RANGE</th>
+        <th>FEEDBACK</th>
+        <th></th>
+        </thead>
+       <tbody class="bg-base-100">
+        <tr>
+            <td>Titulo de prueba</td>
+            <td> 7 </td>
+            <td>7 / 10</td>
+            <td class="truncate">djkashdjkashdjaskhdasjkhdjkashjsa</td>
+            <td><a class="link">See more</a></td>
+          </tr>
+         @for (item of gradeResource.value(); track $index) {
+          <tr>
+            <td>{{ item.tasks_title }}</td>
+            <td>{{ item.grades_total }}</td>
+            <td>{{ item.grades_total }} / {{ item.grades_max_range }}</td>
+            <td class="truncate">{{ item.grades_feedback }}</td>
+            <td><a class="link">See more</a></td>
+          </tr>
+        }
+       </tbody>
+      </table>
+    </div>
+  }
+</div>
