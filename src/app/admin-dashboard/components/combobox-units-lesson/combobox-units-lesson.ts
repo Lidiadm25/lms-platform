@@ -77,7 +77,7 @@ export class ComboboxUnitsLesson {
       studentsController:'',
     });
 
-    // Note: listen for search text changes
+   
     const filter$ = this.exFormGroup.get('unitsController').valueChanges.pipe(
       startWith(''),
       debounceTime(200),
@@ -133,12 +133,11 @@ export class ComboboxUnitsLesson {
   }
 
   getUnitsList(startsWith: any, page: number): Observable<Unit[]> {
-    const take = 10;
-    const skip = page > 0 ? (page - 1) * take : 0;
+    
     const filtered = this.unitList.filter((option) =>
       option.title.toLowerCase().startsWith(startsWith.toLowerCase()),
     );
-    return of(filtered.slice(skip, skip + take));
+    return of(filtered);
   }
 
   getUsersList(startsWith: any): Observable<UserProject[]> {
