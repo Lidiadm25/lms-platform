@@ -33,7 +33,9 @@ export class SurveyManagerPage {
     });
 
   }
-
+  wasSaved = signal<boolean>(false)
+  hasError = signal<boolean>(false)
+  messageError = signal<string | null>(null)
   onSubmit() {
 
     const questionsArray: Question[] = Object.keys(this.surveyGroup.value).map((value:string)=>{
@@ -44,7 +46,21 @@ export class SurveyManagerPage {
 
     const payload = { projectsId: this.projectId(), questions: questionsArray };
     
+     
+    this.surveyService.createSurvey(payload).subscribe({
+      next: (x)=> {
+         this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 3000);
+      },
+      error:(error) => {this.messageError.set(error.error.message)
+         this.hasError.set(true);
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 3000);
 
-    this.surveyService.createSurvey(payload).subscribe((result)=> console.log(result))
+      }
+    })
   }
 }
