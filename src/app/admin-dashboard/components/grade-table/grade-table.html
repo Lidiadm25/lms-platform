@@ -3,7 +3,7 @@
   <legend class="fieldset-legend text-sm">Grade review</legend>
 
   <label class="label">Title of task</label>
-  <input type="text" class="input" placeholder="Task title" />
+  <input type="text" class="input" placeholder="Task title" [value]="this.task()?.title ?? ''" />
 
   <label class="label">Min grade</label>
   <input type="number" class="input" placeholder="0"  formControlName="min_range"  />
@@ -22,7 +22,7 @@
   ></textarea>
 </fieldset>
 
-<Button class="btn btn-secondary w-full mt-2" type="submit">save grades</Button>
+<Button class="btn btn-secondary w-full mt-2" type="submit">Save grades</Button>
 </form>
 
 @if (wasSaved()) {
@@ -32,6 +32,6 @@
   }
   @if (hasError()) {
     <div class="alert alert-error fixed bottom-4 right-4 w-80 animate-fadeIn">
-      <span>Something went wrong</span>
+      <span>{{this.messageError()}}</span>
     </div>
   }
