@@ -39,10 +39,16 @@ export class TaskManagerPage {
     effect(() => {
       this.activatedRoute.paramMap.subscribe((params) => {
         const id = params.get('idTask') ?? 'create';
-        const project = params.get('idProject') ?? 'create';
-        this.projectId.set(project)
+        
         this.taskId.set(id);
       });
+
+      this.activatedRoute.parent?.paramMap.subscribe((params)=> {
+        const project = params.get('idProject') ?? 'create';
+      
+
+        this.projectId.set(project)
+      })
       if (this.taskId() != 'create') {
         this.edit.set(true);
         this.taskService.getById(this.taskId()).subscribe((result) => {
@@ -86,6 +92,7 @@ export class TaskManagerPage {
     var task: TaskCreate = {
       ...(this.taskForm.value as any),
       lesson: this.lessonId,
+      idProject : this.projectId()
     };
 
     console.log(task)
@@ -94,6 +101,7 @@ export class TaskManagerPage {
       this.taskService.create(task).subscribe({
         next: (x) => console.log(x),
         error: (e) => {
+          console.log(e)
           this.hasError.set(true);
           setTimeout(() => {
             this.hasError.set(false);

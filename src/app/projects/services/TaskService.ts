@@ -22,7 +22,7 @@ export class TaskService {
   create(task : TaskCreate){
     task = {
       ...task,
-      idProject: "c687c1de-fc3c-4453-a7b1-2ed15bcebc45"
+      idProject: task.idProject
     }
     return this.http.post<TaskCreate>(`${BASE_URL}/tasks`, task)
   }
