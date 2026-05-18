@@ -11,12 +11,20 @@ import { LessonViewPage } from './pages/lesson-view-page/lesson-view-page';
 import { LayoutCourseView } from './components/top-bar-client/layout-course-view';
 import { CalendarPage } from './pages/calendar-page/calendar-page';
 import { GradesViewPage } from './pages/grades-view-page/grades-view-page';
+import { checkEnrollGuard } from './guards/checkEnroll-guard';
+import { notAuthenticatedGuard } from '../auth/guards/not-authenticated.guard';
 
 export const platformFrontRoutes: Routes = [
   {
     path: '',
     component: PlatformFrontLayout,
+  
     children: [
+       {
+        path: 'home',
+        component: HomePage,
+         data: { breadcrumb: 'home'},
+      },
       {
         path: 'explore',
         component: ExplorePage,
@@ -39,25 +47,28 @@ export const platformFrontRoutes: Routes = [
         path: 'task/:idTask',
         component: TaskDetailsPage,
       },
-      {
-        path: 'home',
-        component: HomePage,
-      },
+     
       {
         path: 'course/:idProject',
         component: LayoutCourseView,
+        canActivate:[checkEnrollGuard],
+         data: { breadcrumb: 'course'},
+       
         children: [
           { path: '', component: ProjectViewPage },
           {
             path: 'lesson/:idLesson',
             component: LessonViewPage,
+               data: { breadcrumb: 'Lesson'},
           },
           {
             path:'calendar',
-            component: CalendarPage
+            component: CalendarPage,
+               data: { breadcrumb: 'calendar'},
           },
           {
             path:'grades',
+               data: { breadcrumb: 'Grades'},
             component: GradesViewPage
           }
           
