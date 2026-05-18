@@ -43,6 +43,7 @@ export class UnitsManagerPage {
 
       });
       if (this.unitId() != 'create' && this.unitId()!= null) {
+        console.log("es edit")
         this.edit.set(true);
       
 

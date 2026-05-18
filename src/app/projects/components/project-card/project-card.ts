@@ -30,15 +30,6 @@ export class ProjectCard {
   authService = inject(AuthService);
   user!: User;
 
-  // todo hacer decode de jwt en vez de esta mierda
-  inscription(id: string) {
-    if (this.authService.user() !== null) {
-      this.user = this.authService.user() as User;
-    }
-    
-
-  }
-
 
   navigateToPage(){
     if(this.in()== true){

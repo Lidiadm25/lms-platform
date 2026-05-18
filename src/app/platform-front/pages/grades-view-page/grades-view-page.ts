@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GradeService } from '../../../projects/services/GradeService';
 
 @Component({
   selector: 'app-grades-view-page',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './grades-view-page.html',
   
   changeDetection: ChangeDetectionStrategy.OnPush,
