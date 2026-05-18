@@ -14,16 +14,15 @@ export class ManagerPage {
   activatedRoute = inject(ActivatedRoute);
   projectId = signal<string>('create');
   userProjectService = inject(UsersProjectService);
-
   wasSaved = signal<boolean>(false);
   hasError = signal<boolean>(false);
 
   currentRoute!: string;
   constructor(private router: Router) {
     this.projectId.set(this.activatedRoute.snapshot.params['idProject']);
-
+    
     this.currentRoute = this.router.url;
-
+   
     this.router.events.subscribe((event) => {
       event instanceof NavigationEnd ? (this.currentRoute = event.url) : (this.currentRoute = '');
     });
@@ -31,7 +30,6 @@ export class ManagerPage {
 
   users: Array<string> = [];
   usersEmails: UserProjectCreate[] = [];
-
   async usersInscription(event: any) {
     this.users = event;
     for (let index = 0; index < this.users.length; index++) {

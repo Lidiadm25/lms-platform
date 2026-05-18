@@ -36,7 +36,8 @@
 <section class="p-7">
   <div class="flex flex-col lg:flex-row gap-6 w-full">
     @if (this.currentRoute.includes('survey-manager') || this.projectId() != 'create') {
-      <app-table-accordeon [idProject]="this.projectId()" class="flex-shrink-0 lg:w-80 max-w-80" />
+      
+      <app-table-accordeon [idProject]="this.projectId()" class="flex-shrink-0 lg:w-80 max-w-80 max-h-[calc(100vh-25vh)] overflow-y-auto" />
     }
 
     <main class="flex-1 w-full bg-base-100 rounded-xl shadow-sm p-6 lg:p-8 h-[calc(100vh-25vh)]">

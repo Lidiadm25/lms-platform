@@ -14,6 +14,7 @@ export class UsersProjectList {
   hasError = signal<boolean>(false);
   wasSaved = signal<boolean>(false);
   usersProjectService = inject(UsersProjectService);
+  message = signal<string>('There was an error deleting users');
 
   changes = output<boolean>();
 
@@ -53,6 +54,7 @@ export class UsersProjectList {
           this.changes.emit(true);
         },
         error: () => {
+          this.message.set('There was an error deleting users');
           this.hasError.set(true);
           setTimeout(() => {
             this.wasSaved.set(false);
@@ -61,6 +63,12 @@ export class UsersProjectList {
       });
 
       
+    } else {
+      this.message.set("Please select an student to delete")
+      this.hasError.set(true);
+          setTimeout(() => {
+            this.wasSaved.set(false);
+          }, 3000);
     }
     this.usersIds = [];
   }

@@ -1,10 +1,10 @@
+import { NgClass } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { ProjectService } from '../../../projects/services/ProjectService';
 import { UnitService } from '../../../projects/services/UnitService';
 import { Unit } from './../../../projects/interfaces/project.interface';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-units-manager-page',
@@ -13,18 +13,20 @@ import { NgClass } from '@angular/common';
 })
 export class UnitsManagerPage {
   fb = inject(FormBuilder);
-  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+  unitService = inject(UnitService);
+  projectService = inject(ProjectService)
   unitForm = this.fb.group({
     title: ['', []],
     description: ['', []],
   });
 
+
+
+  projectId: string = this.route.parent?.snapshot.params['idProject'];
+  unitId = signal<string | null>('create');
   edit = signal(false);
-  unitService = inject(UnitService);
-  projectId: string = this.activatedRoute.parent?.snapshot.params['idProject'];
-  unitId = signal<string>('create');
-  router = inject(Router);
-  route = inject(ActivatedRoute);
   unitLoaded = signal<Unit | null>(null);
   wasSaved = signal<boolean>(false);
   hasError = signal<boolean>(false);
@@ -32,15 +34,23 @@ export class UnitsManagerPage {
   constructor() {
     effect(() => {
       this.route.paramMap.subscribe((params) => {
-        const id = params.get('idUnit') ?? 'create';
-        this.unitId.set(id);
+        const id = params.get('idUnit');
+        if(id && id.toLowerCase()!== 'create'){
+          this.unitId.set(id)
+        } else {
+          this.unitId.set(null);
+        }
+
       });
-      if (this.unitId() != 'create') {
+      if (this.unitId() != 'create' && this.unitId()!= null) {
         this.edit.set(true);
-        this.unitService.getById(this.unitId()).subscribe((result) => {
+      
+
+        this.unitService.getById(this.unitId() as string).subscribe((result) => {
+          
           this.unitLoaded.set(result);
           this.unitForm.patchValue(result);
-          console.log(result);
+        
         });
       } else {
         this.unitForm.reset();
@@ -55,10 +65,12 @@ export class UnitsManagerPage {
       project: this.projectId,
     };
     if (this.edit() == true) {
-      firstValueFrom(await this.unitService.updateUnit(unit));
+      this.unitService.updateUnit(unit).subscribe((x)=> console.log(x));
     } else {
       const { id, ...rest } = unit;
-      firstValueFrom(await this.unitService.createUnit(rest as Unit));
+     this.unitService.createUnit(rest as Unit).subscribe((x)=> {
+      this.unitId.set(x.id)
+    });
     }
     this.wasSaved.set(true);
     setTimeout(() => {
@@ -79,8 +91,7 @@ export class UnitsManagerPage {
   }
 
   deleteUnit() {
-    this.unitService.delete(this.unitId()).subscribe(() => console.log('unit deleted'));
-
+    this.unitService.delete(this.unitId() as string).subscribe(() => console.log('unit deleted'));
     this.wasSaved.set(true);
     setTimeout(() => {
       this.wasSaved.set(false);
