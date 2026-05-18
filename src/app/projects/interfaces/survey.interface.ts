@@ -28,6 +28,14 @@ export interface Answer {
 }
 
 export interface datasetSurvey{
+    id:string
     avg: string;
     course: string;
 }
+
+export interface datasetQuestion {
+    question:string;
+    avg:string;
+}
+
+

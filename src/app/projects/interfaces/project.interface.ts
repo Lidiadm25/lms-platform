@@ -13,8 +13,8 @@ export interface ProjectsResponse {
 export interface Project {
   id: string;
   title: string;
-  image: string;
-  snippet: string
+  image: Files;
+ // snippet: string
   category: Category;
   description: string;
   duration: number;
@@ -25,6 +25,16 @@ export interface Project {
   last_modified:Date;
 
   studentsCount: number;
+}
+
+export interface Files{
+  id: string;
+  originalName:String;
+  key: string;
+  mimeType:string;
+  size: number;
+  createdAt: Date;
+  url?:string;
 }
 
 export interface Unit {
@@ -38,7 +48,7 @@ export interface Unit {
 export interface Lesson {
   section: string;
   id: string;
-  url_file: string;
+  url_file: Files[];
   title: string;
   description: string;
   maxSize?: string;

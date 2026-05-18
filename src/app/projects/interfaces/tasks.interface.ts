@@ -1,4 +1,4 @@
-import {Task } from "./project.interface";
+import {Files, Task } from "./project.interface";
 
 
 export interface TaskCreate{
@@ -18,7 +18,7 @@ export interface  SubmitTaskResponse{
 
 export interface Submit {
     id:string;
-    url_file:string[];
+    url_file:Files[];
     task: Task;
     date_send : Date
 }
