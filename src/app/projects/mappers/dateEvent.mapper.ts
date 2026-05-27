@@ -11,7 +11,7 @@ export class DateEventMapper{
                 title: submitItem.tasks[index].task.title, 
                 start:new Date( submitItem.tasks[index].task.task_open),
                 end: new Date( submitItem.tasks[index].task.task_close),
-                lesson_task: submitItem.tasks[index].task.lesson_task.id,
+                lesson_task: submitItem.tasks[index].task.lesson_task?.id,
                 task_id: submitItem.tasks[index].task.id
 
             })
