@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { ExamplePdfViewerComponent } from "../../../example-pdf-viewer/example-pdf-viewer.component";
+import { ExamplePdfViewerComponent } from "../example-pdf-viewer/example-pdf-viewer.component";
 
 @Component({
   selector: 'app-submission-visualizer',
