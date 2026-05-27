@@ -68,7 +68,7 @@ export interface Category {
 export interface Task {
     fileSize: number;
     id:           string;
-    lesson_task: Lesson;
+    lesson_task?: Lesson;
     title:        string;
     description:  string;
     task_created: Date;

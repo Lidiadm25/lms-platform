@@ -11,46 +11,44 @@ import { Task } from '../../../projects/interfaces/project.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubmitForm {
-   submissionId = input.required<string>();
-   fileSize = signal<number>(0)
-   id = signal<string>('')
-   submitService = inject(TaskService)
+  submissionId = input.required<string>();
+  fileSize = signal<number>(0)
+  id = signal<string>('')
+  submitService = inject(TaskService)
 
-   task = input.required<Task | null>();
-     file = model<File[]>([]);
+  task = input.required<Task | null>();
+  file = model<File[]>([]);
   wasSaved = signal<boolean>(false);
   hasError = signal<boolean>(false);
 
-   ngOnInit(){
-  if(this.task != null){
+  ngOnInit() {
+    if (this.task != null) {
       this.id.set(this!.task()!.id)
-    this.fileSize.set(this!.task()!.fileSize)
+      this.fileSize.set(this!.task()!.fileSize)
+    }
   }
-   }
 
-  onSubmit(){
-    
-  
-    
+  onSubmit() {
+
     this.submitService.updateSubmission(this.submissionId(), this.file()).subscribe({
-      next: (x)=> {
-         this.wasSaved.set(true);
-    setTimeout(() => {
-      this.wasSaved.set(false);
-    
-    }, 3000);
+      next: (x) => {
+        this.wasSaved.set(true);
+        setTimeout(() => {
+          this.wasSaved.set(false);
+
+        }, 3000);
       },
-      error: (error)=> {
+      error: (error) => {
         console.log(error)
-           this.hasError.set(true);
-    setTimeout(() => {
-      this.hasError.set(false);
-    }, 3000);
+        this.hasError.set(true);
+        setTimeout(() => {
+          this.hasError.set(false);
+        }, 3000);
       }
     })
 
- 
+
   }
- 
- }
+
+}
 

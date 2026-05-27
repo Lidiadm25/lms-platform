@@ -1,6 +1,8 @@
 
-<app-file-input-manager  [(file)]="file" [fileSize]="this.fileSize()"  />
-<div class="my-5">
+@if(this.task() != null) {  
+
+  <app-file-input-manager  [(file)]="file" [fileSize]="this.fileSize()"  />
+<div class="my-5 ml-4">
     <button class="btn btn-primary mr-5" (click)="onSubmit()"> Save changes </button>
 <button class="btn btn-secondary"> Cancel </button>
 </div>
@@ -14,3 +16,4 @@
       <span>Something went wrong</span>
     </div>
   }
+}

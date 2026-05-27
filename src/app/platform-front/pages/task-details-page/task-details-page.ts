@@ -26,18 +26,22 @@ export class TaskDetailsPage {
   ngOnInit(){
 
     this.taskService.getById(this.idTask).subscribe((result) => {
+      console.log(result);
+      console.log(this.idTask);
       this.task.set(result)
       this.verifyStatus();
-    });
-    
-    this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
-   
+       this.taskService.getSubmissionByTask(this.idTask).subscribe((result) =>  {
+       console.log(result);
       this.submit.set(result)
-      if(this.isActive() == false || (this.isActive()== true && this.submit()!.date_send !=null)) 
+      if(this.isActive() == false || (this.isActive()== true && this.submit() != null && this.submit()?.date_send !=null)) 
       {
         this.status.set("Submission info")
+
       }
        });
+    });
+   
+   
 
   }
 

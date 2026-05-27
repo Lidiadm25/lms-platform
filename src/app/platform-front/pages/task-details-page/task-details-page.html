@@ -1,33 +1,36 @@
-<div class="w-full h-[calc(100vh-4rem)]">
-  <div class="bg-sky-50 h-full rounded-xl">
+<div class="w-full min-h-[calc(100vh-4rem)] rounded-xl bg-sky-100 max-h-screen">
+
     <div class="breadcrumbs text-sm p-7">
   <ul>
     <li class="font-sans"><a> Home </a></li>
     <li><a>Documents</a></li>
     <li>Add Document</li>
   </ul>
-
+ 
 
   @if(this.task() != null){
-  <h1 class="m-6 font-semibold tracking-wide text-xl  ">{{ this.task()!.title }}</h1>
+  <h1 class="m-6 font-semibold tracking-wide text-xl  ">{{ this.task()?.title }}</h1>
   <div class="flex flex-col m-5  ">
    
    <app-task-info [task] = "this.task()"/>
   
     <!-- MODIFICADO POR COMPONENTE HIJO!! -->
-    <p class="my-7 ml-1 text-2xl text-body">{{this.status()}}</p>
-    <div class="bg-white rounded-xl shadow-md">
-       @if(this.isActive() == false || (this.isActive()== true && this.submit()!.date_send !=null)){
+    <p class=" text-2xl text-body p-3">{{this.status()}}</p>
+  
+      
+       @if(this.isActive() == false || (this.isActive()== true && this.submit() != null && this.submit()?.date_send !=null))  {
         <!-- TABLA CON DATOS Y CALIFICACIÓN -->
-
+        <div class="bg-white rounded-xl shadow-md">
          <app-submit-info [submit] = "this.submit()"/>
+          </div>
     } @else if(this.isActive()) {
         
         <app-submit-form [submissionId] = "this.submit()!.id" [task]="this.task()" />
     }
     </div>
-  </div>
+    
+ 
    }
-</div>
-</div>
+
+
 
