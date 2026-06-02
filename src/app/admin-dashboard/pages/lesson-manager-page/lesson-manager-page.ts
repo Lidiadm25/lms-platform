@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { Lesson } from '../../../projects/interfaces/project.interface';
 import { LessonService } from '../../../projects/services/LessonService';
 import { ProjectService } from '../../../projects/services/ProjectService';
+import { CourseStateService } from '../../../projects/services/CourseStateService';
 
 @Component({
   selector: 'app-lesson-manager-page',
@@ -19,6 +20,7 @@ export class LessonManagerPage {
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);
   // signals
+  courseStateService = inject(CourseStateService);
   projectService = inject(ProjectService)
   lessonLoaded = signal<Lesson | null>(null);
   files = signal<File[]>([])
@@ -70,11 +72,24 @@ export class LessonManagerPage {
    
       const lessonLike: Partial<Lesson> = { ...(this.lessonForm.value as any) };
       if (this.edit() == true) {
-        await firstValueFrom(
-          this.lessonService.updateLesson(this.lessonId(), lessonLike, this.files()),
-        );
+       
+          this.lessonService.updateLesson(this.lessonId(), lessonLike, this.files()).subscribe({
+            next: () => {
+              this.courseStateService.notifyUpdate();
+            },
+             error: (err) => {
+              console.error('Error updating lesson:', err);
+            }
+          });
       } else {
-        await firstValueFrom(this.lessonService.create(this.unitId, lessonLike, this.files()));
+        this.lessonService.create(this.unitId, lessonLike, this.files()).subscribe({
+          next: () => {
+            this.courseStateService.notifyUpdate();
+          },
+          error: (err) => {
+            console.error('Error creating lesson:', err);
+          }
+        });
       }
 
       this.wasSaved.set(true);

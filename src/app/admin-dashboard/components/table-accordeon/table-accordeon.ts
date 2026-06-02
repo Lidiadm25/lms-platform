@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Project } from '../../../projects/interfaces/project.interface';
 import { ProjectService } from './../../../projects/services/ProjectService';
@@ -10,28 +10,24 @@ import { LessonAccordeon } from './lesson-accordeon/lesson-accordeon';
   templateUrl: './table-accordeon.html',
 })
 export class TableAccordeon {
-  idProject = input<string>('');
-  projectService = inject(ProjectService);
+  projectData = input<Project | null>(null);
 
-  
+
+
   projectLoaded = signal<Project | null>(null);
   router = inject(Router);
 
-  ngOnInit() {
-    if (this.idProject() && this.idProject() != 'create') {
-      this.projectService.getById(this.idProject()).subscribe((result) => {
-        this.projectLoaded.set(result);
-      });
-    }
-  }
 
-  constructor(){
-    // effect(()=>{
-    //   console.log(this.project())
-    // })
+
+  constructor() {
+    effect(() => {
+      if (this.projectData()) {
+        this.projectLoaded.set(this.projectData());
+      }
+    })
   }
 
   navigateUnits(id: string) {
-    this.router.navigateByUrl('/admin/manager/' + this.idProject() + '/unit/' + id);
+    this.router.navigateByUrl('/admin/manager/' + this.projectLoaded()?.id + '/unit/' + id);
   }
 }

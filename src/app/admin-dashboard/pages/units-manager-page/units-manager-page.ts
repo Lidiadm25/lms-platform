@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjectService } from '../../../projects/services/ProjectService';
 import { UnitService } from '../../../projects/services/UnitService';
 import { Unit } from './../../../projects/interfaces/project.interface';
+import { CourseStateService } from '../../../projects/services/CourseStateService';
 
 @Component({
   selector: 'app-units-manager-page',
@@ -22,7 +23,7 @@ export class UnitsManagerPage {
     description: ['', []],
   });
 
-
+  courseState = inject(CourseStateService);
 
   projectId: string = this.route.parent?.snapshot.params['idProject'];
   unitId = signal<string | null>('create');
@@ -66,17 +67,43 @@ export class UnitsManagerPage {
       project: this.projectId,
     };
     if (this.edit() == true) {
-      this.unitService.updateUnit(unit).subscribe((x)=> console.log(x));
+      this.unitService.updateUnit(unit).subscribe(
+        {
+          next: () => {
+            this.wasSaved.set(true);
+            setTimeout(() => {
+              this.wasSaved.set(false);
+            }, 3000);
+            this.courseState.notifyUpdate();
+          },
+          error: (e) => {
+            this.hasError.set(true);
+            setTimeout(() => {
+              this.hasError.set(false);
+            }, 3000);
+          },
+        });
     } else {
       const { id, ...rest } = unit;
-     this.unitService.createUnit(rest as Unit).subscribe((x)=> {
-      this.unitId.set(x.id)
-    });
+     this.unitService.createUnit(rest as Unit).subscribe({
+        next: (createdUnit) => {
+          this.unitId.set(createdUnit.id);
+          this.courseState.notifyUpdate();
+          this.wasSaved.set(true);  
+          setTimeout(() => {
+            this.wasSaved.set(false);
+          }, 3000);
+          this.router.navigateByUrl('/admin/manager/' + this.projectId + '/unit/' + createdUnit.id);
+        },
+        error: (e) => {
+          this.hasError.set(true);
+          setTimeout(() => {
+            this.hasError.set(false);
+          }, 3000);
+        },
+     });
     }
-    this.wasSaved.set(true);
-    setTimeout(() => {
-      this.wasSaved.set(false);
-    }, 3000);
+    
   }
 
   verifyStatus() {
