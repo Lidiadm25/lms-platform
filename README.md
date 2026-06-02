@@ -6,7 +6,7 @@ Built with modern web technologies to provide an intuitive and responsive experi
 
 ---
 
-# 📸 Preview
+# Preview
 
 
 Dashboard for admins:
@@ -32,7 +32,7 @@ Real-time message service:
 
 ---
 
-# ✨ Features
+# Features
 
 - **Course management**: Teachers can create and manage courses, units, lessons, and assignments.
 - **Assignment review**: Teachers can view and download student submissions. (download work in progress)
@@ -89,19 +89,18 @@ Core functionality has been implemented, but UI/UX improvements, accessibility f
 
 ---
 
-# 🗺️ Roadmap
+# Roadmap
 
-- [ ] Improve manager-page state handling
-- [ ] Refactor course state management into a dedicated service
+- [x] Improve manager-page state handling
 - [ ] Add lesson file list component
 - [ ] Improve overall UI styling
 - [ ] Add dark mode
 - [ ] Improve accessibility
-
+- [ ] Clean code 🥲
 
 ---
 
-# 📦 Installation
+# Installation
 
 ## 1. Clone the repository
 
@@ -138,7 +137,7 @@ npm run start:dev
 
 ---
 
-# 🔌 Backend repository
+# Backend repository
 
 You can find the backend repository here:
 
