@@ -143,7 +143,7 @@ npm run start:dev
 You can find the backend repository here:
 
 ```md
-[Backend Repository](https://github.com/Lidiadm25/lms-platform-backend)
+https://github.com/Lidiadm25/lms-platform-backend
 ```
 
 
