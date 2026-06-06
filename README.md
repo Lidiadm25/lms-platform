@@ -92,11 +92,13 @@ Core functionality has been implemented, but UI/UX improvements, accessibility f
 # Roadmap
 
 - [x] Improve manager-page state handling
+- [ ] Add breadcrumbs
 - [ ] Add lesson file list component
 - [ ] Improve overall UI styling
 - [ ] Add dark mode
 - [ ] Improve accessibility
 - [ ] Clean code 🥲
+- [x] Download files when reviewing a submission
 
 ---
 

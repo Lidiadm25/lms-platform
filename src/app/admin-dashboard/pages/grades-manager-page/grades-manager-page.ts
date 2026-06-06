@@ -11,6 +11,7 @@ import { TaskService } from '../../../projects/services/TaskService';
 import { ComboboxUnitsLesson } from '../../components/combobox-units-lesson/combobox-units-lesson';
 import { GradeTable } from '../../components/grade-table/grade-table';
 import { SubmissionVisualizer } from '../../components/submission-visualizer/submission-visualizer';
+import { GradeService } from '../../../projects/services/GradeService';
 
 @Component({
   selector: 'app-grades-manager-page',
@@ -38,6 +39,7 @@ export class GradesManagerPage {
   selectedPdf = signal<string| null>(null)
   task = signal<Task | null>(null)
   taskService = inject(TaskService);
+  gradeService = inject(GradeService);
 
   constructor() {
     effect(() => {
@@ -57,4 +59,14 @@ export class GradesManagerPage {
   openPdf(url:string){
     this.selectedPdf.set(url)
   }
+  downloadImage(id:string){
+    this.gradeService.downloadFile(id).subscribe({
+      next: (response) => {
+        window.location.href = response.url;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+}
 }

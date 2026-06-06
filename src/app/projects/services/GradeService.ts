@@ -28,4 +28,8 @@ export class GradeService {
  updateGrade(grade: Grade, id: string){
     return this.http.patch<Grade>(`${BASE_URL}/grade/${id}`, grade)
  }
+
+ downloadFile(id:string){
+  return this.http.get<{url:string}>(`${BASE_URL}/files/download/${id}`);
+ }
 }
